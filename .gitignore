@@ -72,3 +72,4 @@ crashlytics-build.properties
 
 # Remove proprietary assets from being tracked.
 /[Aa]ssets/[Pp]roprietary/
+/[Aa]ssets/[Rr]esources/[Pp]roprietary/
