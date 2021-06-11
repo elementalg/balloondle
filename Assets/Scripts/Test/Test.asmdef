@@ -1,12 +1,16 @@
 {
-    "name": "Tests",
-    "rootNamespace": "Balloondle.Test",
+    "name": "Test",
+    "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Scripts"
+        "Server",
+        "Shared",
+        "Client"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
