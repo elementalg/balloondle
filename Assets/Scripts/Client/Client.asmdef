@@ -1,3 +1,16 @@
 {
-	"name": "Client"
+    "name": "Client",
+    "rootNamespace": "Balloondle.Client",
+    "references": [
+        "GUID:03ebb1d8fe919b4429247c8a21dcb206"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

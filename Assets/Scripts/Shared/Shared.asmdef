@@ -1,6 +1,6 @@
 {
     "name": "Shared",
-    "rootNamespace": "",
+    "rootNamespace": "Balloondle.Shared",
     "references": [
         "GUID:9f4f5bf029cebb64f983b7bdc29f62a1",
         "GUID:3b8ed52f1b5c64994af4c4e0aa4b6c4b",
