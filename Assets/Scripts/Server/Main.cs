@@ -39,26 +39,31 @@ namespace Balloondle.Server
                     throw new System.ArgumentException("-port argument must be defined.");
                 }
 
-                UNetTransport transport = NetworkManager
+                int listenPort = int.Parse(startArguments["port"]);
+
+                StartServerOnPort(listenPort);
+
+                Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
+            }
+        }
+
+        private void StartServerOnPort(int listenPort)
+        {
+            UNetTransport transport = NetworkManager
                     .Singleton
                     .NetworkConfig
                     .NetworkTransport as UNetTransport;
 
-                int listenPort = int.Parse(startArguments["port"]);
-
-                if (!IsListenPortValid(listenPort))
-                {
-                    throw new
-                        System.ArgumentException($"-port argument must be a valid port," +
-                        $" got '{listenPort}'.");
-                }
-
-                transport.ServerListenPort = listenPort;
-
-                NetworkManager.Singleton.StartServer();
-
-                Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
+            if (!IsListenPortValid(listenPort))
+            {
+                throw new
+                    System.ArgumentException($"-port argument must be a valid port," +
+                    $" got '{listenPort}'.");
             }
+
+            transport.ServerListenPort = listenPort;
+
+            NetworkManager.Singleton.StartServer();
         }
 
         private bool IsListenPortValid(int listenPort)
