@@ -18,7 +18,7 @@ namespace Balloondle.UI.LoadingScene
         }
 
         /// <summary>
-        /// Rotates the loading indicator.
+        /// Rotates the loading indicator.s
         /// </summary>
         void Update()
         {
