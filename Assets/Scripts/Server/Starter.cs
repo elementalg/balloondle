@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
 using MLAPI.Transports.UNET;
+using UnityEngine.SceneManagement;
+using Balloondle.Shared;
 
 namespace Balloondle.Server
 {
@@ -14,27 +16,40 @@ namespace Balloondle.Server
     {
         void Start()
         {
-            Dictionary<string, string> startArguments = GetExpectedCommandLineArguments();
+            Debug.Log("- Starting.");
 
-            if (!startArguments.ContainsKey("port"))
-            {
-                throw new System.ArgumentException("-port argument must be defined.");
-            }
-
-            UNetTransport transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UNetTransport;
-            int listenPort = int.Parse(startArguments["port"]);
-
-            if (!IsListenPortValid(listenPort))
-            {
-                throw new
-                    System.ArgumentException($"-port argument must be a valid port, got '{listenPort}'.");
-            }
-
-            transport.ServerListenPort = listenPort;
-
-            NetworkManager.Singleton.StartServer();
+            SceneManager.sceneLoaded += OnSharedSceneHasBeenLoaded;
         }
 
+        void OnSharedSceneHasBeenLoaded(Scene loadedScene, LoadSceneMode mode)
+        {
+            if (loadedScene.name.Equals(Scenes.GameSharedScene.ToString()))
+            {
+                Debug.Log("- Preparing to listen to incoming connections.");
+
+                Dictionary<string, string> startArguments = GetExpectedCommandLineArguments();
+
+                if (!startArguments.ContainsKey("port"))
+                {
+                    throw new System.ArgumentException("-port argument must be defined.");
+                }
+                UNetTransport transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UNetTransport;
+                int listenPort = int.Parse(startArguments["port"]);
+
+                if (!IsListenPortValid(listenPort))
+                {
+                    throw new
+                        System.ArgumentException($"-port argument must be a valid port, got '{listenPort}'.");
+                }
+
+                transport.ServerListenPort = listenPort;
+
+                NetworkManager.Singleton.StartServer();
+
+                Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
+            }
+        }
+        
         private Dictionary<string, string> GetExpectedCommandLineArguments()
         {
             string[] commandLineArguments = System.Environment.GetCommandLineArgs();
