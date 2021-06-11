@@ -318,6 +318,7 @@ MonoBehaviour:
     RegisteredScenes:
     - GameScene
     - GameServerScene
+    - GameSharedScene
     AllowRuntimeSceneChanges: 0
     NetworkPrefabs:
     - Prefab: {fileID: 3832668519577557919, guid: ad61c7e5a92b13745a4e3b23a530152b, type: 3}

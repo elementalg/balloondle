@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Balloondle.Server.Gameplay.Maps
+namespace Balloondle.Server.Gameplay
 {
     public class Map
     {
