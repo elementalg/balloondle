@@ -73,3 +73,5 @@ crashlytics-build.properties
 # Remove proprietary assets from being tracked.
 /[Aa]ssets/[Pp]roprietary/
 /[Aa]ssets/[Rr]esources/[Pp]roprietary/
+/Assets/Scripts/Test/NewTestScript.cs
+/Assets/Scripts/Test/NewTestScript.cs.meta
