@@ -39,7 +39,11 @@ namespace Balloondle.Server
                     throw new System.ArgumentException("-port argument must be defined.");
                 }
 
-                UNetTransport transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UNetTransport;
+                UNetTransport transport = NetworkManager
+                    .Singleton
+                    .NetworkConfig
+                    .NetworkTransport as UNetTransport;
+
                 int listenPort = int.Parse(startArguments["port"]);
 
                 if (!IsListenPortValid(listenPort))

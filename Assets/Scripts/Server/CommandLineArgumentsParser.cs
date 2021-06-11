@@ -4,7 +4,8 @@ namespace Balloondle.Server
 {
     public class CommandLineArgumentsParser
     { 
-        public Dictionary<string, string> GetExpectedCommandLineArguments(string[] commandLineArguments, int expectedArguments)
+        public Dictionary<string, string> GetExpectedCommandLineArguments(string[] commandLineArguments,
+            int expectedArguments)
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 

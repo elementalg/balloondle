@@ -10,7 +10,8 @@ public class CommandLineArgumentsParserTest
     {
         string[] testCommandLineArguments = new string[] { "program.exe", "-port", "7777" };
         CommandLineArgumentsParser parser = new CommandLineArgumentsParser();
-        Dictionary<string, string> arguments = parser.GetExpectedCommandLineArguments(testCommandLineArguments, testCommandLineArguments.Length);
+        Dictionary<string, string> arguments = parser
+            .GetExpectedCommandLineArguments(testCommandLineArguments, testCommandLineArguments.Length);
 
         Assert.IsTrue(arguments.ContainsKey("port"));
     }
