@@ -2,7 +2,11 @@
     "name": "Client",
     "rootNamespace": "Balloondle.Client",
     "references": [
-        "GUID:03ebb1d8fe919b4429247c8a21dcb206"
+        "GUID:03ebb1d8fe919b4429247c8a21dcb206",
+        "GUID:9f4f5bf029cebb64f983b7bdc29f62a1",
+        "GUID:3b8ed52f1b5c64994af4c4e0aa4b6c4b",
+        "GUID:1491147abca9d7d4bb7105af628b223e",
+        "GUID:fe4fa159f4a96442ba22af67ddf20c65"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

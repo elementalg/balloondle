@@ -8,12 +8,17 @@ namespace Balloondle.Server.Network
 {
     public class NetworkEventHandlerImpl : INetworkEventHandler
     {
+        private Match match;
+        private string serverPassword;
         private PlayerManager playerManager;
 
         public Match CurrentMatch { get; set; }
 
-        public NetworkEventHandlerImpl()
+        public NetworkEventHandlerImpl(Match match, string serverPassword)
         {
+            this.match = match;
+            this.serverPassword = serverPassword;
+
             playerManager = new PlayerManager();
         }
 
@@ -36,19 +41,37 @@ namespace Balloondle.Server.Network
             PlayerConnectionData playerConnectionData = JsonConvert
                 .DeserializeObject<PlayerConnectionData>(uncheckedPlayerData);
 
-            // TODO: Validate 'playerConnectionData'.
-
+            if (!IsPlayerConnectionDataValid(playerConnectionData))
+            {
+                callback(false, null, false, null, null);
+                return;
+            }
 
             Player player = new Player(playerConnectionData.Name, clientId);
 
             playerManager.AddPlayer(player);
 
             Debug.Log($"Accepted connection for player with name '{player.Name}'.");
+
+            callback(false, null, true, null, null);
+        }
+
+        private bool IsPlayerConnectionDataValid(PlayerConnectionData playerConnectionData)
+        {
+            // TODO: Validate 'playerConnectionData'.
+
+            if (!playerConnectionData.ServerPassword.Equals(serverPassword))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void OnClientConnected(ulong clientId)
         {
             // TODO: Assure CurrentMatch is set before any client gets connected.
+            Debug.Log($"OnClientConnected {clientId}");
 
             if (CurrentMatch != null)
             {
@@ -59,6 +82,8 @@ namespace Balloondle.Server.Network
 
         public void OnClientDisconnected(ulong clientId)
         {
+            Debug.Log($"OnClientDisconnected {clientId}");
+
             if (CurrentMatch != null)
             {
                 Player player = playerManager.GetPlayerFromClientId(clientId);

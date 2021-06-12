@@ -1,12 +1,9 @@
 using Balloondle.Server.Gameplay;
 using Balloondle.Server.Network;
 using Balloondle.Shared;
-using Balloondle.Shared.Game;
 using MLAPI;
 using MLAPI.Transports.UNET;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +16,7 @@ namespace Balloondle.Server
     /// </summary>
     public class Main : MonoBehaviour
     {
-        private const int EXPECTED_ARGUMENTS_INCLUDING_BINARY = 7;
+        private const int EXPECTED_ARGUMENTS_INCLUDING_BINARY = 9;
 
         private Match match;
 
@@ -31,8 +28,6 @@ namespace Balloondle.Server
         void Start()
         {
             Debug.Log("- Starting.");
-
-            networkEventHandler = new NetworkEventHandlerImpl();
 
             SceneManager.sceneLoaded += OnSharedSceneHasBeenLoaded;
         }
@@ -50,14 +45,16 @@ namespace Balloondle.Server
 
                 ExceptionIfMissingArguments(startArguments);
 
-                int listenPort = int.Parse(startArguments["port"]);
-
-                StartServerOnPort(listenPort);
-
                 string gamemode = startArguments["gamemode"];
                 string map = startArguments["map"];
 
                 LoadMatch(gamemode, map);
+
+                networkEventHandler = new NetworkEventHandlerImpl(match, startArguments["password"]);
+
+                int listenPort = int.Parse(startArguments["port"]);
+
+                StartServerOnPort(listenPort);
 
                 Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
             }

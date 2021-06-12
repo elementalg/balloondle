@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameServerScene.unity
     guid: 1f6b7dc4f15b4c74f92a4e95af1eea91
-  - enabled: 0
-    path: Assets/Scenes/GameClientScene.unity
-    guid: 09a952c8d517a50408921aa9b8255ca2
   - enabled: 1
     path: Assets/Scenes/GameSharedScene.unity
     guid: eba157086cc49a34d91304c141501656
+  - enabled: 0
+    path: Assets/Scenes/GameClientScene.unity
+    guid: 09a952c8d517a50408921aa9b8255ca2
   m_configObjects: {}
