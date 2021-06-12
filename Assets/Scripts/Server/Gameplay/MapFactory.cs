@@ -15,13 +15,11 @@ namespace Balloondle.Server.Gameplay
 
         public Map BuildMap(Maps map)
         {
-            switch (map)
+            return map switch
             {
-                case Maps.DEVELOPMENT:
-                    return new Map(developmentMapPrefab);
-                default:
-                    throw new System.ArgumentException("Invalid map value.", nameof(map));
-            }
+                Maps.DEVELOPMENT => new Map(developmentMapPrefab),
+                _ => throw new System.ArgumentException("Invalid map value.", nameof(map)),
+            };
         }
     }
 }

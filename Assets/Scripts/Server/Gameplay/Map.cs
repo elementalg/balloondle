@@ -11,17 +11,17 @@ namespace Balloondle.Server.Gameplay
             this.mapPrefab = mapPrefab;
         }
 
-        public void Start(Gamemode gamemode)
+        public void Start(IGamemode gamemode)
         {
             gamemode.OnMapStart(this);
         }
 
-        public void Restart(Gamemode gamemode)
+        public void Restart(IGamemode gamemode)
         {
             gamemode.OnMapRestart(this);
         }
 
-        public void Stop(Gamemode gamemode)
+        public void Stop(IGamemode gamemode)
         {
             gamemode.OnMapStop(this);
         }

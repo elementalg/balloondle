@@ -19,6 +19,9 @@ namespace Balloondle.Server
 
         private Match match;
 
+        [SerializeField]
+        private MapFactory mapFactory;
+
         void Start()
         {
             Debug.Log("- Starting.");
@@ -108,9 +111,8 @@ namespace Balloondle.Server
                     .ArgumentException("Gamemode name is not a valid one.", nameof(gamemodeName));
             }
 
-            MapFactory.Maps map;
 
-            bool isMapNameValid = System.Enum.TryParse<MapFactory.Maps>(mapName, out map);
+            bool isMapNameValid = System.Enum.TryParse<MapFactory.Maps>(mapName, out MapFactory.Maps map);
 
             if (!isMapNameValid)
             {
@@ -118,14 +120,15 @@ namespace Balloondle.Server
             }
 
             GamemodeFactory gamemodeFactory = new GamemodeFactory();
-            MapFactory mapFactory = new MapFactory();
 
             match = new Match(gamemodeFactory.BuildGamemode(gamemode), mapFactory.BuildMap(map));
+
+            match.Start();
         }
 
         void Update()
         {
-        
+      
         }
     }
 }

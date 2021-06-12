@@ -9,7 +9,7 @@ namespace Balloondle.Server.Gameplay
             TEST,
         }
 
-        public Gamemode BuildGamemode(Gamemodes gamemode)
+        public IGamemode BuildGamemode(Gamemodes gamemode)
         {
             switch (gamemode)
             {

@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 674084021}
   - component: {fileID: 674084020}
   - component: {fileID: 674084022}
+  - component: {fileID: 674084023}
   m_Layer: 0
   m_Name: Server
   m_TagString: Untagged
@@ -153,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9521f27e80677ea43b4980477766b535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapFactory: {fileID: 674084023}
 --- !u!4 &674084021
 Transform:
   m_ObjectHideFlags: 0
@@ -179,6 +181,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d562057d345a34fbd124e77f5bcbc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &674084023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674084019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7863f7064997ebc4aab81903222dfec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  developmentMapPrefab: {fileID: 9157618318577535455, guid: 889f0815689ec1b42b480f162659332f, type: 3}
 --- !u!1 &674839413
 GameObject:
   m_ObjectHideFlags: 0

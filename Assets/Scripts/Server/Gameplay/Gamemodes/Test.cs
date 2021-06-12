@@ -1,6 +1,8 @@
-﻿namespace Balloondle.Server.Gameplay.Gamemodes
+﻿using UnityEngine;
+
+namespace Balloondle.Server.Gameplay.Gamemodes
 {
-    public class Test : Gamemode
+    public class Test : IGamemode
     {
         internal Test()
         {
@@ -9,27 +11,27 @@
 
         public void OnMatchEnd(Match match)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("OnMatchEnd");
         }
 
         public void OnMatchStart(Match match)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("OnMatchStart");
         }
 
         public void OnMapStart(Map map)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("OnMapStart");
         }
 
         public void OnMapRestart(Map map)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("OnMapRestart");
         }
 
         public void OnMapStop(Map map)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("OnMapStop");
         }
     }
 }
