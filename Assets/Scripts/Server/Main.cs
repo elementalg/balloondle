@@ -1,8 +1,12 @@
 using Balloondle.Server.Gameplay;
+using Balloondle.Server.Network;
 using Balloondle.Shared;
+using Balloondle.Shared.Game;
 using MLAPI;
 using MLAPI.Transports.UNET;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,9 +26,13 @@ namespace Balloondle.Server
         [SerializeField]
         private MapFactory mapFactory;
 
+        private INetworkEventHandler networkEventHandler;
+
         void Start()
         {
             Debug.Log("- Starting.");
+
+            networkEventHandler = new NetworkEventHandlerImpl();
 
             SceneManager.sceneLoaded += OnSharedSceneHasBeenLoaded;
         }
@@ -89,12 +97,26 @@ namespace Balloondle.Server
 
             transport.ServerListenPort = listenPort;
 
+            LinkNetworkEventHandlerWithNetworkManager();
+
             NetworkManager.Singleton.StartServer();
         }
 
         private bool IsListenPortValid(int listenPort)
         {
             return (listenPort > 1024 && listenPort < 65535);
+        }
+
+        private void LinkNetworkEventHandlerWithNetworkManager()
+        {
+            NetworkManager.Singleton.ConnectionApprovalCallback += networkEventHandler
+                .OnConnectionApprovalRequest;
+
+            NetworkManager.Singleton.OnClientConnectedCallback += networkEventHandler
+                .OnClientConnected;
+
+            NetworkManager.Singleton.OnClientDisconnectCallback += networkEventHandler
+                .OnClientDisconnected;
         }
 
         private void LoadMatch(string gamemodeName, string mapName)

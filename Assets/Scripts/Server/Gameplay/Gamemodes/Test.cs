@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Balloondle.Server.Network;
+using UnityEngine;
 
 namespace Balloondle.Server.Gameplay.Gamemodes
 {
@@ -32,6 +33,16 @@ namespace Balloondle.Server.Gameplay.Gamemodes
         public void OnMapStop(Map map)
         {
             Debug.Log("OnMapStop");
+        }
+
+        public void OnPlayerJoin(Player player)
+        {
+            Debug.Log($"Player: '{player.Name}' ID {player.ClientId} joined.");
+        }
+
+        public void OnPlayerQuit(Player player, Player.QuitReason quitReason)
+        {
+            Debug.Log($"Player: '{player.Name}' ID {player.ClientId} quit.");
         }
     }
 }
