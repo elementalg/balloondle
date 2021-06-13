@@ -1,5 +1,3 @@
-using Balloondle.Server.Gameplay;
-using Balloondle.Server.Network;
 using Balloondle.Shared;
 using MLAPI;
 using MLAPI.Transports.UNET;
@@ -17,13 +15,6 @@ namespace Balloondle.Server
     public class Main : MonoBehaviour
     {
         private const int EXPECTED_ARGUMENTS_INCLUDING_BINARY = 9;
-
-        private Match match;
-
-        [SerializeField]
-        private MapFactory mapFactory;
-
-        private INetworkEventHandler networkEventHandler;
 
         void Start()
         {
@@ -50,10 +41,9 @@ namespace Balloondle.Server
 
                 LoadMatch(gamemode, map);
 
-                networkEventHandler = new NetworkEventHandlerImpl(match, startArguments["password"]);
 
                 int listenPort = int.Parse(startArguments["port"]);
-
+                
                 StartServerOnPort(listenPort);
 
                 Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
@@ -75,6 +65,11 @@ namespace Balloondle.Server
             if (!startArguments.ContainsKey("map"))
             {
                 throw new System.ArgumentException("-map argument must be defined.");
+            }
+
+            if (!startArguments.ContainsKey("password"))
+            {
+                throw new System.ArgumentException("-password argument must be defined.");
             }
         }
 
@@ -106,43 +101,12 @@ namespace Balloondle.Server
 
         private void LinkNetworkEventHandlerWithNetworkManager()
         {
-            NetworkManager.Singleton.ConnectionApprovalCallback += networkEventHandler
-                .OnConnectionApprovalRequest;
-
-            NetworkManager.Singleton.OnClientConnectedCallback += networkEventHandler
-                .OnClientConnected;
-
-            NetworkManager.Singleton.OnClientDisconnectCallback += networkEventHandler
-                .OnClientDisconnected;
+           
         }
 
         private void LoadMatch(string gamemodeName, string mapName)
         {
-            GamemodeFactory.Gamemodes gamemode;
-
-            bool isGamemodeNameValid = System
-                .Enum
-                .TryParse<GamemodeFactory.Gamemodes>(gamemodeName, out gamemode);
-
-            if (!isGamemodeNameValid)
-            {
-                throw new System
-                    .ArgumentException("Gamemode name is not a valid one.", nameof(gamemodeName));
-            }
-
-
-            bool isMapNameValid = System.Enum.TryParse<MapFactory.Maps>(mapName, out MapFactory.Maps map);
-
-            if (!isMapNameValid)
-            {
-                throw new System.ArgumentException("Map name is not a valid one.", nameof(mapName));
-            }
-
-            GamemodeFactory gamemodeFactory = new GamemodeFactory();
-
-            match = new Match(gamemodeFactory.BuildGamemode(gamemode), mapFactory.BuildMap(map));
-
-            match.Start();
+            
         }
 
         void Update()

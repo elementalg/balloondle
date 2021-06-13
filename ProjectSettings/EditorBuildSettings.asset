@@ -8,16 +8,25 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LoadingScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: c29079b7a04a09b4ca84a0c7ceeceddd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GameServerScene.unity
     guid: 1f6b7dc4f15b4c74f92a4e95af1eea91
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Scenes/GameClientLoadingScene.unity
+    guid: a4bafc4b08bd0704988561ac2cf7ce78
+  - enabled: 0
+    path: Assets/Scenes/RpcServerTest.unity
+    guid: 3f882fe92d504d640a5ccffa3a7301b2
+  - enabled: 0
     path: Assets/Scenes/GameSharedScene.unity
     guid: eba157086cc49a34d91304c141501656
   - enabled: 0
     path: Assets/Scenes/GameClientScene.unity
     guid: 09a952c8d517a50408921aa9b8255ca2
+  - enabled: 0
+    path: Assets/Scenes/RpcClientTEst.unity
+    guid: b4baadb5dc50b9e4a80c6b6094ee652b
   m_configObjects: {}
