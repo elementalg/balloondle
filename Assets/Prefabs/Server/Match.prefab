@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8395260434801580909
+--- !u!1 &1801829050796231244
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3152346965490592445}
-  - component: {fileID: 8395260434801580910}
+  - component: {fileID: 1801829050796231234}
+  - component: {fileID: 1801829050796231235}
   m_Layer: 0
-  m_Name: ServerLogic
-  m_TagString: Untagged
+  m_Name: Match
+  m_TagString: Match
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3152346965490592445
+--- !u!4 &1801829050796231234
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8395260434801580909}
+  m_GameObject: {fileID: 1801829050796231244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.025000095, y: 2.44, z: 0}
+  m_LocalPosition: {x: -0.24559608, y: 2.9859667, z: -2.4415586}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8395260434801580910
+--- !u!114 &1801829050796231235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8395260434801580909}
+  m_GameObject: {fileID: 1801829050796231244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b80b49f790bfa3a498049d6d58ff56b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d1bc1e0e2de9af4d9c838a87aa7bcaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: Development
-  gamemode: FreeForAll
-  maxPlayers: 6
-  matchObjectPrefab: {fileID: 1801829050796231244, guid: a9f8ef59a9e60d7459aa2fdfbc2a83bc, type: 3}
+  loaderPrefab: {fileID: 9185551135352689944, guid: 64379e5f8b35f1d4293f5100381d8396, type: 3}

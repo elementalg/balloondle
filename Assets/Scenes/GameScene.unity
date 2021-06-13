@@ -251,7 +251,7 @@ MonoBehaviour:
     NetworkPrefabs:
     - Prefab: {fileID: 125914894}
       PlayerPrefab: 0
-    - Prefab: {fileID: 9157618318577535455, guid: 889f0815689ec1b42b480f162659332f, type: 3}
+    - Prefab: {fileID: 2714482096655947227, guid: 889f0815689ec1b42b480f162659332f, type: 3}
       PlayerPrefab: 0
     - Prefab: {fileID: 3832668519577557919, guid: ad61c7e5a92b13745a4e3b23a530152b, type: 3}
       PlayerPrefab: 1
@@ -263,7 +263,7 @@ MonoBehaviour:
     MaxReceiveEventsPerTickRate: 500
     EventTickrate: 128
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverLogicPrefab: {fileID: 8395260434801580909, guid: 760f331af57f78747abee810cd55751d, type: 3}
   clientLogicPrefab: {fileID: 4686299728029593640, guid: 0772d76212a77e7478154515753bbb65, type: 3}
-  isServer: 1
+  isServer: 0
 --- !u!4 &1771054152
 Transform:
   m_ObjectHideFlags: 0

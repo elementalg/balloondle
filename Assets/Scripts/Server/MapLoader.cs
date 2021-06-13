@@ -9,17 +9,16 @@ namespace Balloondle.Server
         [SerializeField]
         private GameObject developmentMapPrefab;
 
-        public void LoadMap(BaseMapFactory.Maps map)
+        public void LoadMap(string map)
         {
-            switch (map)
+            if (map.ToLower().Equals("development"))
             {
-                case BaseMapFactory.Maps.DEVELOPMENT:
-                    GameObject mapObject = Instantiate(developmentMapPrefab);
-                    mapObject.GetComponent<NetworkObject>().Spawn();
-
-                    break;
-                default:
-                    break;
+                GameObject mapObject = Instantiate(developmentMapPrefab);
+                mapObject.GetComponent<NetworkObject>().Spawn();
+            }
+            else
+            {
+                throw new System.ArgumentException("Unknown map name.");
             }
         }
     }
