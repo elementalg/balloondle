@@ -253,8 +253,14 @@ MonoBehaviour:
       PlayerPrefab: 0
     - Prefab: {fileID: 2714482096655947227, guid: 889f0815689ec1b42b480f162659332f, type: 3}
       PlayerPrefab: 0
-    - Prefab: {fileID: 3832668519577557919, guid: ad61c7e5a92b13745a4e3b23a530152b, type: 3}
+    - Prefab: {fileID: 8127213532390330434, guid: ad61c7e5a92b13745a4e3b23a530152b, type: 3}
       PlayerPrefab: 1
+    - Prefab: {fileID: 3262179471827840887, guid: 4f2de94fa92d83d47a2f49426684b6b2, type: 3}
+      PlayerPrefab: 0
+    - Prefab: {fileID: 7232877216659379784, guid: 6f358e19ec3423d42b89bdae60473043, type: 3}
+      PlayerPrefab: 0
+    - Prefab: {fileID: 6775529501130682769, guid: 84dfffa8b8081cb4da7812ddf50a07f8, type: 3}
+      PlayerPrefab: 0
     PlayerPrefabHash:
       id: 0
     CreatePlayerPrefab: 0
@@ -330,7 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverLogicPrefab: {fileID: 8395260434801580909, guid: 760f331af57f78747abee810cd55751d, type: 3}
   clientLogicPrefab: {fileID: 4686299728029593640, guid: 0772d76212a77e7478154515753bbb65, type: 3}
-  isServer: 0
+  isServer: 1
 --- !u!4 &1771054152
 Transform:
   m_ObjectHideFlags: 0

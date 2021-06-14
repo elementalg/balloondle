@@ -47,3 +47,4 @@ MonoBehaviour:
   gamemode: FreeForAll
   maxPlayers: 6
   matchObjectPrefab: {fileID: 1801829050796231244, guid: a9f8ef59a9e60d7459aa2fdfbc2a83bc, type: 3}
+  movementHandlerPrefab: {fileID: 4818849225036703317, guid: a0023ac81ec0d634d89dba827bd41354, type: 3}

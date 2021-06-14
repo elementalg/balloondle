@@ -19,9 +19,14 @@ namespace Balloondle.Server
         [SerializeField]
         private GameObject matchObjectPrefab;
 
+        [SerializeField]
+        private GameObject movementHandlerPrefab;
+
         // Start is called before the first frame update
         void Start()
         {
+            GameObject movementHandler = GameObject.Instantiate(movementHandlerPrefab);
+
             GameObject match = GameObject.Instantiate(matchObjectPrefab);
             MatchFunctionality matchFunctionality = match.GetComponent<MatchFunctionality>();
             matchFunctionality.Gamemode = gamemode;

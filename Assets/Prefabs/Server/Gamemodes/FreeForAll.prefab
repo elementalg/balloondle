@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9182597322415518257}
   - component: {fileID: 3124939678115664493}
   - component: {fileID: 9182597322415518256}
+  - component: {fileID: 7168677045534747168}
   m_Layer: 0
   m_Name: FreeForAll
   m_TagString: Gamemode
@@ -70,3 +71,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumRequiredPlayers: 1
+--- !u!114 &7168677045534747168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9182597322415518263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf09ea840c76af418524d67afb80156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverPlayerPrefab: {fileID: 2114587352991234171, guid: 2f10efcf061a3274eb26d6fb29b8dbb7, type: 3}
+  balloonPrefab: {fileID: 6775529501130682769, guid: 84dfffa8b8081cb4da7812ddf50a07f8, type: 3}
+  balloonAnchorPoint: {x: 0.027, y: -0.95}
+  weaponPrefab: {fileID: 7232877216659379784, guid: 6f358e19ec3423d42b89bdae60473043, type: 3}
+  weaponAnchorPoint: {x: 0, y: -0.5}
+  baseThreadCell: {fileID: 3262179471827840887, guid: 4f2de94fa92d83d47a2f49426684b6b2, type: 3}
+  threadCellSize: 0.16

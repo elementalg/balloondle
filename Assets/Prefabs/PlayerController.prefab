@@ -87,3 +87,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa3b98bbe6355f4cba94c37a81cda3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  balloonMovementScale: {x: 1, y: 1}
+  weaponMovementScale: {x: 1, y: 1}

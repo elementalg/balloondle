@@ -2,6 +2,7 @@ using Balloondle.Shared;
 using Balloondle.Shared.Network.Game;
 using MLAPI;
 using MLAPI.Configuration;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Balloondle.Server
@@ -10,8 +11,12 @@ namespace Balloondle.Server
     {
         private NetworkPrefab playerPrefab;
 
+        private Dictionary<ulong, GameObject> serverPlayers;
+
         private void Start()
         {
+            serverPlayers = new Dictionary<ulong, GameObject>();
+
             var prefabs = NetworkManager.Singleton.NetworkConfig.NetworkPrefabs;
 
             foreach (var prefab in prefabs)
@@ -51,7 +56,9 @@ namespace Balloondle.Server
 
             ulong playerObjectId = playerObject.GetComponent<NetworkObject>().NetworkObjectId;
             GameObject synchronizer = GameObject.Find("Messenger");
-            synchronizer.GetComponent<NetworkRpcMessages>().OnPlayerSpawnClientRpc(playerObjectId);
+            synchronizer.GetComponent<NetworkRpcMessages>().OnPlayerSpawnClientRpc(clientId, playerObjectId);
+
+            GetComponent<CharacterCreator>().SpawnBallonWithWeapon(playerObject);
         }
 
         private Vector3 GetRandomPositionFromMap()
