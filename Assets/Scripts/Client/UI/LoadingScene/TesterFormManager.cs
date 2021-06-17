@@ -1,3 +1,4 @@
+using Balloondle.Client.UI.LoadingScene;
 using UnityEngine;
 
 namespace Balloondle.Client
@@ -10,14 +11,7 @@ namespace Balloondle.Client
     /// </summary>
     public class TesterFormManager : MonoBehaviour
     {
-        /// <summary>
-        /// Key used for storing the tester's name in the player's preferences.
-        /// </summary>
-        private const string NAME_PREFERENCE_KEY = "name";
-        /// <summary>
-        /// Key used for storing the tester's code in the player's preferences.
-        /// </summary>
-        private const string CODE_PREFERENCE_KEY = "code";
+        private const string PLAYER_PREFERENCES_HANDLER = "Player Preferences Handler";
 
         /// <summary>
         /// Tag which every UI element takes part in the tester's form.
@@ -46,7 +40,11 @@ namespace Balloondle.Client
         /// if otherwise.</returns>
         private bool AreTestersAuthenticationDetailsAvailable()
         {
-            return PlayerPrefs.HasKey("name") && PlayerPrefs.HasKey("code");
+            GameObject playerPreferencesHandler = GameObject.Find(PLAYER_PREFERENCES_HANDLER);
+            PlayerPreferencesHandler preferences = playerPreferencesHandler
+                .GetComponent<PlayerPreferencesHandler>();
+
+            return preferences.HasRequiredAuthenticationDetails();
         }
 
         /// <summary>
@@ -56,7 +54,7 @@ namespace Balloondle.Client
         private void SetTesterFormVisible(bool visibility)
         {
             // All UI elements used for the tester's form, have the tag "TesterForm".
-            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("TesterForm");
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(TESTER_FORM_TAG);
 
             foreach (GameObject gameObject in gameObjects)
             {

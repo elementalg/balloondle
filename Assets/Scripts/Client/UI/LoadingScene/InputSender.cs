@@ -35,7 +35,7 @@ namespace Balloondle.Client
                 return;
             }
 
-            lobbyCommunicator.GetComponent<LobbyCommunicatorFunctionality>().SignUp(name);
+            lobbyCommunicator.GetComponent<LobbyCommunicator>().SignUp(name);
         }
     }
 }

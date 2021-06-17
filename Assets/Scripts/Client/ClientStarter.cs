@@ -79,7 +79,7 @@ namespace Balloondle.Client
             {
                 if (playerObject.GetComponent<NetworkObject>().IsLocalPlayer) {
                     playerController = Instantiate(playerControllerPrefab);
-                    playerController.GetComponent<PlayerControllerFunctionality>().Player = playerObject;
+                    playerController.GetComponent<PlayerController>().Player = playerObject;
 
                     break;
                 }
@@ -107,7 +107,7 @@ namespace Balloondle.Client
 
             MovableElement[] movableElements = GameObject.FindObjectsOfType<MovableElement>();
 
-            PlayerControllerFunctionality controller = playerController.GetComponent<PlayerControllerFunctionality>();
+            PlayerController controller = playerController.GetComponent<PlayerController>();
 
             // Look for the balloon's and weapon's gameobjects.
             foreach (MovableElement element in movableElements)

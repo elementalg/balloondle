@@ -8,7 +8,7 @@ namespace Balloondle.Client
     /// <summary>
     /// Provides the base client side functionality for the balloon's and weapon's movement.
     /// </summary>
-    public class PlayerControllerFunctionality : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         /// <summary>
         /// Scales the input for the balloon movement by the indicated scale.
