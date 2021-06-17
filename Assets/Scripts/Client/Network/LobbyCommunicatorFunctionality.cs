@@ -1,6 +1,8 @@
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
+using System.IO;
+using System.Net;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -34,52 +36,42 @@ namespace Balloondle.Client
         /// Register the name on the lobby.
         /// </summary>
         /// <param name="name">Name of the player.</param>
-        public void SignUp(string name)
+        async public void SignUp(string name)
         {
             // Send the request on a coroutine in order to avoid
             // freezing the main thread.
             string uri = $"{basePage}{SIGNUP_REQUEST}name={name}";
             Debug.Log($"URI: {uri}");
-            StartCoroutine(SignUpRequest(uri));
+            HttpWebRequest request = HttpWebRequest.CreateHttp(uri);
+            request.Method = "POST";
+
+            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+
+            HttpStatusCode statusCode = response.StatusCode;
+            
+            switch (statusCode)
+            {
+                case HttpStatusCode.Created:
+                    HandleSignUpResponseStream(response.GetResponseStream());
+                    break;
+                case HttpStatusCode.BadRequest:
+                    Debug.Log("Invalid JSON data.");
+                    break;
+                default:
+                    Debug.Log("Unexpected response.");
+                    break;
+            }
         }
 
-        /// <summary>
-        /// Proceed to send the request to the lobby.
-        /// </summary>
-        /// <param name="uri">Final REST API request url.</param>
-        /// <returns></returns>
-        IEnumerator SignUpRequest(string uri)
+        private void HandleSignUpResponseStream(Stream responseStream)
         {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-            {
-                yield return webRequest.SendWebRequest();
+            using StreamReader streamReader = new StreamReader(responseStream);
+            using JsonTextReader responseReader = new JsonTextReader(streamReader);
+            JsonSerializer serializer = new JsonSerializer();
 
-                switch (webRequest.result)
-                {
-                    case UnityWebRequest.Result.ConnectionError:
-                    case UnityWebRequest.Result.DataProcessingError:
-                    case UnityWebRequest.Result.ProtocolError:
-                        Debug.Log($"Error: {webRequest.result}");
-                        Debug.Log($"Error message: {webRequest.error}");
-                        throw new InvalidOperationException("Could not retrieve data from the Lobby.");
-                    case UnityWebRequest.Result.Success:
-                        Debug.Log($"Success: {webRequest.downloadHandler.text}");
-                        string userJson = webRequest.downloadHandler.text;
+            JObject jsonObject = serializer.Deserialize<JObject>(responseReader);
 
-                        Debug.Log($"UserJson: {userJson}");
-                        //JObject user = JObject.Parse(userJson);
-                        //string code = (string)user["code"];
-
-                        //PlayerPrefs.SetString("code", code);
-                        break;
-                    case UnityWebRequest.Result.InProgress:
-                        Debug.Log($"InProgress");
-                        break;
-                    default:
-                        Debug.Log($"Undetected result.");
-                        break;
-                }
-            }
+            Debug.Log($"Received JSONObject: {jsonObject}");
         }
 
         /// <summary>

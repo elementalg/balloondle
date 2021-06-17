@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2914d543294ee63418ada9a91fb5e85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basePage: localhost:8000
+  basePage: http://localhost:8000
 --- !u!4 &137075087
 Transform:
   m_ObjectHideFlags: 0
