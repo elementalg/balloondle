@@ -1,6 +1,7 @@
 using Balloondle.Client.UI.LoadingScene;
 using Balloondle.Shared.Net.Models;
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -205,14 +206,21 @@ namespace Balloondle.Client
         /// <summary>
         /// Send the details retrieved from the lobby server, to the lobby scene.
         /// </summary>
+        /// <exception cref="InvalidOperationException">If the requiremenets retriever is
+        /// missing.</exception>
         public void SendDetailsToLobbyScene()
         {
-            GameObject prerequirements = GameObject.Find(PREREQUIREMENTS_RETRIEVER);
+            GameObject prerequirementsRetriever = GameObject.Find(PREREQUIREMENTS_RETRIEVER);
 
-            if (prerequirements != null)
+            if (prerequirementsRetriever == null)
             {
-                Debug.Log("Prerequirements found!");
+                throw new InvalidOperationException($"Missing '{PREREQUIREMENTS_RETRIEVER}'");
             }
+
+            PrerequirementsRetriever retriever = prerequirementsRetriever
+                .GetComponent<PrerequirementsRetriever>();
+
+            retriever.UserInstance = userInstanceFromLobby;
         }
     }
 }
