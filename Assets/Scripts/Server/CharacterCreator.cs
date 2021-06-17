@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Balloondle.Server
 {
+    /// <summary>
+    /// Provides an accesible interface for spawning the balloons, weapons and thread cells.
+    /// </summary>
     public class CharacterCreator : NetworkBehaviour
     {
 
@@ -52,6 +55,11 @@ namespace Balloondle.Server
         //
         private List<GameObject> threadCells;
 
+        /// <summary>
+        /// Spawns the balloon, weapon and thread cells on a relative position from the 
+        /// player object.
+        /// </summary>
+        /// <param name="playerObject"></param>
         public void SpawnBallonWithWeapon(GameObject playerObject)
         {
             threadCells = new List<GameObject>();
@@ -85,12 +93,19 @@ namespace Balloondle.Server
             synchronizer.GetComponent<NetworkRpcMessages>().OnSpawnPlayerBalloonAndWeaponClientRpc(playerClientId, objectIds);
         }
 
+        /// <summary>
+        /// Proceeds to spawn the balloon at the position of the specified gameObject.
+        /// </summary>
+        /// <param name="gameObject"></param>
         private void SpawnBalloon(GameObject gameObject)
         {
             balloon = GameObject.Instantiate(balloonPrefab, gameObject.transform.position, Quaternion.identity);
             balloon.GetComponent<NetworkObject>().Spawn();
         }
 
+        /// <summary>
+        /// Proceeds to spawn the weapon below the balloon.
+        /// </summary>
         private void SpawnWeapon()
         {
             Vector3 weaponPosition = new Vector3(balloon.transform.position.x, balloon.transform.position.y - 4.4f, 0f);
@@ -197,6 +212,10 @@ namespace Balloondle.Server
             hingeJoint2D.connectedAnchor = destinationAnchor;
         }
 
+        /// <summary>
+        /// Retrieves the network object's ids.
+        /// </summary>
+        /// <returns>Network object ids for the balloon and thread cells.</returns>
         private ulong[] GetNetworkIdsForObjectsWithJoints()
         {
             ulong[] objectIds = new ulong[threadCells.Count + 2];
@@ -215,15 +234,14 @@ namespace Balloondle.Server
             return objectIds;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gameObject">GameObject containing a NetworkObject component.</param>
+        /// <returns>Get the network gameobject id.</returns>
         private ulong GetNetworkIdOfObject(GameObject gameObject)
         {
             return gameObject.GetComponent<NetworkObject>().NetworkObjectId;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

@@ -10,6 +10,9 @@ TagManager:
   - Balloon
   - ServerPlayer
   - MovementHandler
+  - StartupForm
+  - PlayButton
+  - TesterForm
   layers:
   - Default
   - TransparentFX

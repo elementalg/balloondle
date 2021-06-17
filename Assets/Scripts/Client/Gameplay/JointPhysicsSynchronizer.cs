@@ -4,13 +4,21 @@ using UnityEngine;
 
 namespace Balloondle.Client
 {
+    /// <summary>
+    /// Synchronizes all the instances of HingeJoints2D, assigning the RigidBody2D accordingly to the
+    /// game logic.
+    /// </summary>
     public class JointPhysicsSynchronizer : MonoBehaviour
     {
-        // Start is called before the first frame update
+        /// <summary>
+        /// Start listening to the event 'OnSpawnPlayerBalloonAndWeapon'.
+        /// </summary>
         void Start()
         {
             GameObject synchronizer = GameObject.Find("Messenger");
-            synchronizer.GetComponent<NetworkRpcMessages>().OnSpawnPlayerBalloonAndWeapon += SynchronizeJointsOnAttachWeapon;
+            synchronizer
+                .GetComponent<NetworkRpcMessages>()
+                .OnSpawnPlayerBalloonAndWeapon += SynchronizeJointsOnAttachWeapon;
         }
 
         /// <summary>
@@ -24,6 +32,7 @@ namespace Balloondle.Client
             Rigidbody2D[] rigidbodies = GameObject.FindObjectsOfType<Rigidbody2D>();
             GameObject[] objects = new GameObject[objectIds.Length];
 
+            // Retrieve the objects which have a RigidBody2D.
             for (int i = 0; i < objectIds.Length; i++)
             {
                 for (int j = 0; j < rigidbodies.Length; j++)
@@ -38,6 +47,7 @@ namespace Balloondle.Client
                 }
             }
 
+            // Create a chain of connections between HingeJoint2D and RigidBody2D.
             for (int i = 0; i < objects.Length - 1; i++)
             {
                 GameObject currentObject = objects[i];
@@ -47,9 +57,11 @@ namespace Balloondle.Client
             }
         }
 
-        //
-        // Connects the source's joint with the destination's rigid body.
-        //
+        /// <summary>
+        /// Connects the source's joint with the destination's rigid body.
+        /// </summary>
+        /// <param name="source">Object with a HingeJoint2D component</param>
+        /// <param name="destination">Object with a RigidBody2D component</param>
         private void ConnectSourceWithJointsToDestination(GameObject source, GameObject destination)
         {
             HingeJoint2D hingeJoint2D = source.GetComponent<HingeJoint2D>();
@@ -65,12 +77,6 @@ namespace Balloondle.Client
             {
                 Debug.Log($"Source: {source.name} && Destination: {destination.name}");
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

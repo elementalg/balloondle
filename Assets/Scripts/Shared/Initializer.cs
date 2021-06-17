@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Balloondle.Shared
 {
+    /// <summary>
+    /// Initializes the server or client depending upon the configuration specified
+    /// on the scene.
+    /// </summary>
     public class Initializer : MonoBehaviour
     {
         [SerializeField]
@@ -25,12 +29,6 @@ namespace Balloondle.Shared
             {
                 Instantiate(clientLogicPrefab);
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

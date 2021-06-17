@@ -336,7 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverLogicPrefab: {fileID: 8395260434801580909, guid: 760f331af57f78747abee810cd55751d, type: 3}
   clientLogicPrefab: {fileID: 4686299728029593640, guid: 0772d76212a77e7478154515753bbb65, type: 3}
-  isServer: 1
+  isServer: 0
 --- !u!4 &1771054152
 Transform:
   m_ObjectHideFlags: 0

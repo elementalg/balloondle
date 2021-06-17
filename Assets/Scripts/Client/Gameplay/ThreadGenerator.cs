@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-//
-// Creates a thread composed by many cells which occupy the total distance
-// between the player's balloon and his weapon.
-//
+/// <summary>
+/// Creates a thread composed by many cells which occupy the total distance
+/// between the player's balloon and his weapon.
+/// </summary>
 public class ThreadGenerator : MonoBehaviour
 {
     //

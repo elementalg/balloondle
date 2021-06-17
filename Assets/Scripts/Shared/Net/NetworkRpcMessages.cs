@@ -6,8 +6,14 @@ using UnityEngine;
 
 namespace Balloondle.Shared.Network.Game
 {
+    /// <summary>
+    /// Defines all the Rpc messages which may be sent between the server and the client.
+    /// </summary>
     public class NetworkRpcMessages : NetworkBehaviour
     {
+        /// <summary>
+        /// Invoked whenever the server sends the match details to the client.
+        /// </summary>
         public event Action<BaseMapFactory.Maps> OnSendMatchDetails;
 
         [ClientRpc]
@@ -16,6 +22,9 @@ namespace Balloondle.Shared.Network.Game
             OnSendMatchDetails?.Invoke(map);
         }
 
+        /// <summary>
+        /// Invoked whenever the player has been spawned.
+        /// </summary>
         public event Action<ulong, ulong> OnPlayerSpawn;
 
         [ClientRpc]
@@ -24,6 +33,9 @@ namespace Balloondle.Shared.Network.Game
             OnPlayerSpawn?.Invoke(targetClientId, playerObjectId);
         }
 
+        /// <summary>
+        /// Invoked whenever the server has spawned the player's balloon, weapon and thread cells.
+        /// </summary>
         public event Action<ulong, ulong[]> OnSpawnPlayerBalloonAndWeapon;
 
         [ClientRpc]
@@ -32,17 +44,23 @@ namespace Balloondle.Shared.Network.Game
             OnSpawnPlayerBalloonAndWeapon?.Invoke(ownerId, objectIds);
         }
 
+        /// <summary>
+        /// Invoked whenever the player has decided to move its balloon.
+        /// </summary>
         public event Action<ulong, Vector2> OnPlayerMoveBalloon;
 
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void OnPlayerMoveBalloonServerRpc(ulong playerClientId, Vector2 movement)
         {
             OnPlayerMoveBalloon?.Invoke(playerClientId, movement);
         }
 
+        /// <summary>
+        /// Invoked whenever the player has decided to move its weapon.
+        /// </summary>
         public event Action<ulong, Vector2> OnPlayerMoveWeapon;
 
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void OnPlayerMoveWeaponServerRpc(ulong playerClientId, Vector2 movement)
         {
             OnPlayerMoveWeapon?.Invoke(playerClientId, movement);

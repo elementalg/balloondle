@@ -1,28 +1,46 @@
-using Balloondle.Shared.Gameplay;
-using Balloondle.Shared.Network.Game;
 using MLAPI;
 using UnityEngine;
 
 namespace Balloondle.Server
 {
+    /// <summary>
+    /// Start point for the server.
+    /// </summary>
     public class ServerStarter : MonoBehaviour
     {
+        /// <summary>
+        /// Name of the map to be played.
+        /// </summary>
         [SerializeField]
         private string map = "CubeLand";
 
+        /// <summary>
+        /// Name of the gamemode to be played.
+        /// </summary>
         [SerializeField]
         private string gamemode = "FreeForAll";
 
+        /// <summary>
+        /// Maximum amount of allowed players.
+        /// </summary>
         [SerializeField]
         private uint maxPlayers = 6;
 
+        /// <summary>
+        /// Prefab of the match object.
+        /// </summary>
         [SerializeField]
         private GameObject matchObjectPrefab;
 
+        /// <summary>
+        /// Prefab of the movement handler.
+        /// </summary>
         [SerializeField]
         private GameObject movementHandlerPrefab;
 
-        // Start is called before the first frame update
+        /// <summary>
+        /// Start listening to the events, starting also the match.
+        /// </summary>
         void Start()
         {
             GameObject movementHandler = GameObject.Instantiate(movementHandlerPrefab);
@@ -39,7 +57,14 @@ namespace Balloondle.Server
             NetworkManager.Singleton.StartServer();
         }
 
-        private void OnClientAwaitsForApproval(byte[] connectionData, ulong clientId, NetworkManager.ConnectionApprovedDelegate callback)
+        /// <summary>
+        /// Approves the connection only if the amount of maximum allowed players has not been passed.
+        /// </summary>
+        /// <param name="connectionData"></param>
+        /// <param name="clientId"></param>
+        /// <param name="callback"></param>
+        private void OnClientAwaitsForApproval(byte[] connectionData,
+            ulong clientId, NetworkManager.ConnectionApprovedDelegate callback)
         {
             if (NetworkManager.Singleton.ConnectedClientsList.Count > maxPlayers)
             {
@@ -66,12 +91,6 @@ namespace Balloondle.Server
                 GameObject gamemodeObject = GameObject.FindGameObjectWithTag("Gamemode");
                 gamemodeObject.GetComponent<BaseGamemode>().OnClientDisconnect(clientId);
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8774416741073651903}
   - component: {fileID: 8774416741073651902}
   - component: {fileID: 4062890549697469028}
+  - component: {fileID: -6907154229241738969}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -87,5 +88,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa3b98bbe6355f4cba94c37a81cda3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balloonMovementScale: {x: 1, y: 1}
-  weaponMovementScale: {x: 1, y: 1}
+  balloonMovementScale: {x: 2, y: 2}
+  weaponMovementScale: {x: 5, y: 5}
+  joysticksCanvasPrefab: {fileID: 6316063462847877506, guid: fa2307e8ba7c69849a8b2a2851a2c053, type: 3}
+  inputEventSystemPrefab: {fileID: 6093272060741835837, guid: e7ac57fd3eba2464c846e7059ef9829e, type: 3}
+--- !u!114 &-6907154229241738969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774416741073651900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d0a57d291c6d1cd438588fbf7b99f7d2, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4062890549697469028}
+        m_TargetAssemblyTypeName: Balloondle.Client.PlayerControllerFunctionality,
+          Client
+        m_MethodName: MoveBalloon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 664d76d0-c76a-498e-a822-de38c701d500
+    m_ActionName: Player/Move
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4062890549697469028}
+        m_TargetAssemblyTypeName: Balloondle.Client.PlayerControllerFunctionality,
+          Client
+        m_MethodName: MoveWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7e468140-2f2b-42fc-826d-8bdc592cda8a
+    m_ActionName: Player/Fire
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 8774416741073651902}

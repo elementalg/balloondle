@@ -2,8 +2,19 @@
 
 namespace Balloondle.Server
 {
+    /// <summary>
+    /// Gets the arguments from the command line, and proceeds to generate a map of them
+    /// through a dictionary, being the keys the name of the arguments, and the values the
+    /// values of said arguments.
+    /// </summary>
     public class CommandLineArgumentsParser
     { 
+        /// <summary>
+        /// Retrieves the expected amount of command line arguments.
+        /// </summary>
+        /// <param name="commandLineArguments">Arguments from the command line.</param>
+        /// <param name="expectedArguments">Amount of arguments which are expected.</param>
+        /// <returns></returns>
         public Dictionary<string, string> GetExpectedCommandLineArguments(string[] commandLineArguments,
             int expectedArguments)
         {
@@ -15,6 +26,7 @@ namespace Balloondle.Server
                     System.InvalidOperationException("Failed to acquire required arguments.");
             }
 
+            // Go one by one argument from the command line.
             for (int i = 0; i < commandLineArguments.Length; i++)
             {
                 string argument = commandLineArguments[i].ToLower();
@@ -42,6 +54,11 @@ namespace Balloondle.Server
             return arguments;
         }
 
+        /// <summary>
+        /// Detect whether the argument is a parameter or a value.
+        /// </summary>
+        /// <param name="argument">string value from the command line.</param>
+        /// <returns>True if it starts with '-'.</returns>
         private bool IsArgumentAParameterIndicator(string argument)
         {
             return argument.StartsWith("-");
