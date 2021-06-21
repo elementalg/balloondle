@@ -21,7 +21,7 @@ namespace Balloondle.Server
         /// <param name="map">Name of the map.</param>
         public void LoadMap(string map)
         {
-            if (map.ToLower().Equals("development"))
+            if (map.ToLower().Equals("dev"))
             {
                 GameObject mapObject = Instantiate(developmentMapPrefab);
                 mapObject.GetComponent<NetworkObject>().Spawn();

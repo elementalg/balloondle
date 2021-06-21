@@ -2,8 +2,10 @@
 {
     public enum Scenes
     {
-        GameServerScene,
-        GameClientScene,
-        GameSharedScene,
+        LoadingScene,
+        LobbyScene,
+        ServerScene,
+        GameScene,
+        MatchEndScene,
     }
 }

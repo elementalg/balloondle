@@ -49,6 +49,17 @@ namespace Balloondle.Client
         /// </summary>
         public GameObject PlayerWeapon { get; set; }
 
+        [SerializeField]
+        private float balloonMovementSampleDurationInSeconds = 0.1f;
+
+        [SerializeField]
+        private float weaponMovementSampleDurationInSeconds = 0.1f;
+
+        private InputMaximizer balloonMovementMaximizer;
+        private InputMaximizer weaponMovementMaximizer;
+
+        private NetworkRpcMessages messenger;
+
         /// <summary>
         /// Create the instances of the prefabs.
         /// </summary>
@@ -56,6 +67,12 @@ namespace Balloondle.Client
         {
             GameObject.Instantiate(inputEventSystemPrefab);
             GameObject.Instantiate(joysticksCanvasPrefab);
+
+            balloonMovementMaximizer = new InputMaximizer(balloonMovementSampleDurationInSeconds);
+            weaponMovementMaximizer = new InputMaximizer(weaponMovementSampleDurationInSeconds);
+
+            GameObject synchronizer = GameObject.Find("Messenger");
+            messenger = synchronizer.GetComponent<NetworkRpcMessages>();
         }
         
         /// <summary>
@@ -68,10 +85,7 @@ namespace Balloondle.Client
 
             movement.Scale(balloonMovementScale);
 
-            GameObject synchronizer = GameObject.Find("Messenger");
-            synchronizer
-                .GetComponent<NetworkRpcMessages>()
-                .OnPlayerMoveBalloonServerRpc(NetworkManager.Singleton.LocalClientId, movement);
+            balloonMovementMaximizer.OnInput(movement);
         }
 
         /// <summary>
@@ -84,10 +98,7 @@ namespace Balloondle.Client
 
             movement.Scale(weaponMovementScale);
 
-            GameObject synchronizer = GameObject.Find("Messenger");
-            synchronizer
-                .GetComponent<NetworkRpcMessages>()
-                .OnPlayerMoveWeaponServerRpc(NetworkManager.Singleton.LocalClientId, movement);
+            weaponMovementMaximizer.OnInput(movement);
         }
 
         /// <summary>
@@ -97,6 +108,24 @@ namespace Balloondle.Client
         {
             if (PlayerBalloon != null)
             {
+                Vector2? balloonMaximizedMovement = balloonMovementMaximizer.OnUpdate();
+
+                if (balloonMaximizedMovement.HasValue)
+                {
+                    Debug.Log($"Sending balloon: {balloonMaximizedMovement.Value}");
+                    messenger.OnPlayerMoveBalloonServerRpc(NetworkManager.Singleton.LocalClientId,
+                        balloonMaximizedMovement.Value);
+                }
+
+                Vector2? weaponMaximizedMovement = weaponMovementMaximizer.OnUpdate();
+
+                if (weaponMaximizedMovement.HasValue)
+                {
+                    Debug.Log($"Sending weapon: {weaponMaximizedMovement.Value}");
+                    messenger.OnPlayerMoveWeaponServerRpc(NetworkManager.Singleton.LocalClientId,
+                        weaponMaximizedMovement.Value);
+                }
+
                 Vector3 position = new Vector3(PlayerBalloon.transform.position.x,
                     PlayerBalloon.transform.position.y, -10f);
 

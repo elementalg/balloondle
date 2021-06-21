@@ -19,7 +19,7 @@ namespace Balloondle.Server
         /// <param name="gamemode">Name of the gamemode to be loaded.</param>
         public void LoadGamemode(string gamemode)
         {
-            if (gamemode.ToLower().Equals("freeforall"))
+            if (gamemode.ToLower().Equals("dev"))
             {
                 GameObject.Instantiate(freeForAllGamemodePrefab);
             }

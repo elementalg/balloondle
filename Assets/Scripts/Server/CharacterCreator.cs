@@ -55,6 +55,9 @@ namespace Balloondle.Server
         //
         private List<GameObject> threadCells;
 
+        private Dictionary<ulong, Tuple<GameObject, List<GameObject>, GameObject>> serverPlayerObjects = 
+            new Dictionary<ulong, Tuple<GameObject, List<GameObject>, GameObject>>();
+
         /// <summary>
         /// Spawns the balloon, weapon and thread cells on a relative position from the 
         /// player object.
@@ -71,6 +74,9 @@ namespace Balloondle.Server
 
             SpawnWeapon();
             weapon.GetComponent<MovableElement>().MovableByClientId = playerClientId;
+
+            serverPlayerObjects
+                .Add(playerClientId, new Tuple<GameObject, List<GameObject>, GameObject>(balloon, threadCells, weapon));
 
             // Amount of cells needed to fill in the distance between the balloon
             // and the weapon.
@@ -242,6 +248,29 @@ namespace Balloondle.Server
         private ulong GetNetworkIdOfObject(GameObject gameObject)
         {
             return gameObject.GetComponent<NetworkObject>().NetworkObjectId;
+        }
+
+        /// <summary>
+        /// Proceeds to destroy a player's objects within the game by passing its client id.
+        /// </summary>
+        /// <param name="playerClientId">Network client id of the player.</param>
+        public void DestroyPlayerObjects(ulong playerClientId)
+        {
+            if (serverPlayerObjects.ContainsKey(playerClientId))
+            {
+                var objects = serverPlayerObjects[playerClientId];
+
+                Destroy(objects.Item1);
+
+                foreach (var threadCell in objects.Item2)
+                {
+                    Destroy(threadCell);
+                }
+
+                Destroy(objects.Item3);
+
+                serverPlayerObjects.Remove(playerClientId);
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace Balloondle.Server
 {
@@ -20,10 +22,11 @@ namespace Balloondle.Server
         {
             Dictionary<string, string> arguments = new Dictionary<string, string>();
 
+            Console.WriteLine($"Arguments {JsonConvert.SerializeObject(commandLineArguments)}");
             if (commandLineArguments.Length < expectedArguments)
             {
                 throw new
-                    System.InvalidOperationException("Failed to acquire required arguments.");
+                    System.InvalidOperationException($"Failed to acquire required arguments. Got: {commandLineArguments.Length}");
             }
 
             // Go one by one argument from the command line.

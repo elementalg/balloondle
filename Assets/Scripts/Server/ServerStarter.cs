@@ -1,4 +1,5 @@
 using MLAPI;
+using MLAPI.Transports.UNET;
 using UnityEngine;
 
 namespace Balloondle.Server
@@ -12,13 +13,13 @@ namespace Balloondle.Server
         /// Name of the map to be played.
         /// </summary>
         [SerializeField]
-        private string map = "CubeLand";
+        private string map = "dev";
 
         /// <summary>
         /// Name of the gamemode to be played.
         /// </summary>
         [SerializeField]
-        private string gamemode = "FreeForAll";
+        private string gamemode = "dev";
 
         /// <summary>
         /// Maximum amount of allowed players.
@@ -33,6 +34,12 @@ namespace Balloondle.Server
         private GameObject matchObjectPrefab;
 
         /// <summary>
+        /// Prefab containing the object in charge of communicating the state of the match to the lobby.
+        /// </summary>
+        [SerializeField]
+        private GameObject lobbyMatchCommunicatorPrefab;
+
+        /// <summary>
         /// Prefab of the movement handler.
         /// </summary>
         [SerializeField]
@@ -41,8 +48,22 @@ namespace Balloondle.Server
         /// <summary>
         /// Start listening to the events, starting also the match.
         /// </summary>
-        void Start()
+        public void StartServer(string map, string gamemode, long code, string lobbyBaseUrl, int listenPort)
         {
+            this.map = map;
+            this.gamemode = gamemode;
+
+            GameObject lobbyMatchCommunicator = GameObject.Instantiate(lobbyMatchCommunicatorPrefab);
+            LobbyMatchCommunicator communicator = lobbyMatchCommunicator.GetComponent<LobbyMatchCommunicator>();
+            communicator.InitializeCommunicator(map, gamemode, code, lobbyBaseUrl);
+
+            UNetTransport transport = NetworkManager
+                    .Singleton
+                    .NetworkConfig
+                    .NetworkTransport as UNetTransport;
+
+            transport.ServerListenPort = listenPort;
+
             GameObject movementHandler = GameObject.Instantiate(movementHandlerPrefab);
 
             GameObject match = GameObject.Instantiate(matchObjectPrefab);
@@ -53,26 +74,9 @@ namespace Balloondle.Server
 
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnect;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
-            NetworkManager.Singleton.ConnectionApprovalCallback += OnClientAwaitsForApproval;
             NetworkManager.Singleton.StartServer();
-        }
 
-        /// <summary>
-        /// Approves the connection only if the amount of maximum allowed players has not been passed.
-        /// </summary>
-        /// <param name="connectionData"></param>
-        /// <param name="clientId"></param>
-        /// <param name="callback"></param>
-        private void OnClientAwaitsForApproval(byte[] connectionData,
-            ulong clientId, NetworkManager.ConnectionApprovedDelegate callback)
-        {
-            if (NetworkManager.Singleton.ConnectedClientsList.Count > maxPlayers)
-            {
-                callback(false, null, false, null, null);
-                return;
-            }
-
-            callback(false, null, true, null, null);
+            communicator.UpdateServerMatchStateToRunning();
         }
 
         private void OnClientConnect(ulong clientId)

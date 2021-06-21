@@ -81,7 +81,7 @@ namespace Balloondle.Client
             HttpWebRequest request = HttpWebRequest.CreateHttp(uri);
             request.Method = "POST";
 
-            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+            using HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
 
             HttpStatusCode statusCode = response.StatusCode;
             
@@ -89,6 +89,7 @@ namespace Balloondle.Client
             {
                 case HttpStatusCode.Created:
                     HandleSignUpResponseStream(response.GetResponseStream());
+                    await Login();
                     break;
                 case HttpStatusCode.BadRequest:
                     // TODO: Add retry possibility
@@ -142,7 +143,7 @@ namespace Balloondle.Client
             HttpWebRequest request = HttpWebRequest.CreateHttp(uri);
             request.Method = "GET";
 
-            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+            using HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
 
             HttpStatusCode statusCode = response.StatusCode;
 

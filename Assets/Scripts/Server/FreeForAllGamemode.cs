@@ -15,6 +15,17 @@ namespace Balloondle.Server
         private int minimumRequiredPlayers = 1;
 
         /// <summary>
+        /// Amount of seconds which the match lasts on this gamemode.
+        /// </summary>
+        [SerializeField]
+        private float matchDurationInSeconds = 60f;
+
+        /// <summary>
+        /// Amount of seconds which have elapsed since the start of the match.
+        /// </summary>
+        private float elapsedTime = 0f;
+
+        /// <summary>
         /// Count of the amount of players playing.
         /// </summary>
         private int playersCount = 0;
@@ -69,7 +80,22 @@ namespace Balloondle.Server
         /// <param name="clientId">Network object's id.</param>
         void OnPlayerQuit(ulong clientId)
         {
-            Debug.Log("OnPlayerQuit");
+            Debug.Log("Removing player's objects, since it has leaved the game.");
+
+            GetComponent<CharacterCreator>().DestroyPlayerObjects(clientId);
+        }
+
+        void Update()
+        {
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime > matchDurationInSeconds)
+            {
+                MatchFunctionality match = GetComponent<BaseGamemode>().GetCurrentMatch();
+                match.End();
+
+                Application.Quit();
+            }
         }
     }
 }

@@ -1,8 +1,12 @@
 using Balloondle.Shared;
 using Balloondle.Shared.Gameplay;
+using Balloondle.Shared.Net.Models;
 using Balloondle.Shared.Network.Game;
 using MLAPI;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Balloondle.Client
 {
@@ -43,6 +47,7 @@ namespace Balloondle.Client
                 // providing the communications between server and client.
                 GameObject synchronizer = GameObject.Find("Messenger");
                 synchronizer.GetComponent<NetworkRpcMessages>().OnSendMatchDetails += OnMatchDetails;
+                synchronizer.GetComponent<NetworkRpcMessages>().OnMatchEnds += OnMatchEnds;
                 synchronizer.GetComponent<NetworkRpcMessages>().OnPlayerSpawn += OnPlayerSpawn;
                 synchronizer.GetComponent<NetworkRpcMessages>().OnSpawnPlayerBalloonAndWeapon += OnSpawnPlayerBalloonAndWeapon;
             }
@@ -55,6 +60,42 @@ namespace Balloondle.Client
         private void OnMatchDetails(BaseMapFactory.Maps map)
         {
             Debug.Log($"Arrived match details: {map}");
+        }
+
+        /// <summary>
+        /// Handle the end of a match.
+        /// </summary>
+        /// <param name="stats"></param>
+        private void OnMatchEnds(string stats)
+        {
+            Debug.Log($"Stats received: {stats}");
+
+            Dictionary<ulong, PlayerMatchStats> matchStats = 
+                JsonConvert.DeserializeObject<Dictionary<ulong, PlayerMatchStats>>(stats);
+
+            PlayerMatchStats playerStats;
+
+            if (matchStats.ContainsKey(NetworkManager.Singleton.LocalClientId))
+            {
+                playerStats = matchStats[NetworkManager.Singleton.LocalClientId];
+            } else
+            {
+                playerStats = new PlayerMatchStats();
+                playerStats.damage = 0f;
+                playerStats.position = 0;
+            }
+
+            PlayerPrefs.SetString("player_match_stats", JsonConvert.SerializeObject(playerStats));
+            PlayerPrefs.Save();
+
+            // Stop the connection, the match ended.
+            NetworkManager.Singleton.StopClient();
+
+            // Destroy the Network Manager, since it won't destroy itself with the change of scene.
+            Destroy(GameObject.Find("NetworkManager"));
+
+            // Switch to the match end scene.
+            SceneManager.LoadScene(Scenes.MatchEndScene.ToString(), LoadSceneMode.Single);
         }
 
         /// <summary>

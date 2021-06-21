@@ -10,8 +10,8 @@ namespace Balloondle.Client.UI.LoadingScene
     /// </summary>
     public class PlayerPreferencesHandler : MonoBehaviour
     {
-        private const string NAME_KEY = "name";
-        private const string CODE_KEY = "code";
+        public const string NAME_KEY = "name";
+        public const string CODE_KEY = "code";
 
         /// <summary>
         /// Checks whether or not the authentication details are stored on the player's preferences.

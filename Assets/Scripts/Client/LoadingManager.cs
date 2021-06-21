@@ -25,6 +25,10 @@ namespace Balloondle.Client
         /// </summary>
         public void OnPreparedToLoad()
         {
+            // Destroy this scene's event system, in order to avoid bugging the Lobby's one.
+            GameObject eventSystem = GameObject.Find("EventSystem");
+            Destroy(eventSystem);
+
             AsyncOperation operation = SceneManager.LoadSceneAsync(LOBBY_SCENE, LoadSceneMode.Additive);
             operation.completed += OnLobbySceneHasBeenLoaded;
         }

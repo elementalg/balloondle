@@ -13,6 +13,8 @@ TagManager:
   - StartupForm
   - PlayButton
   - TesterForm
+  - LobbyMatchCommunicator
+  - GameInitializer
   layers:
   - Default
   - TransparentFX

@@ -1,3 +1,6 @@
+using Balloondle.Shared.Network.Game;
+using MLAPI;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Balloondle.Server
@@ -7,6 +10,11 @@ namespace Balloondle.Server
     /// </summary>
     public class MatchFunctionality : MonoBehaviour
     {
+        /// <summary>
+        /// Tag used for identifying the instance of the lobby match communicator.
+        /// </summary>
+        private const string LOBBY_MATCH_COMMUNICATOR_TAG = "LobbyMatchCommunicator";
+
         /// <summary>
         /// Prefab containing the MapLoader and GamemodeLoader.
         /// </summary>
@@ -43,6 +51,22 @@ namespace Balloondle.Server
             GameObject loader = GameObject.Instantiate(loaderPrefab);
             loader.GetComponent<MapLoader>().LoadMap(Map);
             loader.GetComponent<GamemodeLoader>().LoadGamemode(Gamemode);
+        }
+
+        public void End()
+        {
+            GameObject gamemodeObject = GameObject.FindGameObjectWithTag("Gamemode");
+            StatsFollower statsFollower = gamemodeObject.GetComponent<StatsFollower>();
+            statsFollower.CalculatePlayersLeaderboardPosition();
+            string serializedStats = JsonConvert.SerializeObject(statsFollower.PlayerStats);
+
+            GameObject synchronizer = GameObject.Find("Messenger");
+            synchronizer.GetComponent<NetworkRpcMessages>().OnMatchEndsClientRpc(serializedStats);
+
+            GameObject lobbyMatchCommunicator = GameObject.FindGameObjectWithTag(LOBBY_MATCH_COMMUNICATOR_TAG);
+            LobbyMatchCommunicator communicator = lobbyMatchCommunicator.GetComponent<LobbyMatchCommunicator>();
+
+            communicator.UpdateServerMatchStateToEnded();
         }
     }
 }

@@ -269,14 +269,14 @@ MonoBehaviour:
     MaxReceiveEventsPerTickRate: 500
     EventTickrate: 128
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 1
+    ConnectionApproval: 0
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
     EnableNetworkVariable: 1
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
-    ForceSamePrefabs: 1
+    ForceSamePrefabs: 0
     UsePrefabSync: 0
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 1771054151}
   m_Layer: 0
   m_Name: Initializer
-  m_TagString: Untagged
+  m_TagString: GameInitializer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

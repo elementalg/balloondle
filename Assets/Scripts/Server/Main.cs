@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 namespace Balloondle.Server
 {
     /// <summary>
-    /// DEPRECATED - To be edited in order to adapt to new architecture.
     /// Class to handle the execution of the server from a command line interface.
     /// </summary>
     public class Main : MonoBehaviour
@@ -17,7 +16,7 @@ namespace Balloondle.Server
         /// Amount of arguments expected to be appended to the execution
         /// of the gameserver's binary file.
         /// </summary>
-        private const int EXPECTED_ARGUMENTS_INCLUDING_BINARY = 9;
+        private const int EXPECTED_ARGUMENTS_INCLUDING_BINARY = 11;
 
         /// <summary>
         /// Handle the start by handling the scene loaded event.
@@ -26,37 +25,33 @@ namespace Balloondle.Server
         {
             Debug.Log("- Starting.");
 
-            SceneManager.sceneLoaded += OnSharedSceneHasBeenLoaded;
-        }
+            Debug.Log("- Preparing to listen to incoming connections.");
 
-        /// <summary>
-        /// Detect when the shared scene has been loaded.
-        /// </summary>
-        /// <param name="loadedScene"></param>
-        /// <param name="mode"></param>
-        void OnSharedSceneHasBeenLoaded(Scene loadedScene, LoadSceneMode mode)
-        {
-            if (loadedScene.name.Equals(Scenes.GameSharedScene.ToString()))
+            // Retrieve the gameserver's details from the command line.
+            CommandLineArgumentsParser parser = new CommandLineArgumentsParser();
+            Dictionary<string, string> startArguments = parser
+                .GetExpectedCommandLineArguments(System.Environment.GetCommandLineArgs(),
+                EXPECTED_ARGUMENTS_INCLUDING_BINARY);
+
+            ExceptionIfMissingArguments(startArguments);
+
+            string gamemode = startArguments["gamemode"];
+            string map = startArguments["map"];
+            long code = long.Parse(startArguments["code"]);
+            string lobbyBaseUrl = startArguments["lobby"];
+
+            int listenPort = int.Parse(startArguments["port"]);
+
+            if (!IsListenPortValid(listenPort))
             {
-                Debug.Log("- Preparing to listen to incoming connections.");
-
-                // Retrieve the gameserver's details from the command line.
-                CommandLineArgumentsParser parser = new CommandLineArgumentsParser();
-                Dictionary<string, string> startArguments = parser
-                    .GetExpectedCommandLineArguments(System.Environment.GetCommandLineArgs(),
-                    EXPECTED_ARGUMENTS_INCLUDING_BINARY);
-
-                ExceptionIfMissingArguments(startArguments);
-
-                string gamemode = startArguments["gamemode"];
-                string map = startArguments["map"];
-
-                int listenPort = int.Parse(startArguments["port"]);
-                
-                StartServerOnPort(listenPort);
-
-                Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
+                throw new
+                    System.ArgumentException($"-port argument must be a valid port," +
+                    $" got '{listenPort}'.");
             }
+
+            GetComponent<ServerStarter>().StartServer(map, gamemode, code, lobbyBaseUrl, listenPort);
+
+            Debug.Log($"- Now listening to connections incoming from port '{listenPort}'.");
         }
 
         /// <summary>
@@ -80,33 +75,15 @@ namespace Balloondle.Server
                 throw new System.ArgumentException("-map argument must be defined.");
             }
 
-            if (!startArguments.ContainsKey("password"))
+            if (!startArguments.ContainsKey("lobby"))
             {
-                throw new System.ArgumentException("-password argument must be defined.");
-            }
-        }
-
-        /// <summary>
-        /// Start the server on the specified port.
-        /// </summary>
-        /// <param name="listenPort"></param>
-        private void StartServerOnPort(int listenPort)
-        {
-            UNetTransport transport = NetworkManager
-                    .Singleton
-                    .NetworkConfig
-                    .NetworkTransport as UNetTransport;
-
-            if (!IsListenPortValid(listenPort))
-            {
-                throw new
-                    System.ArgumentException($"-port argument must be a valid port," +
-                    $" got '{listenPort}'.");
+                throw new System.ArgumentException("-lobby argument must be defined.");
             }
 
-            transport.ServerListenPort = listenPort;
-
-            NetworkManager.Singleton.StartServer();
+            if (!startArguments.ContainsKey("code"))
+            {
+                throw new System.ArgumentException("-code argument must be defined.");
+            }
         }
 
         /// <summary>

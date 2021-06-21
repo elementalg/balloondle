@@ -88,10 +88,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa3b98bbe6355f4cba94c37a81cda3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balloonMovementScale: {x: 2, y: 2}
-  weaponMovementScale: {x: 5, y: 5}
+  balloonMovementScale: {x: 20, y: 20}
+  weaponMovementScale: {x: 20, y: 20}
   joysticksCanvasPrefab: {fileID: 6316063462847877506, guid: fa2307e8ba7c69849a8b2a2851a2c053, type: 3}
   inputEventSystemPrefab: {fileID: 6093272060741835837, guid: e7ac57fd3eba2464c846e7059ef9829e, type: 3}
+  balloonMovementSampleDurationInMilliseconds: 0.1
+  weaponMovementSampleDurationInMilliseconds: 0.1
 --- !u!114 &-6907154229241738969
 MonoBehaviour:
   m_ObjectHideFlags: 0

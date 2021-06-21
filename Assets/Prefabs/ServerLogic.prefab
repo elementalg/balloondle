@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3152346965490592445}
+  - component: {fileID: 2583514158964223160}
   - component: {fileID: 8395260434801580910}
   m_Layer: 0
   m_Name: ServerLogic
@@ -31,6 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2583514158964223160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8395260434801580909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9521f27e80677ea43b4980477766b535, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8395260434801580910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,8 +56,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80b49f790bfa3a498049d6d58ff56b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: Development
-  gamemode: FreeForAll
+  map: dev
+  gamemode: dev
   maxPlayers: 6
   matchObjectPrefab: {fileID: 1801829050796231244, guid: a9f8ef59a9e60d7459aa2fdfbc2a83bc, type: 3}
+  lobbyMatchCommunicatorPrefab: {fileID: 3346046899919022964, guid: 5b786c4947572ea4185249966e7a1562, type: 3}
   movementHandlerPrefab: {fileID: 4818849225036703317, guid: a0023ac81ec0d634d89dba827bd41354, type: 3}

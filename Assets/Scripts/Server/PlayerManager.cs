@@ -18,17 +18,10 @@ namespace Balloondle.Server
         private NetworkPrefab playerPrefab;
 
         /// <summary>
-        /// Dictionary containing the gameobjects of the server players.
-        /// </summary>
-        private Dictionary<ulong, GameObject> serverPlayers;
-
-        /// <summary>
         /// Retrieve the network player's prefab.
         /// </summary>
         private void Start()
         {
-            serverPlayers = new Dictionary<ulong, GameObject>();
-
             var prefabs = NetworkManager.Singleton.NetworkConfig.NetworkPrefabs;
 
             foreach (var prefab in prefabs)

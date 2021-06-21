@@ -50,6 +50,7 @@ namespace Balloondle.Shared
             }
             else
             {
+                lastLocation = randomLocation;
                 return spawnLocations[randomLocation];
             }
         }

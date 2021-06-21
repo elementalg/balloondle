@@ -39,10 +39,13 @@ namespace Balloondle.Client
                 {
                     NetworkObject netObject = rigidbodies[j].gameObject.GetComponent<NetworkObject>();
 
-                    if (objectIds[i] == netObject.NetworkObjectId)
+                    if (netObject != null)
                     {
-                        objects[i] = netObject.gameObject;
-                        break;
+                        if (objectIds[i] == netObject.NetworkObjectId)
+                        {
+                            objects[i] = netObject.gameObject;
+                            break;
+                        }
                     }
                 }
             }

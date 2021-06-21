@@ -45,11 +45,22 @@ namespace Balloondle.Shared.Network.Game
         }
 
         /// <summary>
+        /// Invoked whenever the match has ended.
+        /// </summary>
+        public event Action<string> OnMatchEnds;
+
+        [ClientRpc]
+        public void OnMatchEndsClientRpc(string matchStats)
+        {
+            OnMatchEnds?.Invoke(matchStats);
+        }
+
+        /// <summary>
         /// Invoked whenever the player has decided to move its balloon.
         /// </summary>
         public event Action<ulong, Vector2> OnPlayerMoveBalloon;
 
-        [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(Delivery = RpcDelivery.Unreliable, RequireOwnership = false)]
         public void OnPlayerMoveBalloonServerRpc(ulong playerClientId, Vector2 movement)
         {
             OnPlayerMoveBalloon?.Invoke(playerClientId, movement);
@@ -60,7 +71,7 @@ namespace Balloondle.Shared.Network.Game
         /// </summary>
         public event Action<ulong, Vector2> OnPlayerMoveWeapon;
 
-        [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(Delivery = RpcDelivery.Unreliable, RequireOwnership = false)]
         public void OnPlayerMoveWeaponServerRpc(ulong playerClientId, Vector2 movement)
         {
             OnPlayerMoveWeapon?.Invoke(playerClientId, movement);

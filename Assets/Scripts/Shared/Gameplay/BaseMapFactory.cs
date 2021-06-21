@@ -6,7 +6,7 @@ namespace Balloondle.Shared.Gameplay
     {
         public enum Maps
         {
-            DEVELOPMENT,
+            DEV,
         }
 
         [SerializeField]

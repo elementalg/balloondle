@@ -1,4 +1,6 @@
 using MLAPI;
+using MLAPI.Transports.UNET;
+using UnityEditor;
 using UnityEngine;
 
 namespace Balloondle.Shared
@@ -24,9 +26,23 @@ namespace Balloondle.Shared
             if (isServer)
             {
                 Instantiate(serverLogicPrefab);
-            } 
+            }
             else
             {
+                string ip = PlayerPrefs.GetString("ip");
+                int port = PlayerPrefs.GetInt("port");
+
+                Debug.Log($"Starting: {ip}:{port}");
+                GameObject networkManger = GameObject.Find("NetworkManager");
+                UNetTransport transport = networkManger.GetComponent<UNetTransport>();
+
+                transport.ConnectAddress = ip;
+                transport.ConnectPort = port;
+
+                PlayerPrefs.DeleteKey("ip");
+                PlayerPrefs.DeleteKey("port");
+                PlayerPrefs.Save();
+
                 Instantiate(clientLogicPrefab);
             }
         }
