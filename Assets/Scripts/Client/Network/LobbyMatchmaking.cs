@@ -147,6 +147,8 @@ namespace Balloondle.Client
             {
                 Debug.Log($"Web error: {webException.Message}");
             }
+
+            
         }
 
         private void HandleSearchAliveResponseStream(Stream responseStream)
