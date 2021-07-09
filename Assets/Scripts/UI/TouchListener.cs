@@ -7,7 +7,7 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 namespace Balloondle.UI
 {
     /// <summary>
-    /// 
+    /// Action provider for the main phases of the possible touches.
     /// </summary>
     public class TouchListener : MonoBehaviour
     {
