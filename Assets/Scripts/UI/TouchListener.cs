@@ -33,26 +33,14 @@ namespace Balloondle.UI
                 switch (touch.phase)
                 {
                     case TouchPhase.Began:
-                        if (OnTouchBegan != null)
-                        {
-                            OnTouchBegan(touch);
-                        }
-
+                        OnTouchBegan?.Invoke(touch);
                         break;
                     case TouchPhase.Moved:
-                        if (OnTouchDrag != null)
-                        {
-                            OnTouchDrag(touch);
-                        }
-
+                        OnTouchDrag?.Invoke(touch);
                         break;
                     case TouchPhase.Canceled:
                     case TouchPhase.Ended:
-                        if (OnTouchEnded != null)
-                        {
-                            OnTouchEnded(touch);
-                        }
-
+                        OnTouchEnded?.Invoke(touch);
                         break;
                 }
             }
