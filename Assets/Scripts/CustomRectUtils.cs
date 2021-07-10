@@ -180,5 +180,25 @@ namespace Balloondle
             Vector3 worldPoint = rect.TransformPoint(localPoint);
             return RectTransformUtility.WorldToScreenPoint(cam, worldPoint);
         }
+
+        /// <summary>
+        /// Returns whether or not a screen point, transformed to a world point through a camera and a rect transform
+        /// which contains the boundaries' rect, is within a rect.
+        /// </summary>
+        /// <param name="screenPoint"></param>
+        /// <param name="camera"></param>
+        /// <param name="rectRoot"></param>
+        /// <param name="rect"></param>
+        /// <returns>True if the screen point is within the rect, false otherwise.</returns>
+        public bool IsScreenPointWithinRect(Vector2 screenPoint, Camera camera, RectTransform rectRoot, Rect rect)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                rectRoot,
+                screenPoint,
+                camera,
+                out Vector2 rootTouchPosition);
+
+            return rect.Contains(rootTouchPosition);
+        }
     }
 }
