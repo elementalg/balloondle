@@ -15,7 +15,14 @@ namespace Balloondle
             Bottom,
             Left,
         }
+        
+        public static CustomRectUtils Instance { get; } = new CustomRectUtils();
 
+        private CustomRectUtils()
+        {
+            
+        }
+        
         /// <summary>
         /// Retrieves the closest point , from the rect's perimeter, to the passed point.
         ///
