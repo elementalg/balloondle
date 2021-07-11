@@ -5,12 +5,40 @@ namespace Tests.UI
 {
     public class SingleTouchListenerTest
     {
+        private SingleTouchListener _touchListener;
+
+        [SetUp]
+        public void InitializeTouchListener()
+        {
+            _touchListener = new SingleTouchListener();
+        }
+        
         [Test]
         public void IsNotListeningByDefault()
         {
-            SingleTouchListener touchListener = new SingleTouchListener();
+            Assert.False(_touchListener.CurrentlyListening);
+        }
+
+        [Test]
+        public void IsListeningAfterTouchBegan()
+        {
+            Touch touch = new Touch(1);
             
-            Assert.False(touchListener.CurrentlyListening);
+            _touchListener.OnTouchBegan(touch);
+            
+            Assert.True(_touchListener.CurrentlyListening);
+            Assert.True(_touchListener.IsTouchBeingListened(touch));
+        }
+
+        [Test]
+        public void DistinctsBetweenListenedTouchAndNotListenedOneCorrectly()
+        {
+            Touch touchBeingListened = new Touch(1);
+            Touch touchNotBeingListened = new Touch(2);
+            
+            _touchListener.OnTouchBegan(touchBeingListened);
+            
+            Assert.False(_touchListener.IsTouchBeingListened(touchNotBeingListened));
         }
     }
 }

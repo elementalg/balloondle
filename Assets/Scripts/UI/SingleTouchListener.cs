@@ -1,6 +1,4 @@
-﻿using UnityEngine.InputSystem.EnhancedTouch;
-
-namespace Balloondle.UI
+﻿namespace Balloondle.UI
 {
     /// <summary>
     /// Utility provider for listening only to a specific touch as long as it lasts.
