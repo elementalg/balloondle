@@ -31,7 +31,7 @@ namespace Tests.UI
         }
 
         [Test]
-        public void DistinctsBetweenListenedTouchAndNotListenedOneCorrectly()
+        public void DifferentiatesBetweenListenedTouchAndNotListenedOneCorrectly()
         {
             Touch touchBeingListened = new Touch(1);
             Touch touchNotBeingListened = new Touch(2);
