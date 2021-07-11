@@ -47,15 +47,6 @@ namespace Balloondle.UI
         public void OnTouchBeganWithinBounds(Touch touch, Camera gameCamera)
         {
             // TODO: Drag joystick to relative position on joystick's range.
-            
-            if (_joystick.IsScreenPointWithinBounds(touch.screenPosition, gameCamera))
-            {
-                _joystick.OnTouchBegan(touch, gameCamera);
-            }
-            else
-            {
-                _joystick.OnTouchDrag(touch, gameCamera);
-            }
         }
     }
 }
