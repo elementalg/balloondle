@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace Balloondle.UI
@@ -14,6 +13,8 @@ namespace Balloondle.UI
         public Action<Touch> OnTouchBegan;
         public Action<Touch> OnTouchDrag;
         public Action<Touch> OnTouchEnded;
+
+        private Touch _touchContainer;
         
         /// <summary>
         /// Enable enhanced touch support at start.
@@ -21,6 +22,7 @@ namespace Balloondle.UI
         private void Start()
         {
             EnhancedTouchSupport.Enable();
+            _touchContainer = new Touch();
         }
 
         /// <summary>
@@ -28,19 +30,21 @@ namespace Balloondle.UI
         /// </summary>
         private void Update()
         {
-            foreach (Touch touch in Touch.activeTouches)
+            foreach (var touch in UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches)
             {
-                switch (touch.phase)
+                _touchContainer.CloneEnhancedTouch(touch);
+                
+                switch (_touchContainer.phase)
                 {
                     case TouchPhase.Began:
-                        OnTouchBegan?.Invoke(touch);
+                        OnTouchBegan?.Invoke(_touchContainer);
                         break;
                     case TouchPhase.Moved:
-                        OnTouchDrag?.Invoke(touch);
+                        OnTouchDrag?.Invoke(_touchContainer);
                         break;
                     case TouchPhase.Canceled:
                     case TouchPhase.Ended:
-                        OnTouchEnded?.Invoke(touch);
+                        OnTouchEnded?.Invoke(_touchContainer);
                         break;
                 }
             }
