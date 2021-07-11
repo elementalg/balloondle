@@ -24,7 +24,7 @@ namespace Tests.UI
         {
             Touch touch = new Touch(1);
             
-            _touchListener.OnTouchBegan(touch);
+            _touchListener.ListenToTouch(touch);
             
             Assert.True(_touchListener.CurrentlyListening);
             Assert.True(_touchListener.IsTouchBeingListened(touch));
@@ -36,7 +36,7 @@ namespace Tests.UI
             Touch touchBeingListened = new Touch(1);
             Touch touchNotBeingListened = new Touch(2);
             
-            _touchListener.OnTouchBegan(touchBeingListened);
+            _touchListener.ListenToTouch(touchBeingListened);
             
             Assert.False(_touchListener.IsTouchBeingListened(touchNotBeingListened));
         }

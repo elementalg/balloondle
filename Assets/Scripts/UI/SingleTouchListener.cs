@@ -15,7 +15,7 @@
         /// Start listening to the specified touch only if there's not a touch being listened to.
         /// </summary>
         /// <param name="touch">Touch whose phase is 'Began'.</param>
-        public void OnTouchBegan(Touch touch)
+        public void ListenToTouch(Touch touch)
         {
             if (CurrentlyListening)
             {
