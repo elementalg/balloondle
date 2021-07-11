@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Balloondle.UI
 {
-    public class JoystickMover : MonoBehaviour
+    public class JoystickMoverUser : MonoBehaviour
     {
         [SerializeField, Tooltip("TouchListener used for handling the touches.")]
         private TouchListener m_TouchListener;
@@ -12,6 +12,7 @@ namespace Balloondle.UI
         private Camera m_Camera;
 
         private JoystickRange _joystickRange;
+        
         
         private SingleTouchListener _singleTouchListener;
         private RectTransform _rootRectTransform;
