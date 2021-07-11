@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Balloondle.UI
 {
@@ -20,7 +19,7 @@ namespace Balloondle.UI
 
         private void Start()
         {
-            if (transform.GetChild(0)?.GetComponent<JoystickRange>() == null)
+            if (transform.GetChild(0)?.GetComponent<JoystickRange>() is null)
             {
                 throw new InvalidOperationException("JoystickMover requires a JoystickRange child at index 0.");
             }
@@ -29,14 +28,14 @@ namespace Balloondle.UI
             
             _singleTouchListener = new SingleTouchListener();
 
-            if (transform.parent.GetComponent<RectTransform>() == null)
+            if (transform.parent.GetComponent<RectTransform>() is null)
             {
                 throw new InvalidOperationException("JoystickMover requires parent to have a RectTransform.");
             }
             
             _rootRectTransform = transform.parent.GetComponent<RectTransform>();
             
-            if (GetComponent<RectTransform>()?.rect == null)
+            if (GetComponent<RectTransform>()?.rect is null)
             {
                 throw new InvalidOperationException("JoystickMover requires GameObject to have a RectTransform.");
             }
@@ -72,6 +71,11 @@ namespace Balloondle.UI
             
             // TODO: Custom logic -> Check if touch is made on the joystick or within the joystick's range. Otherwise,
             // proceed to move the joystick.
+        }
+
+        private void UpdateJoystickRangePosition()
+        {
+            
         }
 
         private bool IsTouchPositionWithinBounds(Touch touch)
