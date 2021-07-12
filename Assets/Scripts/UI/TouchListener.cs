@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace Balloondle.UI
 {
@@ -10,9 +9,7 @@ namespace Balloondle.UI
     /// </summary>
     public class TouchListener : MonoBehaviour
     {
-        public Action<Touch> OnTouchBegan;
-        public Action<Touch> OnTouchDrag;
-        public Action<Touch> OnTouchEnded;
+        public Action<Touch> OnTouchUpdate;
 
         private Touch _touchContainer;
         
@@ -34,19 +31,7 @@ namespace Balloondle.UI
             {
                 _touchContainer.CloneEnhancedTouch(touch);
                 
-                switch (_touchContainer.phase)
-                {
-                    case TouchPhase.Began:
-                        OnTouchBegan?.Invoke(_touchContainer);
-                        break;
-                    case TouchPhase.Moved:
-                        OnTouchDrag?.Invoke(_touchContainer);
-                        break;
-                    case TouchPhase.Canceled:
-                    case TouchPhase.Ended:
-                        OnTouchEnded?.Invoke(_touchContainer);
-                        break;
-                }
+                OnTouchUpdate?.Invoke(_touchContainer);
             }
         }
 
