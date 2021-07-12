@@ -2,7 +2,7 @@ using Balloondle;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Tests
+namespace EditorTests
 {
     public class CustomRectUtilsTest
     {
