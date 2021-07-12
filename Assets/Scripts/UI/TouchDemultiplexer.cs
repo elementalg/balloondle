@@ -4,6 +4,12 @@ using UnityEngine.InputSystem;
 
 namespace Balloondle.UI
 {
+    /// <summary>
+    /// Acts as a 'demultiplexer' by selecting a touch for a single purpose/action.
+    ///
+    /// By this way, touches are not passed through to every component listening to the touchscreen, but rather
+    /// only to a specific touch reserved for a component.
+    /// </summary>
     public class TouchDemultiplexer
     {
         private Queue<Action<Touch>> _queue;
