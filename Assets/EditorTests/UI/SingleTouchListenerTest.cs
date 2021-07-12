@@ -1,7 +1,7 @@
 ﻿using Balloondle.UI;
 using NUnit.Framework;
 
-namespace Tests.UI
+namespace EditorTests.UI
 {
     public class SingleTouchListenerTest
     {

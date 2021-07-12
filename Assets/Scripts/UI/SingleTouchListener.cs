@@ -39,7 +39,7 @@
         /// Stop listening to the touch, if it is the one we are listening to, since it does not exist anymore.
         /// </summary>
         /// <param name="touch">Touch checked if it is the one being listened.</param>
-        public void OnTouchEnded(Touch touch)
+        public void StopListeningToTouch(Touch touch)
         {
             if (!IsTouchBeingListened(touch))
             {
