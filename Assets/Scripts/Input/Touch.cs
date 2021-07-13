@@ -54,5 +54,10 @@ namespace Balloondle.Input
             touchId = touch.touchId;
             valid = touch.valid;
         }
+
+        public bool HasEnded()
+        {
+            return phase == TouchPhase.Ended || phase == TouchPhase.Canceled;
+        }
     }
 }
