@@ -1,4 +1,4 @@
-﻿using Balloondle.UI;
+﻿using Balloondle.Input;
 using NUnit.Framework;
 
 namespace EditorTests.UI

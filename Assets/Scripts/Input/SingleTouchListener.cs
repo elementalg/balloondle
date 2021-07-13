@@ -1,4 +1,4 @@
-﻿namespace Balloondle.UI
+﻿namespace Balloondle.Input
 {
     /// <summary>
     /// Utility provider for listening only to a specific touch as long as it lasts.

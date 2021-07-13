@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Balloondle.UI
+namespace Balloondle.Input
 {
     public class TouchDemultiplexerBehaviour : MonoBehaviour
     {

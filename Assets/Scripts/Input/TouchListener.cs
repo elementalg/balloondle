@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 
-namespace Balloondle.UI
+namespace Balloondle.Input
 {
     /// <summary>
     /// Action provider for the main phases of the possible touches.

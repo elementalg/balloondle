@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
-namespace Balloondle.UI
+namespace Balloondle.Input
 {
     public class Touch
     {

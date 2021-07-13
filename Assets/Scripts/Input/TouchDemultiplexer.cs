@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
-namespace Balloondle.UI
+namespace Balloondle.Input
 {
     /// <summary>
     /// Acts as a 'demultiplexer' by selecting a touch for a single purpose/action.
