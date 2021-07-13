@@ -15,14 +15,14 @@ namespace Balloondle.UI
     {
         private const double TouchBeganPhaseMaxDurationInSeconds = 0.25f;
         
-        private Queue<Action<Touch>> _queue;
+        private List<Tuple<Action<Touch>, Func<Touch, bool>>> _queue;
         private Dictionary<long, Action<Touch>> _selectedTouches;
 
         // TODO: Add clean up method for removing touches which got invalidated without the Demultiplexer knowing.
         
         public TouchDemultiplexer()
         {
-            _queue = new Queue<Action<Touch>>();
+            _queue = new List<Tuple<Action<Touch>, Func<Touch, bool>>>();
             _selectedTouches = new Dictionary<long, Action<Touch>>();
         }
 
@@ -32,7 +32,19 @@ namespace Balloondle.UI
         /// <param name="outputAction">Action which will be called on all the touches' update calls.</param>
         public void AddOutputToQueue(Action<Touch> outputAction)
         {
-            _queue.Enqueue(outputAction);
+            _queue.Add(new Tuple<Action<Touch>, Func<Touch, bool>>(outputAction, (touch) => true));
+        }
+
+        /// <summary>
+        /// Look for reserving a touch which will be transferred to the specified output action,
+        /// only if the touch condition has been met.
+        /// </summary>
+        /// <param name="outputAction">Action which will be called on all the touches' update calls.</param>
+        /// <param name="touchCondition">Condition which must be met by the touch in order to be assigned
+        /// to the specified output action.</param>
+        public void AddOutputToQueue(Action<Touch> outputAction, Func<Touch, bool> touchCondition)
+        {
+            _queue.Add(new Tuple<Action<Touch>, Func<Touch, bool>>(outputAction, touchCondition));
         }
 
         /// <summary>
@@ -69,7 +81,12 @@ namespace Balloondle.UI
                     return;
                 }
                 
-                SelectOutputFromQueueForTouch(touch);
+                // If touch has not been selected, then proceed to ignore it and don't transfer it to anyone.
+                if (!SelectOutputFromQueueForTouch(touch))
+                {
+                    return;
+                }
+                
                 TransferTouchToSelectedOutput(touch);
             }
         }
@@ -101,17 +118,36 @@ namespace Balloondle.UI
             return (Time.realtimeSinceStartupAsDouble - touch.startTime) <= TouchBeganPhaseMaxDurationInSeconds;
         }
 
-        private void SelectOutputFromQueueForTouch(Touch touch)
+        private bool SelectOutputFromQueueForTouch(Touch touch)
         {
             // Ignore request if empty.
             if (_queue.Count == 0)
             {
-                return;
+                return false;
             }
-            
-            Action<Touch> output = _queue.Dequeue();
 
-            _selectedTouches.Add(touch.touchId, output);
+            const int noSelectedOutput = -1;
+            int selectedOutput = noSelectedOutput;
+            for (int i = 0; i < _queue.Count; i++)
+            {
+                var (output, touchCondition) = _queue[i];
+
+                if (touchCondition.Invoke(touch))
+                {
+                    _selectedTouches.Add(touch.touchId, output);
+                    
+                    selectedOutput = i;
+                    break;
+                }
+            }
+
+            if (selectedOutput == noSelectedOutput)
+            {
+                return false;
+            }
+
+            _queue.RemoveAt(selectedOutput);
+            return true;
         }
 
         private void RemoveTouchFromSelectedTouches(Touch touch)
