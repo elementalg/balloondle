@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
+using UnityEngine;
+using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace Balloondle.UI
 {
@@ -12,6 +13,8 @@ namespace Balloondle.UI
     /// </summary>
     public class TouchDemultiplexer
     {
+        private const double TouchBeganPhaseMaxDurationInSeconds = 0.25f;
+        
         private Queue<Action<Touch>> _queue;
         private Dictionary<long, Action<Touch>> _selectedTouches;
 
@@ -60,6 +63,11 @@ namespace Balloondle.UI
                 {
                     return;
                 }
+
+                if (!HasTouchBeganRecently(touch))
+                {
+                    return;
+                }
                 
                 SelectOutputFromQueueForTouch(touch);
                 TransferTouchToSelectedOutput(touch);
@@ -81,6 +89,16 @@ namespace Balloondle.UI
             return touch.phase == TouchPhase.Began || 
                    touch.phase == TouchPhase.Moved ||
                    touch.phase == TouchPhase.Stationary;
+        }
+
+        private bool HasTouchBeganRecently(Touch touch)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                return true;
+            }
+
+            return (Time.realtimeSinceStartupAsDouble - touch.startTime) <= TouchBeganPhaseMaxDurationInSeconds;
         }
 
         private void SelectOutputFromQueueForTouch(Touch touch)
