@@ -1,9 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Balloondle.UI.Controllers
 {
-    public class JoystickPositionableSurface : MonoBehaviour
+    public class JoystickPositionableSurface : MonoBehaviourWithBoundsDetector
     {
-        
+        private void Start()
+        {
+            InitializePressDetector();
+        }
+
+        public void OnPressed(Vector2 screenPoint)
+        {
+            
+        }
     }
 }

@@ -5,7 +5,7 @@ using Touch = Balloondle.Input.Touch;
 
 namespace Balloondle.UI.Controllers
 {
-    public class JoystickTouchListeningSurface : MonoBehaviour
+    public class JoystickTouchListeningSurface : MonoBehaviourWithBoundsDetector
     {
         private enum ListeningState
         {
@@ -24,13 +24,13 @@ namespace Balloondle.UI.Controllers
 
         [SerializeField] 
         private Joystick m_Joystick;
-
-        private RectTransform _rectTransform;
-
+        
         private ListeningState _listeningState;
 
         private void Start()
         {
+            InitializePressDetector();
+            
             if (m_TouchDemultiplexerBehaviour == null)
             {
                 throw new InvalidOperationException("Joystick's touch listening surface requires " +
@@ -49,14 +49,6 @@ namespace Balloondle.UI.Controllers
                     "Joystick's touch listening surface requires an instance of Joystick to be assigned.");
             }
 
-            if (transform.parent.GetComponent<RectTransform>() == null)
-            {
-                throw new InvalidOperationException(
-                    "Joystick's touch listening surface must be a child of a Canvas.");
-            }
-
-            _rectTransform = GetComponent<RectTransform>();
-
             ListenForTouchesWithinTheSurface();
         }
 
@@ -72,34 +64,39 @@ namespace Balloondle.UI.Controllers
 
             if (_listeningState == ListeningState.AwaitingTouch)
             {
-                Debug.Log($"[JOYSTICK-TOUCH-LISTENING-SURFACE] Touch started: {touch.startScreenPosition}");
                 TransferTouchBeginning(touch);
 
                 _listeningState = ListeningState.UsingTouch;
                 return;
             }
 
-            Debug.Log($"[JOYSTICK-TOUCH-LISTENING-SURFACE] Touch update: {touch.screenPosition}");
             m_Joystick.InputUpdate(touch.screenPosition);
             
             if (touch.HasEnded())
             {
-                Debug.Log("[JOYSTICK-TOUCH-LISTENING-SURFACE] Touch ended.");
                 HandleEndOfTouch();
             }
         }
 
         private void TransferTouchBeginning(Touch touch)
         {
-            if (m_Joystick.IsScreenPointWithinJoystick(touch.startScreenPosition))
+            if (m_Joystick.IsScreenPointWithinBounds(touch.startScreenPosition))
             {
                 m_Joystick.OnPressed(touch.startScreenPosition);
+            }
+            else if (m_JoystickRange.IsScreenPointWithinBounds(touch.startScreenPosition))
+            {
+                m_JoystickRange.OnPressed(touch.startScreenPosition);
+            }
+            else
+            {
+                m_JoystickPositionableSurface.OnPressed(touch.startScreenPosition);
             }
         }
 
         private bool HasTouchBegunWithinTheSurface(Touch touch)
         {
-            return RectTransformUtility.RectangleContainsScreenPoint(_rectTransform, touch.startScreenPosition);
+            return IsScreenPointWithinBounds(touch.startScreenPosition);
         }
 
         private void HandleEndOfTouch()
