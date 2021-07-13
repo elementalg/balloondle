@@ -86,7 +86,7 @@ namespace Balloondle.UI.Controllers
             }
             else if (m_JoystickRange.IsScreenPointWithinBounds(touch.startScreenPosition))
             {
-                m_JoystickRange.OnPressed(touch.startScreenPosition);
+                m_Joystick.InputUpdate(touch.screenPosition);
             }
             else
             {

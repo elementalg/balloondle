@@ -8,10 +8,5 @@ namespace Balloondle.UI.Controllers
         {
             InitializePressDetector();
         }
-
-        public void OnPressed(Vector2 screenPoint)
-        {
-            
-        }
     }
 }
