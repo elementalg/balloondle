@@ -5,7 +5,7 @@ namespace Balloondle.UI
 {
     public abstract class MonoBehaviourWithBoundsDetector : MonoBehaviour
     {
-        private RectTransform _rectTransform;
+        protected RectTransform _rectTransform;
 
         protected void InitializePressDetector()
         {

@@ -74,17 +74,15 @@ namespace Balloondle.UI.Controllers
             
             if (touch.HasEnded())
             {
+                m_Joystick.InputEnd();
+                
                 HandleEndOfTouch();
             }
         }
 
         private void TransferTouchBeginning(Touch touch)
         {
-            if (m_Joystick.IsScreenPointWithinBounds(touch.startScreenPosition))
-            {
-                m_Joystick.OnPressed(touch.startScreenPosition);
-            }
-            else if (m_JoystickRange.IsScreenPointWithinBounds(touch.startScreenPosition))
+            if (m_JoystickRange.IsScreenPointWithinBounds(touch.startScreenPosition))
             {
                 m_Joystick.InputUpdate(touch.screenPosition);
             }
