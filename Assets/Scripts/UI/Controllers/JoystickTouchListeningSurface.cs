@@ -62,6 +62,14 @@ namespace Balloondle.UI.Controllers
 
         private void OnTouchUpdate(Touch touch)
         {
+            if (touch.HasEnded())
+            {
+                m_Joystick.InputEnd();
+                
+                HandleEndOfTouch();
+                return;
+            }
+
             if (_listeningState == ListeningState.AwaitingTouch)
             {
                 TransferTouchBeginning(touch);
@@ -70,13 +78,6 @@ namespace Balloondle.UI.Controllers
             }
 
             m_Joystick.InputUpdate(touch.screenPosition);
-            
-            if (touch.HasEnded())
-            {
-                m_Joystick.InputEnd();
-                
-                HandleEndOfTouch();
-            }
         }
 
         private void TransferTouchBeginning(Touch touch)
