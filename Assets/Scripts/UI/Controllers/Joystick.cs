@@ -6,6 +6,8 @@ namespace Balloondle.UI.Controllers
 {
     public class Joystick : OnScreenControl
     {
+        private const float BypassInputRepeat = 0.0001f;
+
         [SerializeField]
         private float m_MovementRange = 150f;
 
@@ -14,6 +16,8 @@ namespace Balloondle.UI.Controllers
         private string m_ControlPath;
 
         private RectTransform _parentRectTransform;
+
+        private Vector2 _latestMovement;
 
         protected override string controlPathInternal 
         { 
@@ -24,6 +28,8 @@ namespace Balloondle.UI.Controllers
         private void Start() 
         {
             _parentRectTransform = transform.parent.GetComponent<RectTransform>();
+
+            _latestMovement = new Vector2();
         }
 
         public void InputUpdate(Vector2 screenPoint)
@@ -41,8 +47,21 @@ namespace Balloondle.UI.Controllers
             // Move the joystick.
             ((RectTransform)transform).anchoredPosition = localPoint;
 
+            Vector2 movement = localPoint / m_MovementRange;
+
+            bool inputRepeated = _latestMovement == movement;
+
+            // If input is repeated, alter the local point, in order to bypass the limiter of repeated input.
+            if (inputRepeated)
+            {
+                movement.x += -1f * Mathf.Sign(movement.x) * (BypassInputRepeat);
+                movement.y += -1f * Mathf.Sign(movement.y) * (BypassInputRepeat);
+            }
+
             // Transfer the input to the established control.
-            SendValueToControl(localPoint / m_MovementRange);
+            SendValueToControl(movement);
+
+            _latestMovement = movement;
         }
 
         public void InputEnd()
