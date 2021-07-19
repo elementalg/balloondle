@@ -49,8 +49,13 @@ namespace Balloondle.UI.Controllers
             anchorMin.x = (anchorMin.x - parentRect.x) / parentRect.width;
             anchorMin.y = (anchorMin.y - parentRect.y) / parentRect.height;
 
-            m_Bounds.anchorMax = anchorMax;
-            m_Bounds.anchorMin = anchorMin;
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+            if (m_Bounds != null)
+            {
+                m_Bounds.anchorMax = anchorMax;
+                m_Bounds.anchorMin = anchorMin;
+            }
+#endif   
         }
 
         public void OnPressed(Vector2 screenPoint)
