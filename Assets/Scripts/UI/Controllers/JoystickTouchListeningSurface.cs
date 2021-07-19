@@ -67,7 +67,6 @@ namespace Balloondle.UI.Controllers
                 TransferTouchBeginning(touch);
 
                 _listeningState = ListeningState.UsingTouch;
-                return;
             }
 
             m_Joystick.InputUpdate(touch.screenPosition);
