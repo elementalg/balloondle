@@ -60,8 +60,6 @@ namespace Balloondle.UI.Controllers
 
         private void OnTouchUpdate(Touch touch)
         {
-            // TODO: Transfer touch to the element which contains the touch.
-
             if (_listeningState == ListeningState.AwaitingTouch)
             {
                 TransferTouchBeginning(touch);
