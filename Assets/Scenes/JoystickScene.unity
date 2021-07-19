@@ -171,7 +171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 121637364}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af6fbccce8474f81bde4577e38fdb7ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 75c54b93373cfe545813c1dcfca2b475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &121637367
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 287313717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e8f8ea48a942a280d694f1200cbb35, type: 3}
+  m_Script: {fileID: 11500000, guid: 41341db4d16fbd145a4fca232fb5e18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_JoystickRange: {fileID: 121637364}
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 756584807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d94ef70ecf94792a608209151aa9e1f, type: 3}
+  m_Script: {fileID: 11500000, guid: 07a8229876fccf7458cca8f8c3edb51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_TouchDemultiplexerBehaviour: {fileID: 1397616287}
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1397616284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab50c51c4885c1d4faea4db228021fe4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7691130c2fc45d04f930027b8483c876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1397616287
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1397616284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3b960614496abe48865898d5d525c22, type: 3}
+  m_Script: {fileID: 11500000, guid: e9ef67072e25a1b4bbda99c874607119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_TouchListener: {fileID: 1397616286}
@@ -711,10 +711,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1776126585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93cbb47268c24766ab18670388f31907, type: 3}
+  m_Script: {fileID: 11500000, guid: a73dfdf206c5c904f977e96c2f3ed691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 150
+  m_ControlPath: <Gamepad>/leftStick
 --- !u!114 &1776126588
 MonoBehaviour:
   m_ObjectHideFlags: 0
