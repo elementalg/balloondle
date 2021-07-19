@@ -18,7 +18,7 @@ namespace Balloondle.UI.Controllers
         protected override string controlPathInternal 
         { 
             get => m_ControlPath;
-            set => m_ControlPath = value; 
+            set => m_ControlPath = value;
         }
 
         private void Start() 
@@ -28,21 +28,35 @@ namespace Balloondle.UI.Controllers
 
         public void InputUpdate(Vector2 screenPoint)
         {
-            UpdateJoystickPosition(screenPoint);
+            HandleInputScreenPoint(screenPoint);
         }
 
-        private void UpdateJoystickPosition(Vector2 screenPoint) 
+        private void HandleInputScreenPoint(Vector2 screenPoint) 
         {
+            // Retrieve screen point's local space positioning, and clamp it to the range of movement.
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 _parentRectTransform, screenPoint, null, out var localPoint);
             localPoint = Vector2.ClampMagnitude(localPoint, m_MovementRange);
             
+            // Move the joystick.
             ((RectTransform)transform).anchoredPosition = localPoint;
+
+            // Transfer the input to the established control.
+            SendValueToControl(screenPoint);
         }
 
         public void InputEnd()
         {
+            ResetJoystickState();
+        }
+
+        private void ResetJoystickState()
+        {
+            // Restore the joystick's position to the start.
             ((RectTransform)transform).anchoredPosition = Vector2.zero;
+
+            // Indicate the neutralization of the joystick's position to the control.
+            SendValueToControl(Vector2.zero);
         }
     }
 }
