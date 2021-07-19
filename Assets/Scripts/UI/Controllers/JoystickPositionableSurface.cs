@@ -51,43 +51,35 @@ namespace Balloondle.UI.Controllers
 
             m_Bounds.anchorMax = anchorMax;
             m_Bounds.anchorMin = anchorMin;
-
-            Debug.Log(m_Bounds);
         }
 
         public void OnPressed(Vector2 screenPoint)
         {
-            // TODO: Fix detection.
-            if (IsScreenPointInsidePositionableSurface(screenPoint)) 
-            {
-                RectTransformUtility
+            RectTransformUtility
                     .ScreenPointToLocalPointInRectangle(_parentRectTransform, screenPoint,
-                        null, out Vector2 localPoint);
+                        null, out Vector2 parentLocalPoint);
 
-                m_JoystickRange.transform.localPosition = new Vector3(localPoint.x, localPoint.y, 0f);
+            if (IsScreenPointInsidePositionableSurface(parentLocalPoint)) 
+            {
+                m_JoystickRange.transform.localPosition = new Vector3(parentLocalPoint.x, parentLocalPoint.y, 0f);
             }
             else
             {
-                Vector2 closestWorldPoint = GetClosestPointFromPositionableSurface(screenPoint);
-                m_JoystickRange.transform.localPosition = _parentRectTransform
-                    .InverseTransformPoint(closestWorldPoint);
+                m_JoystickRange.transform.localPosition = GetClosestPointFromPositionableSurface(parentLocalPoint);
             }
         }
 
-        private bool IsScreenPointInsidePositionableSurface(Vector2 screenPoint) 
+        private bool IsScreenPointInsidePositionableSurface(Vector2 parentLocalPoint) 
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(_parentRectTransform, screenPoint,
-                null, out Vector2 localPoint);
-
-            return _positionableSurface.Contains(localPoint);
+            return _positionableSurface.Contains(parentLocalPoint);
         }
 
-        private Vector2 GetClosestPointFromPositionableSurface(Vector2 inputPoint)
+        private Vector2 GetClosestPointFromPositionableSurface(Vector2 parentLocalPoint)
         {
             Vector2 closestPointFromPositionableSurface =
-                CustomRectUtils.Instance.GetClosestPointFromARectPerimeter(inputPoint, _positionableSurface);
+                CustomRectUtils.Instance.GetClosestPointFromARectPerimeter(parentLocalPoint, _positionableSurface);
             
-            return transform.TransformPoint(closestPointFromPositionableSurface);
+            return closestPointFromPositionableSurface;
         }  
     }
 }

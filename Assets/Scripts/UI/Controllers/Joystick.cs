@@ -1,14 +1,26 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem.Layouts;
+using UnityEngine.InputSystem.OnScreen;
 
 namespace Balloondle.UI.Controllers
 {
-    public class Joystick : MonoBehaviour
+    public class Joystick : OnScreenControl
     {
         [SerializeField]
         private float m_MovementRange = 150f;
 
+        [SerializeField]
+        [InputControl(layout = "Vector2")]
+        private string m_ControlPath;
+
         private RectTransform _parentRectTransform;
-        
+
+        protected override string controlPathInternal 
+        { 
+            get => m_ControlPath;
+            set => m_ControlPath = value; 
+        }
+
         private void Start() 
         {
             _parentRectTransform = transform.parent.GetComponent<RectTransform>();
