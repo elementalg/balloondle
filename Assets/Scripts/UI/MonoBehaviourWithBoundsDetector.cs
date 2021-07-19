@@ -18,7 +18,7 @@ namespace Balloondle.UI
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        public bool IsScreenPointWithinBounds(Vector2 screenPoint)
+        public virtual bool IsScreenPointWithinBounds(Vector2 screenPoint)
         {
             return RectTransformUtility.RectangleContainsScreenPoint(_rectTransform, screenPoint);
         }
