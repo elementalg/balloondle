@@ -55,7 +55,9 @@ namespace Balloondle.UI.Controllers
         private void ListenForTouchesWithinTheSurface()
         {
             // Listen for touches which are within the surface.
-            m_TouchDemultiplexerBehaviour.Demultiplexer.AddOutputToQueue(OnTouchUpdate, HasTouchBegunWithinTheSurface);
+            m_TouchDemultiplexerBehaviour
+                .Demultiplexer
+                .AddOutputToQueue(OnTouchUpdate, HasTouchBegunWithinTheSurface);
         }
 
         private void OnTouchUpdate(Touch touch)
