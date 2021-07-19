@@ -159,5 +159,20 @@ namespace Balloondle.Input
 
             _selectedTouches.Remove(touch.touchId);
         }
+
+        /// <summary>
+        /// Cancels all selected touches.
+        /// </summary>
+        public void DeselectAllSelectedTouches()
+        {
+            Touch touch = new Touch();
+            foreach (long touchId in _selectedTouches.Keys)
+            {
+                touch.touchId = (int)touchId;
+                touch.phase = TouchPhase.Canceled;
+
+                OnTouchUpdate(touch);
+            }
+        }
     }
 }

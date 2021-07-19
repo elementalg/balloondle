@@ -13,5 +13,13 @@ namespace Balloondle.Input
         {
             m_TouchListener.OnTouchUpdate += Demultiplexer.OnTouchUpdate;
         }
+
+        private void OnApplicationFocus(bool focus)
+        {
+            if (!focus)
+            {
+                Demultiplexer.DeselectAllSelectedTouches();
+            }
+        }
     }
 }
