@@ -14,7 +14,6 @@ public class MovementController : MonoBehaviour
         ApplyMovement(input.ReadValue<Vector2>());
     }
 
-    // TODO: Add on press, on no longer press handlers.
     private void ApplyMovement(Vector2 inputVelocity)
     {
         inputVelocity = inputVelocity * m_MaximumVelocity;
