@@ -42,7 +42,7 @@ namespace Balloondle.UI.Controllers
             ((RectTransform)transform).anchoredPosition = localPoint;
 
             // Transfer the input to the established control.
-            SendValueToControl(screenPoint);
+            SendValueToControl(localPoint / m_MovementRange);
         }
 
         public void InputEnd()
