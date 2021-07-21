@@ -8,7 +8,13 @@ public class MovementController : MonoBehaviour
 
     [SerializeField, Tooltip("Maximum velocity")]
     private Vector2 m_MaximumVelocity = new Vector2(5f, 5f);
-    
+
+    [SerializeField, Tooltip("Movement cooldown duration after a collision")]
+    private float m_CollisionMovementCooldown;
+
+    private bool _isCollisionCooldownApplied;
+    private float _collisionStartTime;
+
     public void OnMove(InputAction.CallbackContext input)
     {
         ApplyMovement(input.ReadValue<Vector2>());
@@ -16,6 +22,14 @@ public class MovementController : MonoBehaviour
 
     private void ApplyMovement(Vector2 inputVelocity)
     {
+        if (_isCollisionCooldownApplied)
+        {
+            if (Time.realtimeSinceStartup - _collisionStartTime > m_CollisionMovementCooldown)
+            {
+                _isCollisionCooldownApplied = false;
+            }
+        }
+
         inputVelocity = inputVelocity * m_MaximumVelocity;
 
         Vector2 currentVelocity = m_BodyToBeMoved.velocity;
@@ -43,6 +57,14 @@ public class MovementController : MonoBehaviour
         // Calculate the force required to obtain the previously calculated velocities.
         movementForce = movementForce * m_BodyToBeMoved.mass;
 
-        m_BodyToBeMoved.AddForce(movementForce, ForceMode2D.Impulse);
+        ForceMode2D movementMode = (_isCollisionCooldownApplied) ? ForceMode2D.Force : ForceMode2D.Impulse;
+
+        m_BodyToBeMoved.AddForce(movementForce, movementMode);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        _isCollisionCooldownApplied = true;
+        _collisionStartTime = Time.realtimeSinceStartup;
     }
 }

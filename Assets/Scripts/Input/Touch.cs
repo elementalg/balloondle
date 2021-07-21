@@ -5,7 +5,7 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace Balloondle.Input
 {
-    public class Touch
+    public class Touch : IPointerPress
     {
         public Vector2 delta { get; set; }
         public Finger finger { get; set; }
@@ -21,6 +21,38 @@ namespace Balloondle.Input
         public double time { get; set; }
         public int touchId { get; set; }
         public bool valid { get; set; }
+        public int pointerId 
+        { 
+            get => touchId;
+            set => touchId = value;
+        }
+        public PointerPhase pointerPhase
+        {
+            get 
+            {
+                return phase switch
+                {
+                    TouchPhase.Began => PointerPhase.Began,
+                    TouchPhase.Moved => PointerPhase.Moved,
+                    TouchPhase.Stationary => PointerPhase.Stationary,
+                    TouchPhase.Ended => PointerPhase.Ended,
+                    TouchPhase.Canceled => PointerPhase.Ended,
+                    _ => PointerPhase.None,
+                };
+            }
+            set
+            {
+                TouchPhase touchPhase = value switch
+                {
+                    PointerPhase.Began => TouchPhase.Began,
+                    PointerPhase.Moved => TouchPhase.Moved,
+                    PointerPhase.Stationary => TouchPhase.Stationary,
+                    PointerPhase.Ended => TouchPhase.Ended,
+                    _ => TouchPhase.None,
+                };
+                phase = touchPhase;
+            }
+        }
 
         public Touch()
         {

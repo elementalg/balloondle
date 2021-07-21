@@ -1,20 +1,19 @@
 ﻿using System;
 using Balloondle.Input;
 using UnityEngine;
-using Touch = Balloondle.Input.Touch;
 
 namespace Balloondle.UI.Controllers
 {
-    public class JoystickTouchListeningSurface : MonoBehaviourWithBoundsDetector
+    public class JoystickPointerListeningSurface : MonoBehaviourWithBoundsDetector
     {
         private enum ListeningState
         {
-            AwaitingTouch,
-            UsingTouch,
+            AwaitingPointer,
+            UsingPointer,
         }
 
         [SerializeField, Tooltip("Touch Demultiplexer used in the current scene.")]
-        private TouchDemultiplexerBehaviour m_TouchDemultiplexerBehaviour;
+        private PointerDemultiplexerBehaviour m_TouchDemultiplexerBehaviour;
 
         [SerializeField] 
         private JoystickPositionableSurface m_JoystickPositionableSurface;
@@ -49,59 +48,60 @@ namespace Balloondle.UI.Controllers
                     "Joystick's touch listening surface requires an instance of Joystick to be assigned.");
             }
 
-            ListenForTouchesWithinTheSurface();
+            ListenForPointerWithinTheSurface();
         }
 
-        private void ListenForTouchesWithinTheSurface()
+        private void ListenForPointerWithinTheSurface()
         {
-            // Listen for touches which are within the surface.
+            // Listen for pointers which are within the surface.
             m_TouchDemultiplexerBehaviour
                 .Demultiplexer
-                .AddOutputToQueue(OnTouchUpdate, HasTouchBegunWithinTheSurface);
+                .AddOutputToQueue(OnPointerUpdate, HasTouchBegunWithinTheSurface);
         }
 
-        private void OnTouchUpdate(Touch touch)
+        private void OnPointerUpdate(IPointerPress pointer)
         {
-            if (touch.HasEnded())
+            Debug.Log("OnPointerUpdate - Joystick");
+            if (pointer.HasEnded())
             {
                 m_Joystick.InputEnd();
                 
-                HandleEndOfTouch();
+                HandleEndOfPointer();
                 return;
             }
 
-            if (_listeningState == ListeningState.AwaitingTouch)
+            if (_listeningState == ListeningState.AwaitingPointer)
             {
-                TransferTouchBeginning(touch);
+                TransferTouchBeginning(pointer);
 
-                _listeningState = ListeningState.UsingTouch;
+                _listeningState = ListeningState.UsingPointer;
             }
 
-            m_Joystick.InputUpdate(touch.screenPosition);
+            m_Joystick.InputUpdate(pointer.screenPosition);
         }
 
-        private void TransferTouchBeginning(Touch touch)
+        private void TransferTouchBeginning(IPointerPress pointer)
         {
-            if (m_JoystickRange.IsScreenPointWithinBounds(touch.startScreenPosition))
+            if (m_JoystickRange.IsScreenPointWithinBounds(pointer.startScreenPosition))
             {
-                m_Joystick.InputUpdate(touch.screenPosition);
+                m_Joystick.InputUpdate(pointer.screenPosition);
             }
             else
             {
-                m_JoystickPositionableSurface.OnPressed(touch.startScreenPosition);
+                m_JoystickPositionableSurface.OnPressed(pointer.startScreenPosition);
             }
         }
 
-        private bool HasTouchBegunWithinTheSurface(Touch touch)
+        private bool HasTouchBegunWithinTheSurface(IPointerPress pointer)
         {
-            return IsScreenPointWithinBounds(touch.startScreenPosition);
+            return IsScreenPointWithinBounds(pointer.startScreenPosition);
         }
 
-        private void HandleEndOfTouch()
+        private void HandleEndOfPointer()
         {
-            _listeningState = ListeningState.AwaitingTouch;
+            _listeningState = ListeningState.AwaitingPointer;
             
-            ListenForTouchesWithinTheSurface();
+            ListenForPointerWithinTheSurface();
         }
     }
 }
