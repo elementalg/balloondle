@@ -56,14 +56,16 @@ public class MovementController : MonoBehaviour
 
         // Calculate the force required to obtain the previously calculated velocities.
         movementForce = movementForce * m_BodyToBeMoved.mass;
-
-        ForceMode2D movementMode = (_isCollisionCooldownApplied) ? ForceMode2D.Force : ForceMode2D.Impulse;
-
-        m_BodyToBeMoved.AddForce(movementForce, movementMode);
+        
+        if (!_isCollisionCooldownApplied)
+        {
+            m_BodyToBeMoved.AddForce(movementForce, ForceMode2D.Impulse);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("OnCollisionEnter2D");
         _isCollisionCooldownApplied = true;
         _collisionStartTime = Time.realtimeSinceStartup;
     }

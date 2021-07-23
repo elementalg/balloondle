@@ -61,7 +61,6 @@ namespace Balloondle.UI.Controllers
 
         private void OnPointerUpdate(IPointerPress pointer)
         {
-            Debug.Log("OnPointerUpdate - Joystick");
             if (pointer.HasEnded())
             {
                 m_Joystick.InputEnd();

@@ -54,7 +54,6 @@ namespace Balloondle.Input
         /// <param name="pointer"></param>
         public void OnPointerUpdate(IPointerPress pointer)
         {
-            Debug.Log($"OnPointerUpdate: {pointer.startScreenPosition}, {pointer.screenPosition}");
             if (_selectedPointers.ContainsKey(pointer.pointerId))
             {
                 TransferPointerToSelectedOutput(pointer);
