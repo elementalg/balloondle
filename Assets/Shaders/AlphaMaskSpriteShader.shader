@@ -6,14 +6,14 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
 {
     Properties
     {
-        _MainTex ("Sprite Texture", 2D) = "white" {}
+        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
-        PixelSnap ("Pixel snap", Float) = 0
-        _RendererColor ("RendererColor", Color) = (1,1,1,1)
-        _Flip ("Flip", Vector) = (1,1,1,1)
+        [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
+        [HideInInspector] _RendererColor ("RendererColor", Color) = (1,1,1,1)
+        [HideInInspector] _Flip ("Flip", Vector) = (1,1,1,1)
         _AlphaMaskTex ("Alpha Mask", 2D) = "white" {}
-        _AlphaTex ("External Alpha", 2D) = "white" {}
-        _EnableExternalAlpha ("Enable External Alpha", Float) = 0
+        [PerRendererData] _AlphaTex ("External Alpha", 2D) = "white" {}
+        [PerRendererData] _EnableExternalAlpha ("Enable External Alpha", Float) = 0
     }
 
     SubShader
@@ -123,7 +123,9 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 // Apply trasparency depending upon the brightness of the alpha mask at the position.
                 fixed4 alpha_mask = tex2D (_AlphaMaskTex, uv);
                 fixed calculated_alpha = max (alpha_mask.r, max (alpha_mask.g, alpha_mask.b)) / 1.0;
-                color.a = calculated_alpha;
+                
+				// Avoid messing up the borders' finishing.
+				color.a = min (color.a, calculated_alpha);
                 
             #if ETC1_EXTERNAL_ALPHA
                 fixed4 alpha = tex2D (_AlphaTex, uv);
