@@ -167,13 +167,16 @@ namespace Balloondle.Input
         public void DeselectSelectedPointers()
         {
             Touch touch = new Touch();
+            
             foreach (long touchId in _selectedPointers.Keys)
             {
                 touch.touchId = (int)touchId;
                 touch.phase = TouchPhase.Canceled;
 
-                OnPointerUpdate(touch);
+                TransferPointerToSelectedOutput(touch);
             }
+            
+            _selectedPointers.Clear();
         }
     }
 }
