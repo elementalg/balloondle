@@ -14,9 +14,9 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
         _AlphaMaskTex ("Alpha Mask", 2D) = "white" {}
         [PerRendererData] _AlphaTex ("External Alpha", 2D) = "white" {}
         [PerRendererData] _EnableExternalAlpha ("Enable External Alpha", Float) = 0
-        _EnableInnerOutline ("Enable Inner Outline", Float) = 0
-        _InnerOutlineThickness ("Inner Outline Thickness", Int) = 6
-        _InnerOutlineColor ("Inner Outline Color", Color) = (1, 1, 1, 1)
+        _EnableOutline ("Enable Outline", Float) = 0
+        _OutlineMaskTex ("Outline Mask Tex", 2D) = "white" {}
+        _OutlineColor ("Outline Color", Color) = (1,1,1,1)
     }
 
     SubShader
@@ -122,122 +122,10 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
             sampler2D _MainTex;
             float4 _MainTex_TexelSize;
             sampler2D _AlphaMaskTex;
-            sampler2D _AlphaTex;
-
-            float _EnableInnerOutline;
-            uniform int _InnerOutlineThickness;
-            float4 _InnerOutlineColor;
-
-            float IsUVWithinLimits(float2 uv)
-            {
-                float2 minimumLimit = float2 (0.0, 0.0);
-                float2 maximumLimit = float2 (1.0, 1.0);
-
-                float2 isOffsetWithinLimits = min (step (minimumLimit, uv), step (uv, maximumLimit));
-
-                return isOffsetWithinLimits.x * isOffsetWithinLimits.y;
-            }
         
-            float IsUVWithinInnerOutline(float2 uv)
-            {
-                float2 size = float2(_MainTex_TexelSize.x, _MainTex_TexelSize.y) * _InnerOutlineThickness;
-
-                // Check the texel itself.
-                float2 textureOffset = float2 (uv.x, uv.y);
-                float isPixelNotBorder = step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-                
-                // Left texel.
-                textureOffset.x = uv.x - size.x;
-                textureOffset.y = uv.y;
-                float isNoNearBorder = step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Top left texel.
-                textureOffset.x = (-1.0 * size.x) + uv.x;
-                textureOffset.y = size.y + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Top middle texel.
-                textureOffset.x = 0.0 + uv.x;
-                textureOffset.y = size.y + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Top right texel.
-                textureOffset.x = size.x + uv.x;
-                textureOffset.y = size.y + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Right texel.
-                textureOffset.x = size.x + uv.x;
-                textureOffset.y = 0.0 + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Bottom right texel.
-                textureOffset.x = size.x + uv.x;
-                textureOffset.y = (-1.0 * size.y) + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Bottom middle texel.
-                textureOffset.x = 0.0 + uv.x;
-                textureOffset.y = (-1.0 * size.y) + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                // Bottom left texel.
-                textureOffset.x = (-1.0 * size.x) + uv.x;
-                textureOffset.y = (-1.0 * size.y) + uv.y;
-                isNoNearBorder *= step (ALPHA_PRECISION, tex2D (_MainTex, textureOffset).a * IsUVWithinLimits (textureOffset));
-
-                float isPixelWithinOutline = (1.0 - isNoNearBorder) * _EnableInnerOutline * isPixelNotBorder;
-                
-                return isPixelWithinOutline;
-            }
-
-            int CalculateDistanceFromBorder(float2 uv)
-            {
-                float2 centerPoint = float2 (0.5, 0.5);
-                float lineSlope = (uv.y - centerPoint.y) / (uv.x - centerPoint.x);
-                float2 uvLookingForBorder = float2 (uv.x, uv.y);
-                float4 detectionColor = float4 (1.0, 1.0, 1.0, 1.0);
-                
-                [unroll]
-                for (int distanceFromBorder = 0; distanceFromBorder < 16; distanceFromBorder++)
-                {
-                    uvLookingForBorder.x = uv.x + (_MainTex_TexelSize.x * distanceFromBorder * sign (uv.x - centerPoint.x));
-                    uvLookingForBorder.y = uv.y + (_MainTex_TexelSize.y * distanceFromBorder * sign (uv.y - centerPoint.y));
-
-                    detectionColor = tex2D (_MainTex, uvLookingForBorder);
-
-                    if (step (ALPHA_PRECISION, detectionColor.a * IsUVWithinLimits (uvLookingForBorder)) == 0.0)
-                    {
-                        return distanceFromBorder;
-                    }
-                }
-
-                return -1;
-            }
-
-            float AlphaOfOutlineUV(float2 uv)
-            {
-                float2 centerPoint = float2 (0.5, 0.5);
-                float lineSlope = (uv.y - centerPoint.y) / (uv.x - centerPoint.x);
-                float2 uvLookingForBorder = float2 (0.0, 0.0);
-                float4 detectionColor = float4 (1.0, 1.0, 1.0, 1.0);
-                int distanceFromBorder = CalculateDistanceFromBorder (uv);
-                float alpha = 1.0;
-
-                if (distanceFromBorder > (_InnerOutlineThickness / 1.5))
-                {
-                    uvLookingForBorder.x = uv.x + (_MainTex_TexelSize.x * (distanceFromBorder - (_InnerOutlineThickness - distanceFromBorder)) * sign (uv.x - centerPoint.x));
-                    uvLookingForBorder.y = uv.y + (_MainTex_TexelSize.y * (distanceFromBorder - (_InnerOutlineThickness - distanceFromBorder)) * sign (uv.y - centerPoint.y));
-
-                    alpha = 1.0 / pow (1.5, distanceFromBorder) * IsUVWithinInnerOutline (uvLookingForBorder);
-                }
-                else
-                {
-                    alpha = 1.0;
-                }
-
-                return alpha;
-            }
+            float _EnableOutline;
+            sampler2D _OutlineMaskTex;
+            float4 _OutlineColor;
         
             fixed4 SampleSpriteTexture (float2 uv)
             {
@@ -261,87 +149,11 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
             fixed4 SpriteFrag(v2f IN) : SV_Target
             {
                 fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
-
-                // Inner outline.
-                float colorAlpha = c.a;
-                float innerOutline = IsUVWithinInnerOutline (IN.texcoord);
-                float4 outlineColor = float4 (_InnerOutlineColor.r, _InnerOutlineColor.g, _InnerOutlineColor.b, colorAlpha);
-                float outlineSmoothingAlpha = AlphaOfOutlineUV (IN.texcoord);
-                c = lerp (c, _InnerOutlineColor, _InnerOutlineColor.a * innerOutline * AlphaOfOutlineUV (IN.texcoord));
-                c.a = colorAlpha;
                 
-                /*float alphaOn = AlphaOfOutlineUV (IN.texcoord);
-                if (innerOutline > 0.0)
-                {
-                    int distance = CalculateDistanceFromBorder (IN.texcoord);
-
-                    if (distance < 0)
-                    {
-                        c = float4(1.0, 1.0, 1.0, alphaOn);
-                    }
-                    else if (distance == 0)
-                    {
-                        c = float4 (0.75, 0.5, 0.5, alphaOn);
-                    }
-                    else if (distance == 1)
-                    {
-                        c = float4 (1.0, 0, 0, alphaOn);
-                    }
-                    else if (distance == 2)
-                    {
-                        c = float4 (0, 1.0, 0, alphaOn);
-                    }
-                    else if (distance == 3)
-                    {
-                        c = float4 (0, 0, 1.0, alphaOn);
-                    }
-                    else if (distance == 4)
-                    {
-                        c = float4 (0, 1.0, 1.0, alphaOn);
-                    }
-                    else if (distance == 5)
-                    {
-                        c = float4 (1.0, 1.0, 0.0, alphaOn);
-                    }
-                   else if (distance == 6)
-                   {
-                       c = float4 (1.0, 0.0, 1.0, alphaOn);
-                   }
-                   else
-                   {
-                       c = float4 (0.0, 0.0, 0.0, alphaOn);
-                   }
-                }*/
+                float outlineAlpha = tex2D (_OutlineMaskTex, IN.texcoord).a;
+                c.rgb = lerp (c.rgb, _OutlineColor.rgb, _OutlineColor.a * outlineAlpha * _EnableOutline);
                 
                 c.rgb *= c.a;
-
-                
-
-                /*if (innerOutline > 0.0)
-                {
-                    if (alphaOn < 0.25)
-                    {
-                        c = float4( 1.0, 1.0, 1.0, 1.0 );
-                    }
-                    else if (alphaOn < 0.5)
-                    {
-                        c = float4( 1.0, 0.0, 0.0, 1.0);
-                    }
-                    else if (alphaOn < 0.75)
-                    {
-                        c = float4( 0.0, 1.0, 0.0, 1.0);
-                    }
-                    else if (alphaOn <= 1.0)
-                    {
-                        c = float4(0.0, 0.0, 1.0, 1.0);
-                    }
-                    else
-                    {
-                        c = float4(0.0, 0.0, 0.0, 0.0);
-                    }
-                }*/
-
-                
                 return c;
             }
 
