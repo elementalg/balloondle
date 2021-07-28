@@ -187,7 +187,8 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 
                 float uvAngle = (yAngle < 0.0) ? (MATH_PI * 2.0) - xAngle : xAngle;
 
-                return step (_OutlineAngle.x * MATH_PI, uvAngle) * step (uvAngle, _OutlineAngle.y * MATH_PI);
+                return min (1.0, step (_OutlineAngle.x * MATH_PI, uvAngle) * step (uvAngle, _OutlineAngle.y * MATH_PI) +
+                    step (_OutlineAngle.z * MATH_PI, uvAngle) * step (uvAngle, _OutlineAngle.w * MATH_PI));
             }
         
             fixed4 SpriteFrag(v2f IN) : SV_Target
