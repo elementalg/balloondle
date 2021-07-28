@@ -17,6 +17,7 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
         _EnableOutline ("Enable Outline", Float) = 0
         _OutlineMaskTex ("Outline Mask Tex", 2D) = "white" {}
         _OutlineColor ("Outline Color", Color) = (1,1,1,1)
+        _OutlineAngle ("Outline Angle", Vector) = (0,0,0,0)
     }
 
     SubShader
@@ -126,6 +127,7 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
             float _EnableOutline;
             sampler2D _OutlineMaskTex;
             float4 _OutlineColor;
+            float4 _OutlineAngle;
         
             fixed4 SampleSpriteTexture (float2 uv)
             {
@@ -146,12 +148,26 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 return color;
             }
 
+            float IsOutlineWithinAngleLimit(float2 uv)
+            {
+                float2 segmentStartPoint = float2 (cos (_OutlineAngle.x), sin (_OutlineAngle.x));
+                float startSegmentSlope = tan (_OutlineAngle.x);
+                
+                float2 segmentEndPoint = float2 (cos (_OutlineAngle.y), sin (_OutlineAngle.y));
+                float endSegmentSlope = tan (_OutlineAngle.y);
+
+                float minY = min (startSegmentSlope * (uv.x - 0.5), endSegmentSlope * (uv.x - 0.5));
+                float maxY = max (startSegmentSlope * (uv.x - 0.5), endSegmentSlope * (uv.x - 0.5));
+
+                return step (minY, (uv.y - 0.5)) * step ((uv.y - 0.5), maxY);
+            }
+        
             fixed4 SpriteFrag(v2f IN) : SV_Target
             {
                 fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
                 
                 float outlineAlpha = tex2D (_OutlineMaskTex, IN.texcoord).a;
-                c.rgb = lerp (c.rgb, _OutlineColor.rgb, _OutlineColor.a * outlineAlpha * _EnableOutline);
+                c.rgb = lerp (c.rgb, _OutlineColor.rgb, _OutlineColor.a * outlineAlpha * _EnableOutline * IsOutlineWithinAngleLimit (IN.texcoord));
                 
                 c.rgb *= c.a;
                 return c;
