@@ -49,6 +49,10 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
             #ifndef ALPHA_PRECISION
             #define ALPHA_PRECISION 0.000000000000000001
             #endif
+
+            #ifndef MATH_PI
+            #define MATH_PI 3.14159265
+            #endif
         
             #ifndef UNITY_SPRITES_INCLUDED
             #define UNITY_SPRITES_INCLUDED
@@ -150,16 +154,40 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
 
             float IsOutlineWithinAngleLimit(float2 uv)
             {
-                float2 segmentStartPoint = float2 (cos (_OutlineAngle.x), sin (_OutlineAngle.x));
-                float startSegmentSlope = tan (_OutlineAngle.x);
+                float2 displacedUV = uv - 0.5;
+                float2 circumferencePoint = float2 (0.0, 0.0);
+
+                if (1.0 - step (ALPHA_PRECISION, abs (displacedUV.x)) * step (ALPHA_PRECISION, abs (displacedUV.y)))
+                {
+                    return 1.0;
+                }
+
+                if (step (ALPHA_PRECISION, abs (displacedUV.x)) == 0.0)
+                {
+                    circumferencePoint.x = 0.0;
+                    circumferencePoint.y = sign (displacedUV.y);
+                }
+                else
+                {
+                    float lineSlope = (displacedUV.y / displacedUV.x);
+                    float n = displacedUV.y - lineSlope * displacedUV.x;
+
+                    float a = pow (lineSlope, 2.0) + 1;
+                    float b = 2.0 * lineSlope * n;
+                    float c = pow (n, 2.0) - 1;
+                    float dividend = -1.0 * b + (sign (displacedUV.x) * sqrt (pow (b, 2.0) - 4 * a * c));
+                    float divisor = 2 * a;
+                    
+                    circumferencePoint.x = dividend / divisor;
+                    circumferencePoint.y = lineSlope * circumferencePoint.x + n;
+                }
+
+                float xAngle = acos (circumferencePoint.x);
+                float yAngle = asin (circumferencePoint.y);
                 
-                float2 segmentEndPoint = float2 (cos (_OutlineAngle.y), sin (_OutlineAngle.y));
-                float endSegmentSlope = tan (_OutlineAngle.y);
+                float uvAngle = (yAngle < 0.0) ? (MATH_PI * 2.0) - xAngle : xAngle;
 
-                float minY = min (startSegmentSlope * (uv.x - 0.5), endSegmentSlope * (uv.x - 0.5));
-                float maxY = max (startSegmentSlope * (uv.x - 0.5), endSegmentSlope * (uv.x - 0.5));
-
-                return step (minY, (uv.y - 0.5)) * step ((uv.y - 0.5), maxY);
+                return step (_OutlineAngle.x * MATH_PI, uvAngle) * step (uvAngle, _OutlineAngle.y * MATH_PI);
             }
         
             fixed4 SpriteFrag(v2f IN) : SV_Target
