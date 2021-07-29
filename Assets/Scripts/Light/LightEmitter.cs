@@ -2,10 +2,9 @@ using UnityEngine;
 
 namespace Balloondle.Light
 {
-    // TODO -> Link the required component.
     /// <summary>
     /// Generates raycasts in a circular manner, and when a body is hit, the hit is transferred for further
-    /// handling if the body contains the required component.
+    /// handling if the body contains the <see cref="LightHandler"/> component.
     /// </summary>
     public class LightEmitter : MonoBehaviour
     {
