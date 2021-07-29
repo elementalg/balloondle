@@ -15,6 +15,10 @@ namespace Balloondle.Light
         [SerializeField, Tooltip("Maximum distance which the raycast will travel.")]
         private float m_MaximumRaycastDistance = 10f;
 
+        [SerializeField, Tooltip("Starting and ending angle, in radians," +
+                                 " defining the range of the angles used for the creation of raycasts.")]
+        private Vector2 m_AngleRange = new Vector2(0f, 2f * Mathf.PI);
+
         /// <summary>
         /// Value holder for the angle at which a raycast must be emitted.
         /// The angle is calculated in a counter-clockwise manner.
@@ -28,14 +32,14 @@ namespace Balloondle.Light
         
         private void Start()
         {
-            _angleIncrementPerRaycast = 2 * Mathf.PI / m_AmountOfRaycasts;
+            _angleIncrementPerRaycast = (m_AngleRange.y - m_AngleRange.x) / m_AmountOfRaycasts;
             _raycastDirection = new Vector2();
         }
 
         private void FixedUpdate()
         {
-            // Generate raycasts in a circular manner.
-            float angleForRaycast = 0f;
+            // Generate raycasts in a circular manner within the specified angle range.
+            float angleForRaycast = m_AngleRange.x;
             
             for (ushort i = 0; i < m_AmountOfRaycasts; i++)
             {
