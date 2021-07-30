@@ -46,8 +46,12 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
             #pragma multi_compile_local _ PIXELSNAP_ON
             #pragma multi_compile _ ETC1_EXTERNAL_ALPHA
 
-            #ifndef ALPHA_PRECISION
-            #define ALPHA_PRECISION 0.000000000000000001
+            #ifndef ZERO_WITH_MARGIN_ERROR
+            #define ZERO_WITH_MARGIN_ERROR 0.000000000000000001
+            #endif
+
+            #ifndef ANGLE_MARGIN_ERROR
+            #define ANGLE_MARGIN_ERROR 0.001
             #endif
 
             #ifndef MATH_PI
@@ -152,17 +156,37 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 return color;
             }
 
+            /*
+             * Updates the vector '_OutlineAngle' so the angles held are radians.
+             */
+            void ConvertRelativeOutlineAnglesToRadians()
+            {
+                _OutlineAngle.x = (_OutlineAngle.x < 0) ? 2.0 + _OutlineAngle.x : _OutlineAngle.x;
+                _OutlineAngle.x = (_OutlineAngle.x % 2.0) * MATH_PI; 
+                
+                _OutlineAngle.y = (_OutlineAngle.y < 0) ? 2.0 + _OutlineAngle.y : _OutlineAngle.y;
+                _OutlineAngle.y = (_OutlineAngle.y % 2.0) * MATH_PI;
+            }
+
+            /*
+             * Detect whether or not a texture coordinate is located within the boundaries established for the outline.
+             *
+             * Returns: 1.0 if the texture coordinate is within the boundaries, 0.0 otherwise. 
+             */
             float IsOutlineWithinAngleLimit(float2 uv)
             {
+                // Translate the texture coordinate, so we can use (0,0) as center point.
                 float2 displacedUV = uv - 0.5;
                 float2 circumferencePoint = float2 (0.0, 0.0);
 
-                if (1.0 - step (ALPHA_PRECISION, abs (displacedUV.x)) * step (ALPHA_PRECISION, abs (displacedUV.y)))
+                // Return always 1.0 if the point is located in the center.
+                if (1.0 - step (ZERO_WITH_MARGIN_ERROR, abs (displacedUV.x)) * step (ZERO_WITH_MARGIN_ERROR, abs (displacedUV.y)))
                 {
                     return 1.0;
                 }
 
-                if (step (ALPHA_PRECISION, abs (displacedUV.x)) == 0.0)
+                // Vertical line on x = 0.
+                if (step (ANGLE_MARGIN_ERROR, abs (displacedUV.x)) == 0.0)
                 {
                     circumferencePoint.x = 0.0;
                     circumferencePoint.y = sign (displacedUV.y);
@@ -172,6 +196,7 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                     float lineSlope = (displacedUV.y / displacedUV.x);
                     float n = displacedUV.y - lineSlope * displacedUV.x;
 
+                    // 2nd grade equation for retrieving the desired x value within the unitary circle's circumference.
                     float a = pow (lineSlope, 2.0) + 1;
                     float b = 2.0 * lineSlope * n;
                     float c = pow (n, 2.0) - 1;
@@ -182,21 +207,31 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                     circumferencePoint.y = lineSlope * circumferencePoint.x + n;
                 }
 
+                // Angle calculation based upon the point within the unitary circle's circumference.
                 float xAngle = acos (circumferencePoint.x);
                 float yAngle = asin (circumferencePoint.y);
-                
                 float uvAngle = (yAngle < 0.0) ? (MATH_PI * 2.0) - xAngle : xAngle;
+                uvAngle %= 2.0 * MATH_PI;
+                
+                ConvertRelativeOutlineAnglesToRadians();
 
-                return min (1.0, step (_OutlineAngle.x * MATH_PI, uvAngle) * step (uvAngle, _OutlineAngle.y * MATH_PI) +
-                    step (_OutlineAngle.z * MATH_PI, uvAngle) * step (uvAngle, _OutlineAngle.w * MATH_PI));
+                float isAngleRangeALap = step (_OutlineAngle.y, _OutlineAngle.x);
+                
+                float strictAngleRange = step (_OutlineAngle.x, uvAngle) *
+                    step (uvAngle, _OutlineAngle.y + isAngleRangeALap * (2 * MATH_PI));
+                float lapAngleRange = step (0.0, uvAngle) * step (uvAngle, _OutlineAngle.y);
+
+                return min (1.0, strictAngleRange + lapAngleRange * isAngleRangeALap);
             }
         
             fixed4 SpriteFrag(v2f IN) : SV_Target
             {
                 fixed4 c = SampleSpriteTexture (IN.texcoord) * IN.color;
-                
+
+                // Apply outline as long as it is enabled and the texture coordinate is within the defined angle limit.
                 float outlineAlpha = tex2D (_OutlineMaskTex, IN.texcoord).a;
-                c.rgb = lerp (c.rgb, _OutlineColor.rgb, _OutlineColor.a * outlineAlpha * _EnableOutline * IsOutlineWithinAngleLimit (IN.texcoord));
+                c.rgb = lerp (c.rgb, _OutlineColor.rgb,
+                    _OutlineColor.a * outlineAlpha * _EnableOutline * IsOutlineWithinAngleLimit (IN.texcoord));
                 
                 c.rgb *= c.a;
                 return c;
