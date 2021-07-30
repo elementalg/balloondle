@@ -166,8 +166,24 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 
                 _OutlineAngle.y = (_OutlineAngle.y < 0) ? 2.0 + _OutlineAngle.y : _OutlineAngle.y;
                 _OutlineAngle.y = (_OutlineAngle.y % 2.0) * MATH_PI;
+
+                _OutlineAngle.z = (_OutlineAngle.z < 0) ? 2.0 + _OutlineAngle.z : _OutlineAngle.z;
+                _OutlineAngle.z = (_OutlineAngle.z % 2.0) * MATH_PI; 
+                
+                _OutlineAngle.w = (_OutlineAngle.w < 0) ? 2.0 + _OutlineAngle.w : _OutlineAngle.w;
+                _OutlineAngle.w = (_OutlineAngle.w % 2.0) * MATH_PI;
             }
 
+            bool IsAngleWithinAngleRange(float checkedAngle, float2 angleRange)
+            {
+                float isAngleRangeALap = step (angleRange.y, angleRange.x);
+                
+                float strictAngleRange = step (angleRange.x, checkedAngle) *
+                    step (checkedAngle, angleRange.y + isAngleRangeALap * (2 * MATH_PI));
+                float lapAngleRange = step (0.0, checkedAngle) * step (checkedAngle, angleRange.y);
+                return min (1.0, strictAngleRange + lapAngleRange * isAngleRangeALap) > 0;
+            }
+        
             /*
              * Detect whether or not a texture coordinate is located within the boundaries established for the outline.
              *
@@ -180,7 +196,8 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 float2 circumferencePoint = float2 (0.0, 0.0);
 
                 // Return always 1.0 if the point is located in the center.
-                if (1.0 - step (ZERO_WITH_MARGIN_ERROR, abs (displacedUV.x)) * step (ZERO_WITH_MARGIN_ERROR, abs (displacedUV.y)))
+                if (1.0 - step (ZERO_WITH_MARGIN_ERROR, abs (displacedUV.x)) *
+                    step (ZERO_WITH_MARGIN_ERROR, abs (displacedUV.y)))
                 {
                     return 1.0;
                 }
@@ -214,14 +231,9 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
                 uvAngle %= 2.0 * MATH_PI;
                 
                 ConvertRelativeOutlineAnglesToRadians();
-
-                float isAngleRangeALap = step (_OutlineAngle.y, _OutlineAngle.x);
                 
-                float strictAngleRange = step (_OutlineAngle.x, uvAngle) *
-                    step (uvAngle, _OutlineAngle.y + isAngleRangeALap * (2 * MATH_PI));
-                float lapAngleRange = step (0.0, uvAngle) * step (uvAngle, _OutlineAngle.y);
-
-                return min (1.0, strictAngleRange + lapAngleRange * isAngleRangeALap);
+                return min (1, IsAngleWithinAngleRange(uvAngle, _OutlineAngle.xy)
+                    + IsAngleWithinAngleRange(uvAngle, _OutlineAngle.zw));
             }
         
             fixed4 SpriteFrag(v2f IN) : SV_Target
