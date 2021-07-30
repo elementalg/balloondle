@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Balloondle.Light
 {
-    public class BalloonLightHandler : LightHandler
+    public class BalloonLightHandler : MonoBehaviour
     {
         private const string OutlineAngleShaderProperty = "_OutlineAngle";
         
@@ -11,7 +11,16 @@ namespace Balloondle.Light
         private Material m_DynamicOutline;
 
         [SerializeField, Tooltip("Angle, in radians, which will be outlined for each raycast.")]
-        private float m_OutlineAngleForEachRaycast = 3.14f;
+        private float m_OutlineAngleRadius = 0.3f;
+
+        [SerializeField, Tooltip("Space, in radians, in between the outlined angles.")]
+        private float m_OutlineAngleSpacing = 0.66f;
+        
+        [SerializeField, Tooltip("Angle, in radians, which is outlined next to the outline.")]
+        private float m_SecondaryOutlineAngleDiameter = 0.36f;
+
+        [SerializeField, Tooltip("Transform of the GameObject which acts as a light source.")]
+        private Transform m_LightSource;
         
         private int _frameHitCount;
         private int _outlineBiSegmentPropertyId;
@@ -21,39 +30,26 @@ namespace Balloondle.Light
         {
             _outlineBiSegmentPropertyId = Shader.PropertyToID(OutlineAngleShaderProperty);
             _outlineBiSegmentAnglesRange = new Vector4();
-            
-            m_DynamicOutline.SetVector(_outlineBiSegmentPropertyId, _outlineBiSegmentAnglesRange);
-        }
-
-        public override void OnLightRaycastHit(RaycastHit2D hit2D)
-        {
-            Vector2 normalizedCircumferencePoint = 1 * hit2D.normal.normalized;
-
-            float angle = Mathf.Atan2(normalizedCircumferencePoint.y, normalizedCircumferencePoint.x) - hit2D.transform.eulerAngles.z % 360 * Mathf.Deg2Rad;
-            UpdateOutlineSegment(angle);
-            
-            _frameHitCount++;
-        }
-
-        private void UpdateOutlineSegment(float lightRaycastHitAngle)
-        {
-            float startingAngle = ((lightRaycastHitAngle - m_OutlineAngleForEachRaycast / 2f) / Mathf.PI) % 2f;
-            float endingAngle = ((lightRaycastHitAngle + m_OutlineAngleForEachRaycast) / Mathf.PI) % 2f;
-
-            if (_frameHitCount == 0)
-            {
-                _outlineBiSegmentAnglesRange.x = startingAngle;
-            }
-            
-            _outlineBiSegmentAnglesRange.y += endingAngle / Mathf.Pow(2f, _frameHitCount);
 
             m_DynamicOutline.SetVector(_outlineBiSegmentPropertyId, _outlineBiSegmentAnglesRange);
         }
         
         private void Update()
         {
-            Debug.Log($"Update: {_frameHitCount}");
-            _frameHitCount = 0;
+            // Obtain the lighting incision angle by calculating the direction from the balloon's center to the
+            // center of the GameObject acting as light source.
+            Vector3 worldDirection = m_LightSource.position - transform.position;
+
+            Vector2 circumferencePoint = transform.InverseTransformDirection(worldDirection).normalized;
+            float angle = Mathf.Atan2(circumferencePoint.y, circumferencePoint.x) / Mathf.PI;
+
+            _outlineBiSegmentAnglesRange.x = (angle - m_OutlineAngleRadius) % 2f;
+            _outlineBiSegmentAnglesRange.y = (_outlineBiSegmentAnglesRange.x + m_OutlineAngleRadius) % 2f;
+            _outlineBiSegmentAnglesRange.z = (_outlineBiSegmentAnglesRange.y + m_OutlineAngleSpacing) % 2f;
+            _outlineBiSegmentAnglesRange.w = (_outlineBiSegmentAnglesRange.z + m_SecondaryOutlineAngleDiameter) % 2f;
+            
+            // Pass the updated angles to the shader.
+            m_DynamicOutline.SetVector(_outlineBiSegmentPropertyId, _outlineBiSegmentAnglesRange);
         }
     }
 }
