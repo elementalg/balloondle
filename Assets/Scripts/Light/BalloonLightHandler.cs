@@ -27,17 +27,12 @@ namespace Balloondle.Light
 
         public override void OnLightRaycastHit(RaycastHit2D hit2D)
         {
-            if (_frameHitCount != 0)
-            {
-                return;
-            }
-            _frameHitCount++;
-            
             Vector2 normalizedCircumferencePoint = 1 * hit2D.normal.normalized;
-            Debug.Log($"FrameHitCount: {hit2D.normal}");
 
             float angle = Mathf.Atan2(normalizedCircumferencePoint.y, normalizedCircumferencePoint.x) - hit2D.transform.eulerAngles.z % 360 * Mathf.Deg2Rad;
             UpdateOutlineSegment(angle);
+            
+            _frameHitCount++;
         }
 
         private void UpdateOutlineSegment(float lightRaycastHitAngle)
@@ -45,14 +40,19 @@ namespace Balloondle.Light
             float startingAngle = ((lightRaycastHitAngle - m_OutlineAngleForEachRaycast / 2f) / Mathf.PI) % 2f;
             float endingAngle = ((lightRaycastHitAngle + m_OutlineAngleForEachRaycast) / Mathf.PI) % 2f;
 
-            _outlineBiSegmentAnglesRange.x = startingAngle;
-            _outlineBiSegmentAnglesRange.y = endingAngle;
+            if (_frameHitCount == 0)
+            {
+                _outlineBiSegmentAnglesRange.x = startingAngle;
+            }
+            
+            _outlineBiSegmentAnglesRange.y += endingAngle / Mathf.Pow(2f, _frameHitCount);
 
             m_DynamicOutline.SetVector(_outlineBiSegmentPropertyId, _outlineBiSegmentAnglesRange);
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
+            Debug.Log($"Update: {_frameHitCount}");
             _frameHitCount = 0;
         }
     }
