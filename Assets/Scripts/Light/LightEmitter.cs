@@ -9,7 +9,7 @@ namespace Balloondle.Light
     public class LightEmitter : MonoBehaviour
     {
         [SerializeField, Tooltip("Amount of raycasts which will be distanced evenly.")]
-        private ushort m_AmountOfRaycasts = 180;
+        private ushort m_AmountOfRaycasts = 12;
 
         [SerializeField, Tooltip("Maximum distance which the raycast will travel.")]
         private float m_MaximumRaycastDistance = 10f;
@@ -17,6 +17,9 @@ namespace Balloondle.Light
         [SerializeField, Tooltip("Starting and ending angle, in radians," +
                                  " defining the range of the angles used for the creation of raycasts.")]
         private Vector2 m_AngleRange = new Vector2(0f, 2f * Mathf.PI);
+
+        [SerializeField, Tooltip("Size of the capsule.")]
+        private Vector2 m_CapsuleSize = new Vector2(0.25f, 1f);
 
         /// <summary>
         /// Value holder for the angle at which a raycast must be emitted.
@@ -46,8 +49,15 @@ namespace Balloondle.Light
                 _raycastDirection.y = Mathf.Sin(angleForRaycast);
 
                 RaycastHit2D hitBody =
-                    Physics2D.Raycast(transform.position, _raycastDirection, m_MaximumRaycastDistance);
-                
+                    Physics2D.CapsuleCast(transform.position, m_CapsuleSize, CapsuleDirection2D.Vertical, 
+                        angleForRaycast * 180f / Mathf.PI, _raycastDirection, m_MaximumRaycastDistance);
+
+                if (hitBody.transform != null)
+                {
+                    LightHandler lightHandler = hitBody.transform.GetComponent<LightHandler>();
+                    lightHandler?.OnLightRaycastHit(hitBody);
+                }
+
                 // TODO -> Handle the hit body
                 
                 angleForRaycast += _angleIncrementPerRaycast;
