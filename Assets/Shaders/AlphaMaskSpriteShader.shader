@@ -131,6 +131,7 @@ Shader "Balloondle/Alpha Mask Sprite Shader"
             sampler2D _MainTex;
             float4 _MainTex_TexelSize;
             sampler2D _AlphaMaskTex;
+            sampler2D _AlphaTex;
         
             float _EnableOutline;
             sampler2D _OutlineMaskTex;
