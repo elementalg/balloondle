@@ -66,7 +66,7 @@ public class MovementController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("OnCollisionEnter2D");
-        _isCollisionCooldownApplied = true;
+        //_isCollisionCooldownApplied = true;
         _collisionStartTime = Time.realtimeSinceStartup;
     }
 }
