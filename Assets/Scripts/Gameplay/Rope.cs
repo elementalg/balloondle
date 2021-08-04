@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Balloondle.Generator
+namespace Balloondle.Gameplay
 {
     public class Rope : MonoBehaviour
     {
+        private const float MaximumDistanceBetweenConnections = 4f;
+
         [SerializeField, Tooltip("Rope cell's prefab.")]
         private GameObject m_RopeCellPrefab;
         
@@ -83,6 +85,9 @@ namespace Balloondle.Generator
         private void AddCellAtPosition(Vector3 ropeCellPosition)
         {
             GameObject ropeCell = Instantiate(m_RopeCellPrefab, ropeCellPosition, Quaternion.identity);
+
+            RopeJointController ropeJointController = ropeCell.AddComponent<RopeJointController>();
+            ropeJointController.RopeInstance = this;
             
             _cells.Add(ropeCell);
 
@@ -209,11 +214,15 @@ namespace Balloondle.Generator
         {
             if (_gameObjectAttachedToStart != null)
             {
+                Destroy(_gameObjectAttachedToStart.GetComponent<RopeJointController>());
                 AttachGameObjectToRigidBody(_gameObjectAttachedToStart, null);
             }
 
             _gameObjectAttachedToStart = startGameObject;
 
+            RopeJointController ropeJointController = _gameObjectAttachedToStart.AddComponent<RopeJointController>();
+            ropeJointController.RopeInstance = this;
+            
             if (_cells.Count > 0)
             {
                 AttachGameObjectToRigidBody(_gameObjectAttachedToStart, _cells[0].GetComponent<Rigidbody2D>());
@@ -260,6 +269,30 @@ namespace Balloondle.Generator
                 cellPosition.Set(startPosition.x + (_ropeCellSize.x * cell * direction.x), 
                     startPosition.y + (_ropeCellSize.y * cell * direction.y), startPosition.z);
                 AddCellAtPosition(cellPosition);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (_gameObjectAttachedToStart != null && _bodyAttachedToEnd != null)
+            {
+                float distance = Vector2
+                    .Distance(_gameObjectAttachedToStart.transform.position, _bodyAttachedToEnd.transform.position);
+
+                if (distance > MaximumDistanceBetweenConnections)
+                {
+                    OnRopeJointBreak();
+                }
+            }
+        }
+        
+        public void OnRopeJointBreak()
+        {
+            RemoveAllCells();
+
+            if (_bodyAttachedToEnd.GetComponent<Joint2D>() != null)
+            {
+                Destroy(_bodyAttachedToEnd.GetComponent<Joint2D>());
             }
         }
     }
