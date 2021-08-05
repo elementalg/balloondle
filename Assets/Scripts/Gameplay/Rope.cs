@@ -326,14 +326,18 @@ namespace Balloondle.Gameplay
             direction.Normalize();
 
             ulong cells = (ulong) Mathf.Ceil(Mathf.Abs(distance) / Mathf.Abs(_ropeCellSize.x));
+            // Fill in with cells the space created due to the overlapping of cells.
             cells = cells + (cells / 4);
 
             Vector3 cellPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z);
+
+            Vector2 cellOverlap = new Vector2(_ropeCellSize.x * 0.125f * direction.x,
+                _ropeCellSize.y * 0.125f * direction.y);
             
             for (ulong cell = 0ul; cell < cells; cell++)
             {
-                cellPosition.Set(startPosition.x + (_ropeCellSize.x * cell * direction.x) - (_ropeCellSize.x * 0.125f * cell * direction.x), 
-                    startPosition.y + (_ropeCellSize.y * cell * direction.y) - (_ropeCellSize.y * 0.125f * cell * direction.y), startPosition.z);
+                cellPosition.Set(startPosition.x + (_ropeCellSize.x * cell * direction.x) - ( cellOverlap.x * cell), 
+                    startPosition.y + (_ropeCellSize.y * cell * direction.y) - (cellOverlap.y * cell), startPosition.z);
                 AddCellAtPosition(cellPosition);
             }
         }
