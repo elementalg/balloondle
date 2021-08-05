@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.Physics2D
 {
     /// <summary>
     /// Rope made up of cells which connects two gameObjects with certain constraints.
@@ -12,7 +12,7 @@ namespace Balloondle.Gameplay
     /// * The velocity of the start, or the end, has exceeded the maximum supported velocity.
     /// * The distance, between the start and the end, has exceeded the maximum allowed distance. 
     /// </summary>
-    public class Rope : MonoBehaviour
+    public class Rope2D : MonoBehaviour
     {
         /// <summary>
         /// Maximum velocity supported before the rope proceeds to break.
