@@ -4,22 +4,45 @@ using UnityEngine;
 
 namespace Balloondle.Gameplay
 {
+    /// <summary>
+    /// Rope made up of cells which connects two gameObjects with certain constraints.
+    ///
+    /// The rope can get broken by the following reasons:
+    /// * A joint contained within any of the end's GameObject, or, within any of the cells, has been broken.
+    /// * The velocity of the start, or the end, has exceeded the maximum supported velocity.
+    /// * The distance, between the start and the end, has exceeded the maximum allowed distance. 
+    /// </summary>
     public class Rope : MonoBehaviour
     {
+        /// <summary>
+        /// Maximum velocity supported before the rope proceeds to break.
+        /// </summary>
         private const float MaximumSupportedVelocity = 100f;
+        
         private GameObject _ropeCellPrefab;
         
-        private List<GameObject> _cells;
+        private List<GameObject> _ropeCells;
         private Vector2 _ropeCellSize;
 
-        private Vector2 _startAnchorPoint;
-        private Vector2 _endAnchorPoint;
-        
         private GameObject _gameObjectAttachedToStart;
-        private Rigidbody2D _bodyAttachedToEnd;
+        private Vector2 _startGameObjectAnchorPoint;
         
+        private Rigidbody2D _bodyAttachedToEnd;
+        private Vector2 _endBodyAnchorPoint;
+
+        /// <summary>
+        /// Distance constraint between the start gameObject and the end one. If the limit is broken, the
+        /// rope proceeds to break.
+        /// </summary>
         private float _maximumDistanceBetweenStartAndEnd = 4.75f;
 
+        /// <summary>
+        /// Prefab used for instantiating a rope cell.
+        ///
+        /// <exception cref="InvalidOperationException">if trying to set
+        /// a GameObject which is null, or,does not contain a <see cref="SpriteRenderer"/>,
+        /// a <see cref="Rigidbody2D"/>, a <see cref="BoxCollider2D"/>.</exception>
+        /// </summary>
         public GameObject ropeCellPrefab
         {
             get => _ropeCellPrefab;
@@ -32,20 +55,36 @@ namespace Balloondle.Gameplay
             }
         }
 
+        /// <summary>
+        /// Force which proceeds to break any of the joints contained within the start GameObject,
+        /// or, within any of the rope cells.
+        /// </summary>
         public float jointBreakForce { get; set; } = 2f;
+        
+        /// <summary>
+        /// Torque which proceeds to break the <see cref="HingeJoint2D"/> used within the start GameObject,
+        /// and every rope cell.
+        /// </summary>
         public float jointBreakTorque { get; set; } = 2f;
+        
+        /// <summary>
+        /// Force which proceeds to break the <see cref="DistanceJoint2D"/> connecting the start and the end.
+        /// </summary>
         public float jointBetweenEndsBreakForce { get; set; } = 1000f;
 
         private void OnEnable()
         {
-            _cells = new List<GameObject>();
+            _ropeCells = new List<GameObject>();
         }
 
         private void OnDisable()
         {
             RemoveAllCells();
         }
-        
+
+        /// <summary>
+        /// Assures constraints are met.
+        /// </summary>
         private void FixedUpdate()
         {
             if (_gameObjectAttachedToStart != null && _bodyAttachedToEnd != null)
@@ -61,20 +100,21 @@ namespace Balloondle.Gameplay
 
                 if (_gameObjectAttachedToStart.GetComponent<Rigidbody2D>().velocity.magnitude > MaximumSupportedVelocity)
                 {
-                    Debug.Log($"GameObject: Velocity {_gameObjectAttachedToStart.GetComponent<Rigidbody2D>().velocity.magnitude}");
                     OnRopeJointBreak();
                     return;
                 }
 
                 if (_bodyAttachedToEnd.velocity.magnitude > MaximumSupportedVelocity)
                 {
-                    Debug.Log($"Body: Velocity {_bodyAttachedToEnd.velocity.magnitude}");
                     OnRopeJointBreak();
-                    return;
                 }
             }
         }
         
+        /// <summary>
+        /// Removes the rope cells added to the Scene, and the added joints to the start and end. Finally, it proceeds
+        /// to self-destruct.
+        /// </summary>
         public void OnRopeJointBreak()
         {
             RemoveAllCells();
@@ -90,7 +130,7 @@ namespace Balloondle.Gameplay
         /// </summary>
         private void RemoveAllCells()
         {
-            if (_cells.Count < 1)
+            if (_ropeCells.Count < 1)
             {
                 return;
             }
@@ -100,13 +140,13 @@ namespace Balloondle.Gameplay
                 AttachGameObjectToRigidBody(_gameObjectAttachedToStart, null);
             }
 
-            foreach (GameObject ropeCell in _cells)
+            foreach (GameObject ropeCell in _ropeCells)
             {
                 AttachGameObjectToRigidBody(ropeCell, null);
                 Destroy(ropeCell);
             }
             
-            _cells.Clear();
+            _ropeCells.Clear();
         }
         
         private void RemoveJointsFromEnds()
@@ -127,6 +167,15 @@ namespace Balloondle.Gameplay
             }
         }
         
+        /// <summary>
+        /// Creates a rope long enough to fill the existing distance between the start and the end.
+        /// This rope will break if the distance between the start and the end exceeds the established maximum.
+        /// </summary>
+        /// <param name="start">GameObject attached to the start of the rope.</param>
+        /// <param name="startAnchorPoint"></param>
+        /// <param name="end">GameObject attached to the end of the rope.</param>
+        /// <param name="endAnchorPoint"></param>
+        /// <param name="maximumDistanceBetweenStartAndEnd"></param>
         public void AddCellsForJoiningStartToEnd(GameObject start, Vector2 startAnchorPoint,
             Rigidbody2D end, Vector2 endAnchorPoint, float maximumDistanceBetweenStartAndEnd)
         {
@@ -134,8 +183,8 @@ namespace Balloondle.Gameplay
             
             RemoveAllCells();
             
-            _startAnchorPoint = startAnchorPoint;
-            _endAnchorPoint = endAnchorPoint;
+            _startGameObjectAnchorPoint = startAnchorPoint;
+            _endBodyAnchorPoint = endAnchorPoint;
             _maximumDistanceBetweenStartAndEnd = maximumDistanceBetweenStartAndEnd;
 
             AttachJointToStart(start);
@@ -188,12 +237,18 @@ namespace Balloondle.Gameplay
             RopeJointController ropeJointController = _gameObjectAttachedToStart.AddComponent<RopeJointController>();
             ropeJointController.RopeInstance = this;
             
-            if (_cells.Count > 0)
+            if (_ropeCells.Count > 0)
             {
-                AttachGameObjectToRigidBody(_gameObjectAttachedToStart, _cells[0].GetComponent<Rigidbody2D>());
+                AttachGameObjectToRigidBody(_gameObjectAttachedToStart, _ropeCells[0].GetComponent<Rigidbody2D>());
             }
         }
 
+        /// <summary>
+        /// Adds the required joints to the start GameObject, and to every rope cell.
+        /// </summary>
+        /// <param name="connectingPoint">Instance of the start GameObject, or of a rope cell.</param>
+        /// <param name="enableCollision">Whether or not, the connectingPoint should collide with the attached
+        /// body.</param>
         private void AddJointsToConnectingPoint(GameObject connectingPoint, bool enableCollision)
         {
             HingeJoint2D hingeJoint2D;
@@ -238,9 +293,9 @@ namespace Balloondle.Gameplay
         {
             _bodyAttachedToEnd = body2D;
             
-            if (_cells.Count > 0)
+            if (_ropeCells.Count > 0)
             {
-                AttachGameObjectToRigidBody(_cells[_cells.Count - 1], _bodyAttachedToEnd);
+                AttachGameObjectToRigidBody(_ropeCells[_ropeCells.Count - 1], _bodyAttachedToEnd);
             }
 
             DistanceJoint2D distanceJoint2D;
@@ -263,8 +318,8 @@ namespace Balloondle.Gameplay
         
         private void FillWithCellsDistanceBetweenStartAndEnd()
         {
-            Vector3 startPosition = _gameObjectAttachedToStart.transform.TransformPoint(_startAnchorPoint);
-            Vector3 endPosition = _bodyAttachedToEnd.transform.TransformPoint(_endAnchorPoint);
+            Vector3 startPosition = _gameObjectAttachedToStart.transform.TransformPoint(_startGameObjectAnchorPoint);
+            Vector3 endPosition = _bodyAttachedToEnd.transform.TransformPoint(_endBodyAnchorPoint);
 
             float distance = Vector2.Distance(startPosition, endPosition);
             Vector2 direction = endPosition - startPosition;
@@ -294,7 +349,7 @@ namespace Balloondle.Gameplay
             RopeJointController ropeJointController = ropeCell.AddComponent<RopeJointController>();
             ropeJointController.RopeInstance = this;
             
-            _cells.Add(ropeCell);
+            _ropeCells.Add(ropeCell);
 
             SynchronizeJointsAfterAddition();
         }
@@ -304,15 +359,15 @@ namespace Balloondle.Gameplay
         /// </summary>
         private void SynchronizeJointsAfterAddition()
         {
-            if (_cells.Count == 1)
+            if (_ropeCells.Count == 1)
             {
                 if (_gameObjectAttachedToStart != null)
                 {
-                    AttachGameObjectToRigidBody(_gameObjectAttachedToStart, _cells[0].GetComponent<Rigidbody2D>());
+                    AttachGameObjectToRigidBody(_gameObjectAttachedToStart, _ropeCells[0].GetComponent<Rigidbody2D>());
                 }    
             }
 
-            GameObject lastCell = _cells[_cells.Count - 1];
+            GameObject lastCell = _ropeCells[_ropeCells.Count - 1];
             if (_bodyAttachedToEnd != null)
             {
                 AttachGameObjectToRigidBody(lastCell, _bodyAttachedToEnd);
@@ -322,9 +377,9 @@ namespace Balloondle.Gameplay
                 AttachGameObjectToRigidBody(lastCell, null);
             }
 
-            if (_cells.Count > 1)
+            if (_ropeCells.Count > 1)
             {
-                GameObject penultimateCell = _cells[_cells.Count - 2];
+                GameObject penultimateCell = _ropeCells[_ropeCells.Count - 2];
                 
                 AttachGameObjectToRigidBody(penultimateCell, lastCell.GetComponent<Rigidbody2D>());
             }
@@ -344,8 +399,8 @@ namespace Balloondle.Gameplay
             
             if (source == _gameObjectAttachedToStart)
             {
-                hingeJoint2D.anchor = _startAnchorPoint;
-                distanceJoint2D.anchor = _startAnchorPoint;
+                hingeJoint2D.anchor = _startGameObjectAnchorPoint;
+                distanceJoint2D.anchor = _startGameObjectAnchorPoint;
                 return;
             }
 
@@ -356,8 +411,8 @@ namespace Balloondle.Gameplay
 
             if (destination == _bodyAttachedToEnd)
             {
-                hingeJoint2D.connectedAnchor = _endAnchorPoint;
-                distanceJoint2D.connectedAnchor = _endAnchorPoint;
+                hingeJoint2D.connectedAnchor = _endBodyAnchorPoint;
+                distanceJoint2D.connectedAnchor = _endBodyAnchorPoint;
             }
         }
     }
