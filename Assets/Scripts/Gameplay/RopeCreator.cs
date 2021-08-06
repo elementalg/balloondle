@@ -1,4 +1,5 @@
 using System;
+using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 
 namespace Balloondle.Gameplay
@@ -6,6 +7,7 @@ namespace Balloondle.Gameplay
     public class RopeCreator : MonoBehaviour
     {
         [SerializeField] private GameObject m_RopeCellPrefab;
+        [SerializeField] private GameObject m_RopeCellSpriteShapePrefab;
         
         private const string RopeTag = "Rope";
         
@@ -23,11 +25,14 @@ namespace Balloondle.Gameplay
             };
             
             ropeGameObject.GetComponent<Transform>().position = Vector3.zero;
-            Rope rope = ropeGameObject.AddComponent<Rope>();
+            Rope2D rope = ropeGameObject.AddComponent<Rope2D>();
             rope.ropeCellPrefab = m_RopeCellPrefab;
-            
             rope.AddCellsForJoiningStartToEnd(start.gameObject, startAnchor,
                 end, endAnchor, maximumDistanceBetweenBodies);
+
+            RopeVisualizer ropeVisualizer = ropeGameObject.AddComponent<RopeVisualizer>();
+            ropeVisualizer.ropeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
+            ropeVisualizer.VisualizeRope();
         }
     }
 }
