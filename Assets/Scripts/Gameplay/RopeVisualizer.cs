@@ -100,7 +100,7 @@ namespace Balloondle.Gameplay
         {
             if (index < _spriteShapeController.spline.GetPointCount() - 1)
             {
-                throw new InvalidOperationException("INVALID BITCH");
+                throw new InvalidOperationException("Point is not being inserted sequentially.");
             }
             
             Vector3 previousPoint;
@@ -118,9 +118,11 @@ namespace Balloondle.Gameplay
                 }
             }
             
+            _spriteShapeController.spline.InsertPointAt(index, position);
+            
             try
             {
-                _spriteShapeController.spline.InsertPointAt(index, position);
+                
                 return;
             }
             catch (Exception e)
