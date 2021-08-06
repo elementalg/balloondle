@@ -119,18 +119,6 @@ namespace Balloondle.Gameplay
             }
             
             _spriteShapeController.spline.InsertPointAt(index, position);
-            
-            try
-            {
-                
-                return;
-            }
-            catch (Exception e)
-            {
-                previousPoint = _spriteShapeController.spline.GetPosition(index - 1);
-                float squaredDistance = Vector3.SqrMagnitude(previousPoint - position);
-                Debug.Log($"Exception: Index: {index} | Position: {position} | SquaredDistance: {squaredDistance}");                
-            }
         }
     }
 }
