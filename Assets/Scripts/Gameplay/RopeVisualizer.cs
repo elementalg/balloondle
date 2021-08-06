@@ -8,8 +8,7 @@ namespace Balloondle.Gameplay
 {
     public class RopeVisualizer : MonoBehaviour
     {
-        private const string RopeSpriteShapeName = "RopeSpriteShape";
-        private const float MinimalSafeDistanceBetweenPoints = 0.1f;
+        private const float MinimalSafeDistanceBetweenPoints = 0.05f;
         
         private GameObject _ropeSpriteShape;
         private Rope2D _rope2D;
@@ -103,18 +102,23 @@ namespace Balloondle.Gameplay
                 throw new InvalidOperationException("Point is not being inserted sequentially.");
             }
             
-            Vector3 previousPoint;
             if (index > 0)
             {
-                previousPoint = _spriteShapeController.spline.GetPosition(index - 1);
+                Vector3 previousPoint = _spriteShapeController.spline.GetPosition(index - 1);
+                // Check distance with the start of the spline, due to the position validating logic of Spline.
+                Vector3 originPoint = _spriteShapeController.spline.GetPosition(0); 
+                
+                float squaredDistanceFromPreviousPoint = Vector3.SqrMagnitude(previousPoint - position);
+                float squaredDistanceFromOriginPoint = Vector3.SqrMagnitude(originPoint - position);
+                
+                Vector3 safeDirection = (position - originPoint).normalized + (position - previousPoint).normalized;
 
-                float squaredDistance = Vector3.SqrMagnitude(previousPoint - position);
-
-                if (squaredDistance < MinimalSafeDistanceBetweenPoints * MinimalSafeDistanceBetweenPoints)
+                if (squaredDistanceFromPreviousPoint <
+                    MinimalSafeDistanceBetweenPoints * MinimalSafeDistanceBetweenPoints 
+                    || squaredDistanceFromOriginPoint <
+                    MinimalSafeDistanceBetweenPoints * MinimalSafeDistanceBetweenPoints)
                 {
-                    Vector3 direction = position - previousPoint;
-
-                    position += MinimalSafeDistanceBetweenPoints * direction.normalized;
+                    position += MinimalSafeDistanceBetweenPoints * safeDirection.normalized;
                 }
             }
             
