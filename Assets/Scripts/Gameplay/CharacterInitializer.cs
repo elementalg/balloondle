@@ -1,4 +1,3 @@
-using Balloondle.Gameplay;
 using UnityEngine;
 
 namespace Balloondle.Gameplay
@@ -14,7 +13,7 @@ namespace Balloondle.Gameplay
         void Start()
         {
             m_RopeCreator.CreateRopeConnectingTwoRigidBodies2D(m_StartGameObject.GetComponent<Rigidbody2D>(),
-                new Vector2(0, -0.5f), m_EndBody, new Vector2(0, -0.2f),
+                new Vector2(0, -0.5f), m_EndBody, new Vector2(0, -0.32f),
                 5f);
         }
     }
