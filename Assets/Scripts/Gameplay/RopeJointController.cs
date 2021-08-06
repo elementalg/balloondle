@@ -1,4 +1,5 @@
 using System;
+using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 
 namespace Balloondle.Gameplay
@@ -8,7 +9,7 @@ namespace Balloondle.Gameplay
         private HingeJoint2D _hingeJoint2D;
         private DistanceJoint2D _distanceJoint2D;
 
-        public Rope RopeInstance { get; set; }
+        public Rope2D ropeInstance { get; set; }
         
         private void Start()
         {
@@ -39,9 +40,9 @@ namespace Balloondle.Gameplay
                 _hingeJoint2D.enabled = false;
             }
 
-            if (RopeInstance != null)
+            if (ropeInstance != null)
             {
-                RopeInstance.OnRopeJointBreak();
+                ropeInstance.OnRopeJointBreak();
             }
         }
     }
