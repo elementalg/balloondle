@@ -43,7 +43,7 @@ namespace Balloondle.Gameplay
             {
                 _spriteShapeController.spline.Clear();
 
-                for (int i = 0; i <= _ropePoints.Count; i++)
+                for (int i = 0; i < _ropePoints.Count; i++)
                 {
                     Transform pointTransform = _ropePoints[i];
 
