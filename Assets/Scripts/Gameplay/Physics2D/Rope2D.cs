@@ -236,7 +236,7 @@ namespace Balloondle.Gameplay.Physics2D
             AddJointsToConnectingPoint(gameObjectAttachedToStart, true);
             
             RopeJointController ropeJointController = gameObjectAttachedToStart.AddComponent<RopeJointController>();
-            ropeJointController.RopeInstance = this;
+            ropeJointController.ropeInstance = this;
             
             if (ropeCells.Count > 0)
             {
@@ -352,7 +352,7 @@ namespace Balloondle.Gameplay.Physics2D
             // Disable collision between rope cells.
             AddJointsToConnectingPoint(ropeCell, true);
             RopeJointController ropeJointController = ropeCell.AddComponent<RopeJointController>();
-            ropeJointController.RopeInstance = this;
+            ropeJointController.ropeInstance = this;
             
             ropeCells.Add(ropeCell);
 
