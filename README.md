@@ -8,9 +8,9 @@ You may have to protect the world from the infamous alien based balloons, which 
 
 Balloondle will be released initially only for Android (+4.2). iOS releases are planned too!
 
-#### Singleplayer
+#### Levels
 
-Fight your way through the enemies, and reach the peace!
+Fight your way through the enemies in order to achieve the peace.
 
 #### Free to play
 

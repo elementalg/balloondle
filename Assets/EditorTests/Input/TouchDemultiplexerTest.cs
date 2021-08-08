@@ -6,12 +6,12 @@ namespace EditorTests.UI
 {
     public class TouchDemultiplexerTest
     {
-        private TouchDemultiplexer _touchDemultiplexer;
+        private PointerDemultiplexer _touchDemultiplexer;
 
         [SetUp]
         public void Initialize()
         {
-            _touchDemultiplexer = new TouchDemultiplexer();
+            _touchDemultiplexer = new PointerDemultiplexer();
         }
         
         [Test]
@@ -24,7 +24,7 @@ namespace EditorTests.UI
             {
                 outputCalled = true;
             });
-            _touchDemultiplexer.OnTouchUpdate(touchThatJustBegun);
+            _touchDemultiplexer.OnPointerUpdate(touchThatJustBegun);
             
             Assert.True(outputCalled, "Output has not been called.");
         }
@@ -40,16 +40,16 @@ namespace EditorTests.UI
             
             _touchDemultiplexer.AddOutputToQueue(touch =>
             {
-                firstOutputCorrect = (touch.touchId == touchForFirstOutput.touchId);
+                firstOutputCorrect = (touch.pointerId == touchForFirstOutput.touchId);
             });
             _touchDemultiplexer.AddOutputToQueue(touch =>
             {
-                secondOutputCorrect = (touch.touchId == touchForSecondOutput.touchId);
+                secondOutputCorrect = (touch.pointerId == touchForSecondOutput.touchId);
             });
-            _touchDemultiplexer.OnTouchUpdate(touchForFirstOutput);
-            _touchDemultiplexer.OnTouchUpdate(touchForFirstOutput);
-            _touchDemultiplexer.OnTouchUpdate(touchForSecondOutput);
-            _touchDemultiplexer.OnTouchUpdate(touchForFirstOutput);
+            _touchDemultiplexer.OnPointerUpdate(touchForFirstOutput);
+            _touchDemultiplexer.OnPointerUpdate(touchForFirstOutput);
+            _touchDemultiplexer.OnPointerUpdate(touchForSecondOutput);
+            _touchDemultiplexer.OnPointerUpdate(touchForFirstOutput);
             
             Assert.True(firstOutputCorrect, "First output has received touch updates from " +
                                             "other touches not assigned to it.");
@@ -68,16 +68,16 @@ namespace EditorTests.UI
             {
                 callCount++;
             });
-            _touchDemultiplexer.OnTouchUpdate(touchWhichWillEnd);
+            _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
             touchWhichWillEnd.phase = TouchPhase.Moved;
-            _touchDemultiplexer.OnTouchUpdate(touchWhichWillEnd);
+            _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
             touchWhichWillEnd.phase = TouchPhase.Ended;
-            _touchDemultiplexer.OnTouchUpdate(touchWhichWillEnd);
+            _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
             
             // This call must be ignored by the touch demultiplexer, if it is not ignored, and he output action is
             // called, then the demultiplexer does not work correctly.
             touchWhichWillEnd.phase = TouchPhase.Began;
-            _touchDemultiplexer.OnTouchUpdate(touchWhichWillEnd);
+            _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
 
             Assert.AreEqual(expectedCallCount, callCount);
         }
