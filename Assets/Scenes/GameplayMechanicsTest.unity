@@ -1102,6 +1102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MaximumSquaredVelocity: 144
   m_SquaredVelocityDifferenceToDragCoefficient: 0.1
+  m_MaximumAngularVelocity: 240
+  m_AngularVelocityDifferenceToDragCoefficient: 0.001
 --- !u!1 &1183837187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2040,6 +2042,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MaximumSquaredVelocity: 144
   m_SquaredVelocityDifferenceToDragCoefficient: 0.1
+  m_MaximumAngularVelocity: 160
+  m_AngularVelocityDifferenceToDragCoefficient: 0.005
 --- !u!1 &1841015415
 GameObject:
   m_ObjectHideFlags: 0
