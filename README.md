@@ -21,3 +21,7 @@ Enjoy the experience provided by Balloondle for free! No strings attached!
 Why shouldn't you be able to learn from games? With Balloondle you can learn a great deal about how stuff is done under the hood. Also, you can contribute to it by providing functionalities which enhance the gameplay experience!
 
 Although, it's worth to be mentioned that the proprietary assets, such as images, sprites, sounds, videos... are not included within the open source license.
+
+### Stay in touch!
+
+Join our Discord server: https://discord.gg/2P47fb2ZYA
