@@ -9,7 +9,7 @@ namespace Balloondle.Input
     /// </summary>
     public class TouchListener : MonoBehaviour
     {
-        public Action<Touch> OnTouchUpdate;
+        public Action<IPointerPress> OnTouchUpdate;
 
         private Touch _touchContainer;
         

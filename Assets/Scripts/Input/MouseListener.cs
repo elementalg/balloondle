@@ -7,7 +7,7 @@ namespace Balloondle.Input
 {
     public class MouseListener : MonoBehaviour
     {
-        public Action<MouseClick> OnMouseClickUpdate;
+        public Action<IPointerPress> OnMouseClickUpdate;
 
         private MouseClick _mouseClickLeft;
         private MouseClick _mouseClickMiddle;
