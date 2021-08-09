@@ -21,7 +21,6 @@ namespace Balloondle.Gameplay.Physics2D
         
         private GameObject _ropeCellPrefab;
         
-        
         private Vector2 _ropeCellSize;
         
         /// <summary>
@@ -91,7 +90,8 @@ namespace Balloondle.Gameplay.Physics2D
             if (gameObjectAttachedToStart != null && bodyAttachedToEnd != null)
             {
                 float distance = Vector2
-                    .Distance(gameObjectAttachedToStart.transform.position, bodyAttachedToEnd.transform.position);
+                    .Distance(gameObjectAttachedToStart.transform.position,
+                        bodyAttachedToEnd.transform.position);
 
                 if (distance > _maximumDistanceBetweenStartAndEnd)
                 {
@@ -99,17 +99,21 @@ namespace Balloondle.Gameplay.Physics2D
                     return;
                 }
 
-                if (gameObjectAttachedToStart.GetComponent<Rigidbody2D>().velocity.magnitude > MaximumSupportedVelocity)
+                if (gameObjectAttachedToStart.GetComponent<Rigidbody2D>().velocity.sqrMagnitude > 
+                    MaximumSupportedVelocity * MaximumSupportedVelocity)
                 {
                     OnRopeJointBreak();
                     return;
                 }
 
-                if (bodyAttachedToEnd.velocity.magnitude > MaximumSupportedVelocity)
+                if (bodyAttachedToEnd.velocity.sqrMagnitude > 
+                    MaximumSupportedVelocity * MaximumSupportedVelocity)
                 {
                     OnRopeJointBreak();
                 }
             }
+
+            BreakRopeJointIfQuarterRopeCellsExceedMaximumVelocity();
         }
         
         /// <summary>
@@ -165,6 +169,27 @@ namespace Balloondle.Gameplay.Physics2D
             if (bodyAttachedToEnd.GetComponent<DistanceJoint2D>() != null)
             {
                 Destroy(bodyAttachedToEnd.GetComponent<DistanceJoint2D>());
+            }
+        }
+
+        /// <summary>
+        /// Checks the first, second, and third quarter rope cell's velocity. If their velocity exceeds the maximum, the rope
+        /// will break.
+        /// </summary>
+        private void BreakRopeJointIfQuarterRopeCellsExceedMaximumVelocity()
+        {
+            // Check only the first, second, and third quarter.
+            // Thus, only check when the amount of rope cells is bigger than 1.
+            for (int i = 0; i <= 2 && ropeCells.Count > 1; i++)
+            {
+                int index = ((1 + i) * ropeCells.Count) / 4;
+                Rigidbody2D ropeCellBody = ropeCells[index].GetComponent<Rigidbody2D>();
+
+                if (ropeCellBody.velocity.sqrMagnitude > MaximumSupportedVelocity * MaximumSupportedVelocity)
+                {
+                    OnRopeJointBreak();
+                    return;
+                }
             }
         }
         
