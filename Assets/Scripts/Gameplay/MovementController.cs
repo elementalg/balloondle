@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 namespace Balloondle.Gameplay
 {
     /// <summary>
-    /// It is used for moving the balloon relative to the input retrieved.
+    /// It is used for moving the balloon relative to the input retrieved. Proceeds to ignore input, whenever
+    /// the balloon has been collided by a world's object.
     /// </summary>
     public class MovementController : MonoBehaviour
     {
@@ -41,7 +42,7 @@ namespace Balloondle.Gameplay
 
             Vector2 movementForce = new Vector2();
 
-            if (Mathf.Sign(inputVelocity.x) != Mathf.Sign(currentVelocity.x))
+            if ((Mathf.Sign(inputVelocity.x) > 0f) != (Mathf.Sign(currentVelocity.x) > 0f))
             {
                 movementForce.x = inputVelocity.x + (currentVelocity.x * -1f);
             }
@@ -50,7 +51,7 @@ namespace Balloondle.Gameplay
                 movementForce.x = inputVelocity.x - currentVelocity.x;
             }
 
-            if (Mathf.Sign(inputVelocity.y) != Mathf.Sign(currentVelocity.y))
+            if ((Mathf.Sign(inputVelocity.y) > 0f) != (Mathf.Sign(currentVelocity.y) > 0f))
             {
                 movementForce.y = inputVelocity.y + (currentVelocity.y * -1f);
             }
@@ -68,7 +69,7 @@ namespace Balloondle.Gameplay
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnCollisionEnter2D()
         {
             _isCollisionCooldownApplied = true;
             _collisionStartTime = Time.realtimeSinceStartup;
