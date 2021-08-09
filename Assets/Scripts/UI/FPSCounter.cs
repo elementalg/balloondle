@@ -14,6 +14,8 @@ namespace Balloondle.UI
 
         private void OnEnable()
         {
+            Application.targetFrameRate = 60;
+            
             if (GetComponent<Text>() == null)
             {
                 throw new InvalidOperationException(
