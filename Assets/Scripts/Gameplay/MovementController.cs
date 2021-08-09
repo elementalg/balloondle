@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// It is used for moving the balloon relative to the input retrieved.
+/// </summary>
 public class MovementController : MonoBehaviour
 {
     [SerializeField, Tooltip("Physics body to which the movement will be applied")]
@@ -65,8 +68,7 @@ public class MovementController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("OnCollisionEnter2D");
-        //_isCollisionCooldownApplied = true;
+        _isCollisionCooldownApplied = true;
         _collisionStartTime = Time.realtimeSinceStartup;
     }
 }
