@@ -47,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 328980684982408512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a73dfdf206c5c904f977e96c2f3ed691, type: 3}
+  m_Script: {fileID: 11500000, guid: ce3bd60eb10dcfd488495a6d27facf8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 150
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 328980685694621389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c54b93373cfe545813c1dcfca2b475, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ba12e01814bca94aabe9496400aaba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &328980685694621377
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 328980685927403532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41341db4d16fbd145a4fca232fb5e18c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d6adb7d847a6734cba558f0bf7ba468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_JoystickRange: {fileID: 328980685694621389}
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 328980686127124062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07a8229876fccf7458cca8f8c3edb51c, type: 3}
+  m_Script: {fileID: 11500000, guid: a5d341fa650ef5c419ad10f1f75f7fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_TouchDemultiplexerBehaviour: {fileID: 0}
