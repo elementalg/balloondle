@@ -46,7 +46,7 @@ namespace Balloondle.Input
             }
         }
 
-        void Start()
+        private void Start()
         {
             if (m_ListenToTouchscreen)
             {
