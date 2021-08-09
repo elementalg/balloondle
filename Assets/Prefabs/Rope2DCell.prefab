@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4293430157769732309}
   - component: {fileID: 4293430157769732306}
   m_Layer: 7
-  m_Name: RopeCell
+  m_Name: Rope2DCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

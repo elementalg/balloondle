@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 884451844754632290}
   - component: {fileID: 4720591641983321866}
   m_Layer: 0
-  m_Name: Open Sprite Shape 1
+  m_Name: RopeSpriteShape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
