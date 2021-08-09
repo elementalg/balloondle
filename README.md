@@ -6,7 +6,7 @@ You may have to protect the world from the infamous alien based balloons, which 
 
 #### Mobile game
 
-Balloondle will be released initially only for Android (+4.2). iOS releases are planned too!
+Balloondle will be released initially only for Android (+4.4). iOS releases are planned too!
 
 #### Levels
 
