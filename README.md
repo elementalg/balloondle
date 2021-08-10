@@ -28,7 +28,7 @@ Our game is being developed with Unity 2020.3 [LTS]. Minor version updates shoul
 
 ### Powered by Jetbrains' Tools
 
-![Jetbrains Logo](https://i.imgur.com/jBMe7CB.png)(https://jb.gg/OpenSource)
+[![Jetbrains Logo](https://i.imgur.com/jBMe7CB.png)](https://jb.gg/OpenSource)
 
 A huge thanks to Jetbrains' Open Source iniciative, which has given us access to a bundle of the greatest software developments there are, for free! 
 This support means a lot for us.
