@@ -7,6 +7,7 @@ namespace Balloondle.Gameplay
     public class RopeCreator : MonoBehaviour
     {
         private const string RopeTag = "Rope";
+        private const string RopeGameObjectName = "GeneratedRope";
         
         [SerializeField] private GameObject m_RopeCellPrefab;
         [SerializeField] private GameObject m_RopeCellSpriteShapePrefab;
@@ -36,7 +37,8 @@ namespace Balloondle.Gameplay
 
             GameObject ropeGameObject = new GameObject
             {
-                tag = RopeTag
+                tag = RopeTag,
+                name = RopeGameObjectName
             };
             
             ropeGameObject.GetComponent<Transform>().position = Vector3.zero;
