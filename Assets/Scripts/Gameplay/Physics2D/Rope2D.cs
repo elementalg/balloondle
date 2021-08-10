@@ -59,13 +59,16 @@ namespace Balloondle.Gameplay.Physics2D
         /// Force which proceeds to break any of the joints contained within the start GameObject,
         /// or, within any of the rope cells.
         /// </summary>
-        public float jointBreakForce { get; set; } = 2f;
+        public float endBodiesJointBreakForce { get; set; } = 2f;
         
         /// <summary>
         /// Torque which proceeds to break the <see cref="HingeJoint2D"/> used within the start GameObject,
         /// and every rope cell.
         /// </summary>
-        public float jointBreakTorque { get; set; } = 2f;
+        public float endBodiesJointBreakTorque { get; set; } = 2f;
+
+        public float ropeCellsJointBreakForce { get; set; } = 1f;
+        public float ropeCellsJointBreakTorque { get; set; } = 1f;
         
         /// <summary>
         /// Force which proceeds to break the <see cref="DistanceJoint2D"/> connecting the start and the end.
@@ -288,6 +291,13 @@ namespace Balloondle.Gameplay.Physics2D
                 hingeJoint2D = connectingPoint.GetComponent<HingeJoint2D>();
             }
 
+            float jointBreakForce = IsJointOfConnectingPointRelatedToAnEndPoint(connectingPoint)
+                ? endBodiesJointBreakForce
+                : ropeCellsJointBreakForce;
+            float jointBreakTorque = IsJointOfConnectingPointRelatedToAnEndPoint(connectingPoint)
+                ? endBodiesJointBreakForce
+                : ropeCellsJointBreakTorque;
+            
             hingeJoint2D.enableCollision = enableCollision;
             hingeJoint2D.autoConfigureConnectedAnchor = enableCollision;
             hingeJoint2D.breakForce = jointBreakForce;
@@ -309,6 +319,22 @@ namespace Balloondle.Gameplay.Physics2D
             distanceJoint2D.autoConfigureDistance = true;
             distanceJoint2D.maxDistanceOnly = false;
             distanceJoint2D.breakForce = jointBreakForce;
+            distanceJoint2D.breakTorque = jointBreakTorque;
+        }
+
+        private bool IsJointOfConnectingPointRelatedToAnEndPoint(GameObject connectingPoint)
+        {
+            if (connectingPoint == gameObjectAttachedToStart)
+            {
+                return true;
+            }
+
+            if (ropeCells.Count > 0)
+            {
+                return connectingPoint == ropeCells[ropeCells.Count - 1];
+            }
+
+            return false;
         }
 
         /// <summary>
