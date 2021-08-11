@@ -25,3 +25,12 @@ Although, it's worth to be mentioned that the proprietary assets, such as images
 ### Unity
 
 Our game is being developed with Unity 2020.3 [LTS]. Minor version updates should not interfer with the functionality of the created features.
+
+### Powered by Jetbrains' Tools
+
+[![Jetbrains Logo](https://i.imgur.com/jBMe7CB.png)](https://jb.gg/OpenSource)
+
+A huge thanks to Jetbrains' Open Source iniciative, which has given us access to a bundle of the greatest software developments there are, for free! 
+This support means a lot for us.
+
+Copyright © 2000-2021 JetBrains s.r.o. JetBrains and the JetBrains logo are registered trademarks of JetBrains s.r.o.
