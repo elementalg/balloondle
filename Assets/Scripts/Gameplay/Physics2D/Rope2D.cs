@@ -295,7 +295,7 @@ namespace Balloondle.Gameplay.Physics2D
                 ? endBodiesJointBreakForce
                 : ropeCellsJointBreakForce;
             float jointBreakTorque = IsJointOfConnectingPointRelatedToAnEndPoint(connectingPoint)
-                ? endBodiesJointBreakForce
+                ? endBodiesJointBreakTorque
                 : ropeCellsJointBreakTorque;
             
             hingeJoint2D.enableCollision = enableCollision;
