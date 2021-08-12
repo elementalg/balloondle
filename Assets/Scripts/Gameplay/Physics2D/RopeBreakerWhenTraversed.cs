@@ -4,7 +4,7 @@ namespace Balloondle.Gameplay.Physics2D
 {
     public class RopeBreakerWhenTraversed : MonoBehaviour
     {
-        private float _traversedRadiusDetection = 0.0005f;
+        private float _traversedRadiusDetection = 0.00025f;
         private Collider2D _sourceCollider2D;
 
         private void OnEnable()
@@ -12,7 +12,7 @@ namespace Balloondle.Gameplay.Physics2D
             _sourceCollider2D = GetComponent<Collider2D>();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D other)
         {
             bool breakJoint = false;
 
