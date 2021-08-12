@@ -408,6 +408,8 @@ namespace Balloondle.Gameplay.Physics2D
             ropeCells.Add(ropeCell);
 
             SynchronizeJointsAfterAddition();
+
+            ropeCell.AddComponent<RopeBreakerWhenTraversed>();
         }
 
         /// <summary>
