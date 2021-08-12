@@ -1,6 +1,7 @@
 ﻿using System;
 using Balloondle.Input;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Balloondle.UI.Controllers
 {
@@ -22,9 +23,15 @@ namespace Balloondle.UI.Controllers
         private JoystickRange m_JoystickRange;
 
         [SerializeField] 
+        private Image m_JoystickRangeCenter;
+
+        [SerializeField] 
         private Joystick m_Joystick;
         
         private ListeningState _listeningState;
+
+        private JoystickAlphaSetter _joystickAlphaSetter;
+        private bool _isAlphaSetterAvailable;
 
         private void Start()
         {
@@ -48,7 +55,44 @@ namespace Balloondle.UI.Controllers
                     "Joystick's touch listening surface requires an instance of Joystick to be assigned.");
             }
 
+            _joystickAlphaSetter = GetComponent<JoystickAlphaSetter>();
+            _isAlphaSetterAvailable = _joystickAlphaSetter != null;
+
+            if (_isAlphaSetterAvailable)
+            {
+                InitializeAlphaSetter();
+            }
+            
             ListenForPointerWithinTheSurface();
+        }
+
+        /// <summary>
+        /// To be called only once at the start of the script.
+        /// It proceeds to assign the joystick's <see cref="UnityEngine.UI.Image"/>
+        /// components to the <see cref="JoystickAlphaSetter"/>.
+        /// </summary>
+        private void InitializeAlphaSetter()
+        {
+            if (m_JoystickRange.GetComponent<Image>() == null)
+            {
+                throw new InvalidOperationException(
+                    "JoystickRange requires an Image component in order to initialize the alpha setter");
+            }
+            
+            if (m_JoystickRangeCenter == null)
+            {
+                throw new InvalidOperationException("Missing Image component for JoystickRangeCenter.");
+            }
+
+            if (m_Joystick.GetComponent<Image>() == null)
+            {
+                throw new InvalidOperationException(
+                    "Joystick requires an Image component in order to initialize the alpha setter.");
+            }
+            
+            _joystickAlphaSetter.joystickRange = m_JoystickRange.GetComponent<Image>();
+            _joystickAlphaSetter.joystickRangeCenter = m_JoystickRangeCenter;
+            _joystickAlphaSetter.joystick = m_Joystick.GetComponent<Image>();
         }
 
         private void ListenForPointerWithinTheSurface()
@@ -89,6 +133,11 @@ namespace Balloondle.UI.Controllers
             {
                 m_JoystickPositionableSurface.OnPressed(pointer.startScreenPosition);
             }
+
+            if (_isAlphaSetterAvailable)
+            {
+                _joystickAlphaSetter.OnJoystickSelected();
+            }
         }
 
         private bool HasTouchBegunWithinTheSurface(IPointerPress pointer)
@@ -99,6 +148,11 @@ namespace Balloondle.UI.Controllers
         private void HandleEndOfPointer()
         {
             _listeningState = ListeningState.AwaitingPointer;
+
+            if (_isAlphaSetterAvailable)
+            {
+                _joystickAlphaSetter.OnJoystickDeselected();
+            }
             
             ListenForPointerWithinTheSurface();
         }
