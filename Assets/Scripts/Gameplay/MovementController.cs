@@ -21,6 +21,13 @@ namespace Balloondle.Gameplay
         private bool _isCollisionCooldownApplied;
         private float _collisionStartTime;
 
+        private EffectApplier _effectApplier;
+
+        private void OnEnable()
+        {
+            _effectApplier = GetComponent<EffectApplier>();
+        }
+
         public void OnMove(InputAction.CallbackContext input)
         {
             ApplyMovement(input.ReadValue<Vector2>());
@@ -71,8 +78,19 @@ namespace Balloondle.Gameplay
 
         private void OnCollisionEnter2D()
         {
+            // Ignore further collisions, if the cooldown is already applied.
+            if (_isCollisionCooldownApplied)
+            {
+                return;
+            }
+            
             _isCollisionCooldownApplied = true;
             _collisionStartTime = Time.realtimeSinceStartup;
+
+            if (_effectApplier != null)
+            {
+                _effectApplier.ApplyEffect();
+            }
         }
     }
 }
