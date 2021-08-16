@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 namespace Balloondle.Gameplay
 {
     /// <summary>
-    /// It is used for moving the balloon relative to the input retrieved. Proceeds to ignore input, whenever
+    /// Used for moving the balloon relative to the input retrieved. Proceeds to ignore input, whenever
     /// the balloon has been collided by a world's object.
     /// </summary>
     public class MovementController : MonoBehaviour
@@ -35,7 +35,7 @@ namespace Balloondle.Gameplay
                     _isCollisionCooldownApplied = false;
                 }
             }
-
+    
             inputVelocity = inputVelocity * m_MaximumVelocity;
 
             Vector2 currentVelocity = m_BodyToBeMoved.velocity;
