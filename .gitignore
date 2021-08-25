@@ -48,7 +48,8 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
-*.meta
+# *.meta
+# Listen to meta files in order to avoid scene misconfiguration.
 
 # Unity3D generated file on crash reports
 sysinfo.txt
