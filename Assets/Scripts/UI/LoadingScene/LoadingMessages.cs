@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ namespace Balloondle.UI.LoadingScene
         /// <summary>
         ///     UIElement containing the text that must be changed.
         /// </summary>
-        [SerializeField] private Text m_Text;
+        private Text _text;
 
         /// <summary>
         ///     Messages shown next to the loading circumference.
@@ -38,6 +39,16 @@ namespace Balloondle.UI.LoadingScene
         /// </summary>
         private float _timeAccumulator;
 
+        private void Start()
+        {
+            if (GetComponent<Text>() == null)
+            {
+                throw new InvalidOperationException("GameObject must contain a Text component.");
+            }
+            
+            _text = GetComponent<Text>();
+        }
+
         /// <summary>
         ///     Calculate the time elapsed, and proceed to change the text
         ///     when the limit has been achieved.
@@ -53,7 +64,7 @@ namespace Balloondle.UI.LoadingScene
                 else
                     _messageIndex += 1;
 
-                m_Text.text = _messages[_messageIndex];
+                _text.text = _messages[_messageIndex];
                 _timeAccumulator = 0f;
             }
         }
