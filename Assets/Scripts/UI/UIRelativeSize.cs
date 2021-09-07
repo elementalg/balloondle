@@ -42,9 +42,8 @@ namespace Balloondle.UI
             Vector2 initialPos = rectTransform.anchoredPosition;
 
             Vector2 newPos = new Vector2(
-                initialPos.x + ((relativeSize.x * canvasSize.x - originalSize.x) / 2f * Mathf.Sign(initialPos.x)),
-                initialPos.y + ((relativeSize.y * canvasSize.y - originalSize.y) / 2f * Mathf.Sign(initialPos.y)));
-            
+                initialPos.x * (relativeSize.x * canvasSize.x / originalSize.x),
+                initialPos.y * (relativeSize.y * canvasSize.y / originalSize.y));
             
             rectTransform.anchoredPosition = newPos;
         }
