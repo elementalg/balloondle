@@ -35,7 +35,16 @@ namespace Balloondle.UI.Script
 
             _entries.Enqueue(entry);
         }
-
+        
+        /// <summary>
+        /// Checks whether or not there are entries left in the script.
+        /// </summary>
+        /// <returns>True if there are entries left in the script, false otherwise.</returns>
+        public bool HasNext()
+        {
+            return _entries.Count > 0;
+        }
+        
         public Entry ReadNext()
         {
             if (_entries.Count == 0)

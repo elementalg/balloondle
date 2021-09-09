@@ -44,6 +44,20 @@ namespace EditorTests.UI.Script
         }
 
         [Test]
+        public void HasNextDetectsRemainingEntriesCorrectly()
+        {
+            Assert.False(_script.HasNext());
+            
+            _script.Write(new SilenceEntry(1));
+            
+            Assert.True(_script.HasNext());
+
+            _script.ReadNext();
+            
+            Assert.False(_script.HasNext());
+        }
+
+        [Test]
         public void ExceptionOnReadEmptyScript()
         {
             Assert.Throws<InvalidOperationException>(() => _script.ReadNext());
