@@ -6,18 +6,18 @@ namespace EditorTests.Script.Core
 {
     public class ScriptTest
     {
-        private Balloondle.Script.Core.Script _script;
+        private Balloondle.Script.Core.ScriptContainer m_ScriptContainer;
 
         [SetUp]
         public void Initialize()
         {
-            _script = new Balloondle.Script.Core.Script();
+            m_ScriptContainer = new Balloondle.Script.Core.ScriptContainer();
         }
 
         [Test]
         public void ExceptionOnWriteNullEntry()
         {
-            Assert.Throws<ArgumentException>(() => _script.Write(null));
+            Assert.Throws<ArgumentException>(() => m_ScriptContainer.Write(null));
         }
 
         [Test]
@@ -25,8 +25,8 @@ namespace EditorTests.Script.Core
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
-                _script.ReadNext();
-                _script.Write(new SilenceEntry(0f));
+                m_ScriptContainer.ReadNext();
+                m_ScriptContainer.Write(new SilenceEntry(0f));
             });
         }
 
@@ -36,31 +36,31 @@ namespace EditorTests.Script.Core
             SilenceEntry firstEntry = new SilenceEntry(1);
             SilenceEntry secondEntry = new SilenceEntry(2);
             
-            _script.Write(firstEntry);
-            _script.Write(secondEntry);
+            m_ScriptContainer.Write(firstEntry);
+            m_ScriptContainer.Write(secondEntry);
             
-            Assert.True(ReferenceEquals(firstEntry, _script.ReadNext()));
-            Assert.True(ReferenceEquals(secondEntry, _script.ReadNext()));
+            Assert.True(ReferenceEquals(firstEntry, m_ScriptContainer.ReadNext()));
+            Assert.True(ReferenceEquals(secondEntry, m_ScriptContainer.ReadNext()));
         }
 
         [Test]
         public void HasNextDetectsRemainingEntriesCorrectly()
         {
-            Assert.False(_script.HasNext());
+            Assert.False(m_ScriptContainer.HasNext());
             
-            _script.Write(new SilenceEntry(1));
+            m_ScriptContainer.Write(new SilenceEntry(1));
             
-            Assert.True(_script.HasNext());
+            Assert.True(m_ScriptContainer.HasNext());
 
-            _script.ReadNext();
+            m_ScriptContainer.ReadNext();
             
-            Assert.False(_script.HasNext());
+            Assert.False(m_ScriptContainer.HasNext());
         }
 
         [Test]
         public void ExceptionOnReadEmptyScript()
         {
-            Assert.Throws<InvalidOperationException>(() => _script.ReadNext());
+            Assert.Throws<InvalidOperationException>(() => m_ScriptContainer.ReadNext());
         }
     }
 }

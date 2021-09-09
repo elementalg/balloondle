@@ -8,7 +8,7 @@ namespace Balloondle.Script.Core
     /// narrations (<see cref="NarrativeEntry"/>) and silences (<see cref="SilenceEntry"/>),
     /// are described through <b>entries</b> (<see cref="Entry"/>).
     /// </summary>
-    public class Script
+    public class ScriptContainer
     {
         private enum State
         {
@@ -23,7 +23,7 @@ namespace Balloondle.Script.Core
         /// <summary>
         /// Initialize an empty Script waiting to be written to.
         /// </summary>
-        public Script()
+        public ScriptContainer()
         {
             _entries = new Queue<Entry>();
             _state = State.WaitingForWrite;
