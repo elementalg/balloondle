@@ -89,13 +89,13 @@ namespace EditorTests.Script.Data
             Assert.IsInstanceOf<NarrativeEntry>(entryBeingRead);
             NarrativeEntry secondEntry = (NarrativeEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(4f, secondEntry.Duration));
-            Assert.AreEqual("Too many credit cards...", ((NarrativeEntry)secondEntry).Text);
+            Assert.AreEqual("Too many credit cards...", (secondEntry).Text);
 
             entryBeingRead = extractedScriptContainer.ReadNext();
             Assert.IsInstanceOf<CharacterEntry>(entryBeingRead);
             CharacterEntry thirdEntry = (CharacterEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(4f, thirdEntry.Duration));
-            Assert.AreEqual("I DECLARE BANKRUPTCY", ((CharacterEntry)thirdEntry).Text);
+            Assert.AreEqual("I DECLARE BANKRUPTCY", thirdEntry.Text);
             Assert.AreEqual(0, thirdEntry.CharacterData.Id);
             Assert.AreEqual("Michael Scott", thirdEntry.CharacterData.Name);
         }
