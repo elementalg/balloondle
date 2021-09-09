@@ -1,4 +1,4 @@
-﻿namespace Balloondle.UI.Script.Core
+﻿namespace Balloondle.Script.Core
 {
     /// <summary>
     /// Indicates a silence within the script.
