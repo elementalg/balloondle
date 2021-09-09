@@ -12,9 +12,9 @@ namespace Balloondle.UI.Script
     {
         public enum State
         {
-            WAITING_FOR_WRITE,
-            WRITTEN,
-            READ,
+            WaitingForWrite,
+            Written,
+            Read,
         }
         
         private readonly Queue<Entry> _entries;
@@ -26,7 +26,7 @@ namespace Balloondle.UI.Script
         public Script()
         {
             _entries = new Queue<Entry>();
-            _state = State.WAITING_FOR_WRITE;
+            _state = State.WaitingForWrite;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Balloondle.UI.Script
         /// <exception cref="ArgumentException">if the entry is null.</exception>
         public void Write(Entry entry)
         {
-            if (_state == State.READ)
+            if (_state == State.Read)
             {
                 throw new InvalidOperationException("Cannot write to the script if it has already been read.");
             }
@@ -74,7 +74,7 @@ namespace Balloondle.UI.Script
                 throw new InvalidOperationException("Cannot read script if it is empty.");
             }
         
-            _state = State.READ;
+            _state = State.Read;
             
             return _entries.Dequeue();
         }
