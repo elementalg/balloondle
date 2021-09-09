@@ -39,8 +39,14 @@ namespace EditorTests.UI.Script
             _script.Write(firstEntry);
             _script.Write(secondEntry);
             
-            Assert.ReferenceEquals(firstEntry, _script.ReadNext());
-            Assert.ReferenceEquals(secondEntry, _script.ReadNext());
+            Assert.True(ReferenceEquals(firstEntry, _script.ReadNext()));
+            Assert.True(ReferenceEquals(secondEntry, _script.ReadNext()));
+        }
+
+        [Test]
+        public void ExceptionOnReadEmptyScript()
+        {
+            Assert.Throws<InvalidOperationException>(() => _script.ReadNext());
         }
     }
 }

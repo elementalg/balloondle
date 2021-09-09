@@ -38,6 +38,11 @@ namespace Balloondle.UI.Script
 
         public Entry ReadNext()
         {
+            if (_entries.Count == 0)
+            {
+                throw new InvalidOperationException("Cannot read script if it is empty.");
+            }
+        
             _state = State.READ;
             
             return _entries.Dequeue();
