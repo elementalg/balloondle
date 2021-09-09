@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Balloondle.UI.Script
 {
+    /// <summary>
+    /// Abstraction of an acting script, where dialogues (<see cref="CharacterEntry"/>),
+    /// narrations (<see cref="NarrativeEntry"/>) and silences (<see cref="SilenceEntry"/>),
+    /// are described through <b>entries</b> (<see cref="Entry"/>).
+    /// </summary>
     public class Script
     {
         public enum State
@@ -15,12 +20,23 @@ namespace Balloondle.UI.Script
         private readonly Queue<Entry> _entries;
         private State _state;
         
+        /// <summary>
+        /// Initialize an empty Script waiting to be written to.
+        /// </summary>
         public Script()
         {
             _entries = new Queue<Entry>();
             _state = State.WAITING_FOR_WRITE;
         }
 
+        /// <summary>
+        /// Writes an entry to the script following a FIFO logic.
+        ///
+        /// FIFO: First in, first out.
+        /// </summary>
+        /// <param name="entry">Entry being added at the end of the script.</param>
+        /// <exception cref="InvalidOperationException">if the script has been read partially or completely.</exception>
+        /// <exception cref="ArgumentException">if the entry is null.</exception>
         public void Write(Entry entry)
         {
             if (_state == State.READ)
@@ -45,6 +61,12 @@ namespace Balloondle.UI.Script
             return _entries.Count > 0;
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>The next entry from the script.</returns>
+        /// <exception cref="InvalidOperationException">if there are no entries left to read
+        /// within the script.</exception>
         public Entry ReadNext()
         {
             if (_entries.Count == 0)
