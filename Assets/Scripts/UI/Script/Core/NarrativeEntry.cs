@@ -1,4 +1,4 @@
-﻿namespace Balloondle.UI.Script
+﻿namespace Balloondle.UI.Script.Core
 {
     public class NarrativeEntry : Entry
     {

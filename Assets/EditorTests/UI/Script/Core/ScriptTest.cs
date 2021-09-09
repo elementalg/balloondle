@@ -1,17 +1,17 @@
 ﻿using System;
-using Balloondle.UI.Script;
+using Balloondle.UI.Script.Core;
 using NUnit.Framework;
 
-namespace EditorTests.UI.Script
+namespace EditorTests.UI.Script.Core
 {
     public class ScriptTest
     {
-        private Balloondle.UI.Script.Script _script;
+        private Balloondle.UI.Script.Core.Script _script;
 
         [SetUp]
         public void Initialize()
         {
-            _script = new Balloondle.UI.Script.Script();
+            _script = new Balloondle.UI.Script.Core.Script();
         }
 
         [Test]

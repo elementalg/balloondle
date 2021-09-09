@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Balloondle.UI.Script
+namespace Balloondle.UI.Script.Core
 {
     /// <summary>
     /// Abstraction of an acting script, where dialogues (<see cref="CharacterEntry"/>),
