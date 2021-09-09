@@ -41,9 +41,8 @@ namespace Balloondle.Script.Data
             ScriptContainer scriptContainer = new ScriptContainer();
             
             JArray entriesRoot = scriptRoot.Value<JArray>(EntriesKey);
-            for (int i = 0; i < entriesRoot.Count; i++)
+            foreach (JToken entry in entriesRoot)
             {
-                JToken entry = entriesRoot[i];
                 Entry deserializedEntry = DeserializeEntry(entry);
                 scriptContainer.Write(deserializedEntry);
             }
