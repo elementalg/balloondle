@@ -10,7 +10,7 @@ namespace Balloondle.UI.Script
     /// </summary>
     public class Script
     {
-        public enum State
+        private enum State
         {
             WaitingForWrite,
             Written,
