@@ -14,7 +14,5 @@ namespace Balloondle.Script.Viewer
                 m_Components = new List<EntryStyleComponent>();
             }
         }
-
-        
     }
 }
