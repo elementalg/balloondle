@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:Label text="Style Components" display-tooltip-when-elided="true" name="Header" enable-rich-text="true" focusable="false" style="height: auto; justify-content: flex-start; align-items: auto; -unity-text-align: middle-left; font-size: 16px; -unity-font-style: bold; margin-top: 8px; margin-bottom: 8px; margin-left: 2px; margin-right: 2px;" />
-    <uie:Toolbar name="ComponentsListToolbar">
-        <uie:ToolbarButton text="Apply Changes" display-tooltip-when-elided="true" name="ApplyChangesButton" />
-        <uie:ToolbarButton text="New Component" display-tooltip-when-elided="true" name="NewComponentButton" tooltip="Add&apos;s a new component to the list" style="align-items: center; justify-content: center; -unity-text-align: upper-center; width: 100%; margin-left: 6px; margin-right: 6px; margin-top: 3px; margin-bottom: 3px;" />
-    </uie:Toolbar>
-    <ui:ScrollView name="ComponentsList" text="Apply Changesss" style="margin-top: 16px;" />
-</ui:UXML>

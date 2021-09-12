@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:Foldout text="#0 - Component" name="NewComponentsListItem">
-        <ui:TextField picking-mode="Ignore" label="Name" name="ComponentName" tooltip="Component&apos;s name identifier" style="margin-left: 6px; margin-right: 6px; margin-top: 4px; margin-bottom: 4px;" />
-        <uie:EnumField label="Entry type" name="ComponentEntryType" style="margin-left: 6px; margin-right: 6px; margin-top: 4px; margin-bottom: 4px;" />
-        <uie:ObjectField label="Prefab" name="ComponentPrefab" style="margin-left: 6px; margin-right: 6px; margin-top: 4px; margin-bottom: 4px;" />
-        <ui:Button text="Delete this component" display-tooltip-when-elided="true" name="ComponentDeleteButton" style="margin-left: 6px; margin-right: 6px; margin-top: 4px; margin-bottom: 4px;" />
-    </ui:Foldout>
-</ui:UXML>

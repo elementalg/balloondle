@@ -1,11 +1,9 @@
-﻿using System;
-using Balloondle.Script.Core;
+﻿using Balloondle.Script.Core;
 using UnityEngine;
 
 namespace Balloondle.Script.Viewer
 {
-    [Serializable]
-    public class EntryStyleComponent
+    public class EntryStyleComponent : MonoBehaviour
     {
         public string Name;
         public EntryType EntryType;
