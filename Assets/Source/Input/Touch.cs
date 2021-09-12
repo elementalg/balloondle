@@ -7,30 +7,30 @@ namespace Balloondle.Input
 {
     public class Touch : IPointerPress
     {
-        public Vector2 delta { get; set; }
-        public Finger finger { get; set; }
-        public TouchHistory history { get; set; }
-        public TouchPhase phase { get; set; }
-        public float pressure { get; set; }
-        public Vector2 radius { get; set; }
-        public Touchscreen screen { get; set; }
-        public Vector2 screenPosition { get; set; }
-        public Vector2 startScreenPosition { get; set; }
-        public double startTime { get; set; }
-        public int tapCount { get; set; }
-        public double time { get; set; }
-        public int touchId { get; set; }
-        public bool valid { get; set; }
-        public int pointerId 
+        public Vector2 Delta { get; set; }
+        public Finger Finger { get; set; }
+        public TouchHistory History { get; set; }
+        public TouchPhase Phase { get; set; }
+        public float Pressure { get; set; }
+        public Vector2 Radius { get; set; }
+        public Touchscreen Screen { get; set; }
+        public Vector2 ScreenPosition { get; set; }
+        public Vector2 StartScreenPosition { get; set; }
+        public double StartTime { get; set; }
+        public int TapCount { get; set; }
+        public double Time { get; set; }
+        public int TouchId { get; set; }
+        public bool Valid { get; set; }
+        public int PointerId 
         { 
-            get => touchId;
-            set => touchId = value;
+            get => TouchId;
+            set => TouchId = value;
         }
-        public PointerPhase pointerPhase
+        public PointerPhase PointerPhase
         {
             get 
             {
-                return phase switch
+                return Phase switch
                 {
                     TouchPhase.Began => PointerPhase.Began,
                     TouchPhase.Moved => PointerPhase.Moved,
@@ -50,7 +50,7 @@ namespace Balloondle.Input
                     PointerPhase.Ended => TouchPhase.Ended,
                     _ => TouchPhase.None,
                 };
-                phase = touchPhase;
+                Phase = touchPhase;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Balloondle.Input
         
         public Touch(int touchId)
         {
-            this.touchId = touchId;
+            this.TouchId = touchId;
         }
         
         public Touch(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
@@ -71,25 +71,25 @@ namespace Balloondle.Input
 
         public void CloneEnhancedTouch(UnityEngine.InputSystem.EnhancedTouch.Touch touch)
         {
-            delta = touch.delta;
-            finger = touch.finger;
-            history = touch.history;
-            phase = touch.phase;
-            pressure = touch.pressure;
-            radius = touch.radius;
-            screen = touch.screen;
-            screenPosition = touch.screenPosition;
-            startScreenPosition = touch.startScreenPosition;
-            startTime = touch.startTime;
-            tapCount = touch.tapCount;
-            time = touch.time;
-            touchId = touch.touchId;
-            valid = touch.valid;
+            Delta = touch.delta;
+            Finger = touch.finger;
+            History = touch.history;
+            Phase = touch.phase;
+            Pressure = touch.pressure;
+            Radius = touch.radius;
+            Screen = touch.screen;
+            ScreenPosition = touch.screenPosition;
+            StartScreenPosition = touch.startScreenPosition;
+            StartTime = touch.startTime;
+            TapCount = touch.tapCount;
+            Time = touch.time;
+            TouchId = touch.touchId;
+            Valid = touch.valid;
         }
 
         public bool HasEnded()
         {
-            return phase == TouchPhase.Ended || phase == TouchPhase.Canceled;
+            return Phase == TouchPhase.Ended || Phase == TouchPhase.Canceled;
         }
     }
 }

@@ -2,8 +2,8 @@
 {
     public static class SceneNames
     {
-        public const string INTRO = "Intro";
-        public const string LOADING = "Loading";
-        public const string FIRST_RUN = "Level1FirstRun";
+        public const string Intro = "Intro";
+        public const string Loading = "Loading";
+        public const string FirstRun = "Level1FirstRun";
     }
 }

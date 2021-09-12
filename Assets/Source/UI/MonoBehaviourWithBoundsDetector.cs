@@ -5,7 +5,7 @@ namespace Balloondle.UI
 {
     public abstract class MonoBehaviourWithBoundsDetector : MonoBehaviour
     {
-        protected RectTransform _rectTransform;
+        protected RectTransform RectTransform;
 
         protected void InitializePressDetector()
         {
@@ -15,12 +15,12 @@ namespace Balloondle.UI
                     "MonoBehaviourWithBoundsDetector's GameObject must have a RectTransform.");
             }
 
-            _rectTransform = GetComponent<RectTransform>();
+            RectTransform = GetComponent<RectTransform>();
         }
 
         public virtual bool IsScreenPointWithinBounds(Vector2 screenPoint)
         {
-            return RectTransformUtility.RectangleContainsScreenPoint(_rectTransform, screenPoint);
+            return RectTransformUtility.RectangleContainsScreenPoint(RectTransform, screenPoint);
         }
     }
 }

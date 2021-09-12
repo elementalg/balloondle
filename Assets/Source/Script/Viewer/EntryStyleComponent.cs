@@ -5,22 +5,22 @@ namespace Balloondle.Script.Viewer
 {
     public class EntryStyleComponent : MonoBehaviour
     {
-        public string Name;
-        public EntryType EntryType;
-        public GameObject Prefab;
+        public string m_Name;
+        public EntryType m_EntryType;
+        public GameObject m_Prefab;
 
         public EntryStyleComponent()
         {
-            Name = "";
-            EntryType = EntryType.Silence;
-            Prefab = null;
+            m_Name = "";
+            m_EntryType = EntryType.Silence;
+            m_Prefab = null;
         }
         
         public EntryStyleComponent(string name, EntryType entryType, GameObject prefab)
         {
-            Name = name;
-            EntryType = entryType;
-            Prefab = prefab;
+            m_Name = name;
+            m_EntryType = entryType;
+            m_Prefab = prefab;
         }
     }
 }

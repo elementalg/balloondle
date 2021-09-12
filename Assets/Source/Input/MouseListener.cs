@@ -18,20 +18,20 @@ namespace Balloondle.Input
         {
             _mouseClickLeft = new MouseClick
             {
-                pointerId = MouseClick.MouseLeftClickButtonPointerID,
-                pointerPhase = PointerPhase.None
+                PointerId = MouseClick.MouseLeftClickButtonPointerID,
+                PointerPhase = PointerPhase.None
             };
 
             _mouseClickMiddle = new MouseClick
             {
-                pointerId = MouseClick.MouseMiddleClickButtonPointerID,
-                pointerPhase = PointerPhase.None
+                PointerId = MouseClick.MouseMiddleClickButtonPointerID,
+                PointerPhase = PointerPhase.None
             };
 
             _mouseClickRight = new MouseClick
             {
-                pointerId = MouseClick.MouseRightClickButtonPointerID,
-                pointerPhase = PointerPhase.None
+                PointerId = MouseClick.MouseRightClickButtonPointerID,
+                PointerPhase = PointerPhase.None
             };
         }
 
@@ -57,7 +57,7 @@ namespace Balloondle.Input
 
                 UpdateMouseClickContainerByMouseButtonPointerId(mouse, currentMouseClick);
 
-                if (currentMouseClick.pointerPhase != PointerPhase.None)
+                if (currentMouseClick.PointerPhase != PointerPhase.None)
                 {
                     OnMouseClickUpdate?.Invoke(currentMouseClick);
                 }
@@ -66,7 +66,7 @@ namespace Balloondle.Input
 
         private void UpdateMouseClickContainerByMouseButtonPointerId(Mouse mouse, MouseClick currentMouseClick)
         {
-            ButtonControl mouseButton = currentMouseClick.pointerId switch
+            ButtonControl mouseButton = currentMouseClick.PointerId switch
             {
                 MouseClick.MouseLeftClickButtonPointerID => mouse.leftButton,
                 MouseClick.MouseMiddleClickButtonPointerID => mouse.middleButton,
@@ -87,7 +87,7 @@ namespace Balloondle.Input
 
             if (mouseButton.isPressed)
             {
-                if (Mathf.Approximately(0f, (float)currentMouseClick.startTime))
+                if (Mathf.Approximately(0f, (float)currentMouseClick.StartTime))
                 {
                     OnMouseButtonStart(mouse, currentMouseClick);
                 }
@@ -104,31 +104,31 @@ namespace Balloondle.Input
 
         private void OnMouseButtonStart(Mouse mouse, MouseClick mouseClick)
         {
-            mouseClick.pointerPhase = PointerPhase.Began;
-            mouseClick.startTime = Time.realtimeSinceStartupAsDouble;
-            mouseClick.startScreenPosition = mouse.position.ReadValue();
-            mouseClick.screenPosition = mouse.position.ReadValue();
+            mouseClick.PointerPhase = PointerPhase.Began;
+            mouseClick.StartTime = Time.realtimeSinceStartupAsDouble;
+            mouseClick.StartScreenPosition = mouse.position.ReadValue();
+            mouseClick.ScreenPosition = mouse.position.ReadValue();
         }
 
         private void OnMouseButtonMove(Mouse mouse, MouseClick mouseClick)
         {
-            mouseClick.pointerPhase = PointerPhase.Moved;
-            mouseClick.screenPosition = mouse.position.ReadValue();
+            mouseClick.PointerPhase = PointerPhase.Moved;
+            mouseClick.ScreenPosition = mouse.position.ReadValue();
         }
 
         private void OnMouseButtonEnd(MouseClick mouseClick)
         {
-            mouseClick.startTime = 0.0;
+            mouseClick.StartTime = 0.0;
             
-            if (mouseClick.pointerPhase == PointerPhase.Ended)
+            if (mouseClick.PointerPhase == PointerPhase.Ended)
             {
-                mouseClick.pointerPhase = PointerPhase.None;
+                mouseClick.PointerPhase = PointerPhase.None;
                 return;
             }
 
-            if (mouseClick.pointerPhase != PointerPhase.None)
+            if (mouseClick.PointerPhase != PointerPhase.None)
             {
-                mouseClick.pointerPhase = PointerPhase.Ended;
+                mouseClick.PointerPhase = PointerPhase.Ended;
             }
         }
     }

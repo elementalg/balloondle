@@ -12,8 +12,8 @@ namespace Balloondle.Gameplay
     /// </summary>
     public class WorldEntity : MonoBehaviour
     {
-        public float health { get; private set; } = 0f;
-        public float armor { get; private set; } = 0f;
+        public float Health { get; private set; } = 0f;
+        public float Armor { get; private set; } = 0f;
 
         /// <summary>
         /// Only increases the entity's health. When positive infinity is reached, health's value is clamped to the
@@ -28,13 +28,13 @@ namespace Balloondle.Gameplay
             }
 
             // If the sum goes to infinite, proceed to limit it to the maximum real float number.
-            if (healAmount + health >= float.MaxValue)
+            if (healAmount + Health >= float.MaxValue)
             {
-                health = float.MaxValue;
+                Health = float.MaxValue;
                 return;
             }
 
-            health += healAmount;
+            Health += healAmount;
         }
 
         /// <summary>
@@ -50,13 +50,13 @@ namespace Balloondle.Gameplay
             }
 
             // If the sum goes to infinite, proceed to limit it to the maximum real float number.
-            if (armorAmount + armor > float.MaxValue)
+            if (armorAmount + Armor > float.MaxValue)
             {
-                armor = float.MaxValue;
+                Armor = float.MaxValue;
                 return;
             }
 
-            armor += armorAmount;
+            Armor += armorAmount;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Balloondle.Animation
     {
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            SceneManager.UnloadSceneAsync(SceneNames.LOADING, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+            SceneManager.UnloadSceneAsync(SceneNames.Loading, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
             animator.enabled = false;
         }
     }

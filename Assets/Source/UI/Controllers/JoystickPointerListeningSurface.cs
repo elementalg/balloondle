@@ -90,9 +90,9 @@ namespace Balloondle.UI.Controllers
                     "Joystick requires an Image component in order to initialize the alpha setter.");
             }
             
-            _joystickAlphaSetter.joystickRange = m_JoystickRange.GetComponent<Image>();
-            _joystickAlphaSetter.joystickRangeCenter = m_JoystickRangeCenter;
-            _joystickAlphaSetter.joystick = m_Joystick.GetComponent<Image>();
+            _joystickAlphaSetter.JoystickRange = m_JoystickRange.GetComponent<Image>();
+            _joystickAlphaSetter.JoystickRangeCenter = m_JoystickRangeCenter;
+            _joystickAlphaSetter.Joystick = m_Joystick.GetComponent<Image>();
         }
 
         private void ListenForPointerWithinTheSurface()
@@ -120,18 +120,18 @@ namespace Balloondle.UI.Controllers
                 _listeningState = ListeningState.UsingPointer;
             }
 
-            m_Joystick.InputUpdate(pointer.screenPosition);
+            m_Joystick.InputUpdate(pointer.ScreenPosition);
         }
 
         private void TransferTouchBeginning(IPointerPress pointer)
         {
-            if (m_JoystickRange.IsScreenPointWithinBounds(pointer.startScreenPosition))
+            if (m_JoystickRange.IsScreenPointWithinBounds(pointer.StartScreenPosition))
             {
-                m_Joystick.InputUpdate(pointer.screenPosition);
+                m_Joystick.InputUpdate(pointer.ScreenPosition);
             }
             else
             {
-                m_JoystickPositionableSurface.OnPressed(pointer.startScreenPosition);
+                m_JoystickPositionableSurface.OnPressed(pointer.StartScreenPosition);
             }
 
             if (_isAlphaSetterAvailable)
@@ -142,7 +142,7 @@ namespace Balloondle.UI.Controllers
 
         private bool HasTouchBegunWithinTheSurface(IPointerPress pointer)
         {
-            return IsScreenPointWithinBounds(pointer.startScreenPosition);
+            return IsScreenPointWithinBounds(pointer.StartScreenPosition);
         }
 
         private void HandleEndOfPointer()

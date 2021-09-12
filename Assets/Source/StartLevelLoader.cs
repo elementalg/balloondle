@@ -32,7 +32,7 @@ namespace Balloondle
 
         private void LoadFirstRun()
         {
-            AsyncOperation operation = SceneManager.LoadSceneAsync(SceneNames.FIRST_RUN, LoadSceneMode.Additive);
+            AsyncOperation operation = SceneManager.LoadSceneAsync(SceneNames.FirstRun, LoadSceneMode.Additive);
             operation.completed += ApplyTransition;
         }
 

@@ -45,17 +45,17 @@ namespace Balloondle.Gameplay
             Rope2D rope = ropeGameObject.AddComponent<Rope2D>();
             
             // Apply joint break forces/torques.
-            rope.endBodiesJointBreakForce = endBodiesJointBreakForce;
-            rope.endBodiesJointBreakTorque = endBodiesJointBreakTorque;
-            rope.ropeCellsJointBreakForce = ropeCellsJointBreakForce;
-            rope.ropeCellsJointBreakTorque = ropeCellsJointBreakTorque;
+            rope.EndBodiesJointBreakForce = endBodiesJointBreakForce;
+            rope.EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
+            rope.RopeCellsJointBreakForce = ropeCellsJointBreakForce;
+            rope.RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
             
-            rope.ropeCellPrefab = m_RopeCellPrefab;
+            rope.RopeCellPrefab = m_RopeCellPrefab;
             rope.AddCellsForJoiningStartToEnd(start.gameObject, startAnchor,
                 end, endAnchor, maximumDistanceBetweenBodies);
 
             RopeVisualizer ropeVisualizer = ropeGameObject.AddComponent<RopeVisualizer>();
-            ropeVisualizer.ropeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
+            ropeVisualizer.RopeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
             ropeVisualizer.VisualizeRope();
         }
     }

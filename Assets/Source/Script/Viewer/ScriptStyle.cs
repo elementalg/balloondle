@@ -5,19 +5,16 @@ namespace Balloondle.Script.Viewer
 {
     public class ScriptStyle : MonoBehaviour
     {
-        public List<EntryStyleComponent> _components;
+        public List<EntryStyleComponent> m_Components;
 
         private void Start()
         {
-            if (_components == null)
+            if (m_Components == null)
             {
-                _components = new List<EntryStyleComponent>();
+                m_Components = new List<EntryStyleComponent>();
             }
         }
 
-        public void DebugComponents()
-        {
-
-        }
+        
     }
 }

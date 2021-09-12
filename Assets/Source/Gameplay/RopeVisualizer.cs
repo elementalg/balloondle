@@ -16,23 +16,23 @@ namespace Balloondle.Gameplay
 
         private SpriteShapeController _spriteShapeController;
         
-        public GameObject ropeSpriteShapePrefab { get; set; }
+        public GameObject RopeSpriteShapePrefab { get; set; }
         
         public void VisualizeRope()
         {
             _rope2D = GetComponent<Rope2D>();
 
             _ropePoints = new List<Transform>();
-            _ropePoints.Add(_rope2D.gameObjectAttachedToStart.transform);
+            _ropePoints.Add(_rope2D.GameObjectAttachedToStart.transform);
 
-            for (int cell = 0; cell < _rope2D.ropeCells.Count; cell++)
+            for (int cell = 0; cell < _rope2D.RopeCells.Count; cell++)
             {
-                _ropePoints.Add(_rope2D.ropeCells[cell].transform);
+                _ropePoints.Add(_rope2D.RopeCells[cell].transform);
             }
             
-            _ropePoints.Add(_rope2D.bodyAttachedToEnd.transform);
+            _ropePoints.Add(_rope2D.BodyAttachedToEnd.transform);
 
-            _ropeSpriteShape = Instantiate(ropeSpriteShapePrefab, Vector3.zero, Quaternion.identity);
+            _ropeSpriteShape = Instantiate(RopeSpriteShapePrefab, Vector3.zero, Quaternion.identity);
             
             _spriteShapeController = _ropeSpriteShape.GetComponent<SpriteShapeController>();
         }
@@ -50,11 +50,11 @@ namespace Balloondle.Gameplay
                     Vector3 pointPosition;
                     if (i == 0)
                     {
-                        pointPosition = pointTransform.TransformPoint(_rope2D.startGameObjectAnchorPoint);
+                        pointPosition = pointTransform.TransformPoint(_rope2D.StartGameObjectAnchorPoint);
                     }
                     else if (i == _ropePoints.Count - 1)
                     {
-                        pointPosition = pointTransform.TransformPoint(_rope2D.endBodyAnchorPoint);
+                        pointPosition = pointTransform.TransformPoint(_rope2D.EndBodyAnchorPoint);
                     }
                     else
                     {

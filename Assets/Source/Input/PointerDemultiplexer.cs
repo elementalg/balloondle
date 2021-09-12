@@ -54,7 +54,7 @@ namespace Balloondle.Input
         /// <param name="pointer"></param>
         public void OnPointerUpdate(IPointerPress pointer)
         {
-            if (_selectedPointers.ContainsKey(pointer.pointerId))
+            if (_selectedPointers.ContainsKey(pointer.PointerId))
             {
                 TransferPointerToSelectedOutput(pointer);
         
@@ -94,29 +94,29 @@ namespace Balloondle.Input
 
         private void TransferPointerToSelectedOutput(IPointerPress pointer)
         {
-            if (!_selectedPointers.ContainsKey(pointer.pointerId))
+            if (!_selectedPointers.ContainsKey(pointer.PointerId))
             {
                 throw new InvalidOperationException("Cannot transfer touch to a non-existing output.");
             }
 
-            _selectedPointers[pointer.pointerId].Invoke(pointer);
+            _selectedPointers[pointer.PointerId].Invoke(pointer);
         }
 
         private static bool IsPointerPressStillAlive(IPointerPress pointer)
         {
-            return pointer.pointerPhase == PointerPhase.Began ||
-                   pointer.pointerPhase == PointerPhase.Moved ||
-                   pointer.pointerPhase == PointerPhase.Stationary;
+            return pointer.PointerPhase == PointerPhase.Began ||
+                   pointer.PointerPhase == PointerPhase.Moved ||
+                   pointer.PointerPhase == PointerPhase.Stationary;
         }
 
         private static bool HasPointerBegunRecently(IPointerPress pointer)
         {
-            if (pointer.pointerPhase == PointerPhase.Began)
+            if (pointer.PointerPhase == PointerPhase.Began)
             {
                 return true;
             }
 
-            return (Time.realtimeSinceStartupAsDouble - pointer.startTime) <= PressBeganPhaseMaxDurationInSeconds;
+            return (Time.realtimeSinceStartupAsDouble - pointer.StartTime) <= PressBeganPhaseMaxDurationInSeconds;
         }
 
         private bool SelectOutputFromQueueForPointer(IPointerPress pointer)
@@ -135,7 +135,7 @@ namespace Balloondle.Input
 
                 if (touchCondition.Invoke(pointer))
                 {
-                    _selectedPointers.Add(pointer.pointerId, output);
+                    _selectedPointers.Add(pointer.PointerId, output);
                     
                     selectedOutput = i;
                     break;
@@ -153,12 +153,12 @@ namespace Balloondle.Input
 
         private void RemovePointerFromSelectedPointers(IPointerPress pointer)
         {
-            if (!_selectedPointers.ContainsKey(pointer.pointerId))
+            if (!_selectedPointers.ContainsKey(pointer.PointerId))
             {
                 throw new InvalidOperationException("Unable to remove an unselected touch.");
             }
 
-            _selectedPointers.Remove(pointer.pointerId);
+            _selectedPointers.Remove(pointer.PointerId);
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace Balloondle.Input
             
             foreach (long touchId in _selectedPointers.Keys)
             {
-                touch.touchId = (int)touchId;
-                touch.phase = TouchPhase.Canceled;
+                touch.TouchId = (int)touchId;
+                touch.Phase = TouchPhase.Canceled;
 
                 TransferPointerToSelectedOutput(touch);
             }

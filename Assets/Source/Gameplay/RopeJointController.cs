@@ -9,7 +9,7 @@ namespace Balloondle.Gameplay
         private HingeJoint2D _hingeJoint2D;
         private DistanceJoint2D _distanceJoint2D;
 
-        public Rope2D ropeInstance { get; set; }
+        public Rope2D RopeInstance { get; set; }
         
         private void Start()
         {
@@ -40,9 +40,9 @@ namespace Balloondle.Gameplay
                 _hingeJoint2D.enabled = false;
             }
 
-            if (ropeInstance != null)
+            if (RopeInstance != null)
             {
-                ropeInstance.OnRopeJointBreak();
+                RopeInstance.OnRopeJointBreak();
             }
         }
     }

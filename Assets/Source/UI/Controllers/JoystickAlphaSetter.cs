@@ -15,22 +15,22 @@ namespace Balloondle.UI.Controllers
         [SerializeField, Tooltip("X -> Alpha on selected, Y -> Alpha on deselected")]
         private Vector2 m_JoystickAlpha = new Vector2(1.0f, 0.75f);
         
-        public Image joystickRange { get; set; }
-        public Image joystickRangeCenter { get; set; }
-        public Image joystick { get; set; }
+        public Image JoystickRange { get; set; }
+        public Image JoystickRangeCenter { get; set; }
+        public Image Joystick { get; set; }
 
         public void OnJoystickSelected()
         {
-            SetImageAlpha(joystickRange, m_JoystickRangeAlpha.x);
-            SetImageAlpha(joystickRangeCenter, m_JoystickRangeCenterAlpha.x);
-            SetImageAlpha(joystick, m_JoystickAlpha.x);
+            SetImageAlpha(JoystickRange, m_JoystickRangeAlpha.x);
+            SetImageAlpha(JoystickRangeCenter, m_JoystickRangeCenterAlpha.x);
+            SetImageAlpha(Joystick, m_JoystickAlpha.x);
         }
 
         public void OnJoystickDeselected()
         {
-            SetImageAlpha(joystickRange, m_JoystickRangeAlpha.y);
-            SetImageAlpha(joystickRangeCenter, m_JoystickRangeCenterAlpha.y);
-            SetImageAlpha(joystick, m_JoystickAlpha.y);
+            SetImageAlpha(JoystickRange, m_JoystickRangeAlpha.y);
+            SetImageAlpha(JoystickRangeCenter, m_JoystickRangeCenterAlpha.y);
+            SetImageAlpha(Joystick, m_JoystickAlpha.y);
         }
         
         private static void SetImageAlpha(Image image, float alpha)

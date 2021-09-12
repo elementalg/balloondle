@@ -21,7 +21,7 @@ namespace Balloondle.UI.Controllers
 
             _parentRectTransform = transform.parent.GetComponent<RectTransform>();
 
-            Rect gameObjectSurface = _rectTransform.rect;
+            Rect gameObjectSurface = RectTransform.rect;
 
             Rect joystickRangeRect = m_JoystickRange.GetComponent<RectTransform>().rect;
 

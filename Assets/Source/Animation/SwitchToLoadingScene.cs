@@ -8,7 +8,7 @@ namespace Balloondle.Animation
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo,
             int layerIndex)
         {
-            SceneManager.LoadScene(SceneNames.LOADING, LoadSceneMode.Single);
+            SceneManager.LoadScene(SceneNames.Loading, LoadSceneMode.Single);
         }
     }
 }
