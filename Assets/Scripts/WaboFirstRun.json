@@ -1,0 +1,27 @@
+﻿{
+  "title": "Wabo - First Run",
+  "author": "Gabriel Ami",
+  "entries":
+  [
+    {
+      "type": "Silence",
+      "object":
+      {
+        "duration": 1
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "duration": 2,
+        "text": "Hey! Welcome to our imaginary world.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    }
+  ]
+}

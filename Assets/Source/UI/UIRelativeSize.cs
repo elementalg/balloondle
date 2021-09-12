@@ -27,14 +27,14 @@ namespace Balloondle.UI
             Vector2 originalSize = rectTransform.sizeDelta;
             Vector2 relativeSize = originalSize / m_DesignResolution;
 
-            if (rectTransform.parent.GetComponent<RectTransform>() == null)
+            Canvas canvas = FindObjectOfType<Canvas>();
+            if (canvas == null)
             {
-                throw new InvalidOperationException("Parent must be a Canvas containing a RectTransform.");
+                throw new InvalidOperationException("There must be a Canvas in the scene.");
             }
             
-            Vector2 canvasSize = rectTransform.parent.GetComponent<RectTransform>().sizeDelta;
+            Vector2 canvasSize = canvas.GetComponent<RectTransform>().sizeDelta;
 
-            
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, relativeSize.x * canvasSize.x);
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, relativeSize.y * canvasSize.y);
 

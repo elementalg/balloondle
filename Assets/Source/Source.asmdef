@@ -1,5 +1,5 @@
 {
-    "name": "Scripts",
+    "name": "Source",
     "rootNamespace": "Balloondle",
     "references": [
         "Unity.InputSystem",

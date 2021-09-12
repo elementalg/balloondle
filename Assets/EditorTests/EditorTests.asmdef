@@ -5,8 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Unity.InputSystem",
-        "Scripts",
-        "Unity.2D.SpriteShape.Runtime"
+        "Unity.2D.SpriteShape.Runtime",
+        "Source"
     ],
     "includePlatforms": [
         "Editor"
