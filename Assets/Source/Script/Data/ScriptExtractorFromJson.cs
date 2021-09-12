@@ -17,13 +17,6 @@ namespace Balloondle.Script.Data
         private const string EntryCharacterDataIdKey = "id";
         private const string EntryCharacterDataNameKey = "name";
 
-        private enum EntryType
-        {
-            Silence,
-            Narrative,
-            Character,
-        }
-        
         public ScriptContainer FromJson(string json)
         {
             if (json == null)
