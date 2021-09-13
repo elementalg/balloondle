@@ -8,6 +8,11 @@ namespace Balloondle.Script.Viewer
     /// </summary>
     public class InOutController : MonoBehaviour
     {
+        public Action m_InEnd;
+        public Action m_InTextEnd;
+        public Action m_OutTextEnd;
+        public Action m_OutEnd;
+        
         private Animator _animator;
 
         private void OnEnable()
@@ -25,19 +30,39 @@ namespace Balloondle.Script.Viewer
             _animator.Play("In");
         }
 
+        private void InEnd()
+        {
+            m_InEnd?.Invoke();
+        }
+
         public void InText()
         {
             _animator.Play("InText");
+        }
+
+        private void InTextEnd()
+        {
+            m_InTextEnd?.Invoke();
         }
 
         public void OutText()
         {
             _animator.Play("OutText");
         }
+
+        private void OutTextEnd()
+        {
+            m_OutTextEnd?.Invoke();
+        }
         
         public void Out()
         {
             _animator.Play("Out");
+        }
+
+        private void OutEnd()
+        {
+            m_OutEnd?.Invoke();
         }
     }
 }

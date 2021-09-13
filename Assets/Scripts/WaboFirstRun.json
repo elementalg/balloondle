@@ -14,7 +14,7 @@
       "type": "Character",
       "object":
       {
-        "duration": 2,
+        "duration": 10,
         "text": "Hey! Welcome to our imaginary world.",
         "character_data":
         {
