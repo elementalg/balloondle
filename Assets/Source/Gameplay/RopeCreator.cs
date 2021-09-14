@@ -16,19 +16,21 @@ namespace Balloondle.Gameplay
         [SerializeField] private float m_DefaultEndPointJointBreakTorque = 10f;
         [SerializeField] private float m_DefaultRopeCellJointBreakForce = 2f;
         [SerializeField] private float m_DefaultRopeCellJointBreakTorque = 2f;
+        [SerializeField] private float m_DefaultJointBetweenEndsBreakForce = 1000f;
 
         public void CreateRopeConnectingTwoRigidBodies2D(Rigidbody2D start, Vector2 startAnchor, 
             Rigidbody2D end, Vector2 endAnchor, float maximumDistanceBetweenBodies)
         {
-            CreateRopeConnectingTwoRigidBodies2D(start, startAnchor, end, endAnchor, maximumDistanceBetweenBodies,
+            Rope2DLimits defaultLimits = new Rope2DLimits(maximumDistanceBetweenBodies,
                 m_DefaultEndPointJointBreakForce, m_DefaultEndPointJointBreakTorque,
-                m_DefaultRopeCellJointBreakForce, m_DefaultRopeCellJointBreakTorque);
+                m_DefaultRopeCellJointBreakForce, m_DefaultRopeCellJointBreakTorque,
+                m_DefaultJointBetweenEndsBreakForce);
+            
+            CreateRopeConnectingTwoRigidBodies2D(start, startAnchor, end, endAnchor, defaultLimits);
         }
 
         public void CreateRopeConnectingTwoRigidBodies2D(Rigidbody2D start, Vector2 startAnchor, Rigidbody2D end,
-            Vector2 endAnchor, float maximumDistanceBetweenBodies,
-            float endBodiesJointBreakForce, float endBodiesJointBreakTorque,
-            float ropeCellsJointBreakForce, float ropeCellsJointBreakTorque)
+            Vector2 endAnchor, Rope2DLimits limits)
         {
             if (start == end)
             {
@@ -45,14 +47,15 @@ namespace Balloondle.Gameplay
             Rope2D rope = ropeGameObject.AddComponent<Rope2D>();
             
             // Apply joint break forces/torques.
-            rope.EndBodiesJointBreakForce = endBodiesJointBreakForce;
-            rope.EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
-            rope.RopeCellsJointBreakForce = ropeCellsJointBreakForce;
-            rope.RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
+            rope.EndBodiesJointBreakForce = limits.EndBodiesJointBreakForce;
+            rope.EndBodiesJointBreakTorque = limits.EndBodiesJointBreakTorque;
+            rope.RopeCellsJointBreakForce = limits.RopeCellsJointBreakForce;
+            rope.RopeCellsJointBreakTorque = limits.RopeCellsJointBreakTorque;
+            rope.JointBetweenEndsBreakForce = limits.JointBetweenEndsBreakForce;
             
             rope.RopeCellPrefab = m_RopeCellPrefab;
             rope.AddCellsForJoiningStartToEnd(start.gameObject, startAnchor,
-                end, endAnchor, maximumDistanceBetweenBodies);
+                end, endAnchor, limits.MaximumDistanceBetweenBodies);
 
             RopeVisualizer ropeVisualizer = ropeGameObject.AddComponent<RopeVisualizer>();
             ropeVisualizer.RopeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
