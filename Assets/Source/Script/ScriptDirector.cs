@@ -23,7 +23,7 @@ namespace Balloondle.Script
         private ScriptContainer _scriptContainer;
 
         private Entry _currentEntry;
-        private float _entryStartTime;
+        private float _entryElapsedTime;
         private IEntryDirector _currentEntryDirector;
 
         private void OnEnable()
@@ -63,27 +63,73 @@ namespace Balloondle.Script
         {
             m_ScriptEndsHandler.OnScriptStart();
 
-            DirectScript();
+            InitializeScript();
         }
 
+        private void InitializeScript()
+        {
+            _currentEntry = _scriptContainer.ReadNext();
+            _entryElapsedTime = 0f;
+
+            if (UpdateEntryDirectorForCurrentEntry())
+            {
+                _currentEntryDirector.In();
+            }
+        }
+
+        /// <summary>
+        /// Creates, or updates, an entry director.
+        /// </summary>
+        /// <returns>True if the new entry must be eased In, false otherwise.</returns>
+        /// <exception cref="NotImplementedException">if a NarrativeEntry is detected.</exception>
+        private bool UpdateEntryDirectorForCurrentEntry()
+        {
+            switch (_currentEntry)
+            {
+                case SilenceEntry _:
+                    _currentEntryDirector = new SilenceEntryDirector();
+                    break;
+                case NarrativeEntry _:
+                    throw new NotImplementedException("NarrativeEntry direction has not been implemented yet.");
+                case CharacterEntry entry:
+                    if (_currentEntryDirector != null &&
+                        _currentEntryDirector is CharacterEntryDirector currentDirector)
+                    {
+                        if (entry.CharacterData.Id == currentDirector.CharacterId)
+                        {
+                            currentDirector.UpdateText(entry);
+                            return false;
+                        }
+                    } 
+
+                    _currentEntryDirector = new CharacterEntryDirector(entry,
+                        m_ScriptStyle.m_Components[0], m_SceneCanvas);
+                    
+                    break;
+            }
+
+            return true;
+        }
+        
         private void DirectScript()
         {
             if (HasCurrentEntryExpired())
             {
-                if (_currentEntry != null)
-                {
-                    _currentEntryDirector.Out();
-                }
-                
                 if (!_scriptContainer.HasNext())
                 {
+                    if (_currentEntry == null)
+                    {
+                        return;
+                    }
+                    
+                    _currentEntryDirector.Out();
                     m_ScriptEndsHandler.OnScriptEnd();
                     
                     _currentEntry = null;
                     _currentEntryDirector = null;
-                    _entryStartTime = 0f;
+                    _entryElapsedTime = 0f;
                     
-                    Destroy(this);
+                    Destroy(this, 1f);
                     return;
                 }
 
@@ -102,7 +148,7 @@ namespace Balloondle.Script
                 return true;
             }
 
-            float entryProgress = (Time.realtimeSinceStartup - _entryStartTime) / _currentEntry.Duration;
+            float entryProgress = _entryElapsedTime / _currentEntry.Duration;
 
             return entryProgress >= 1f;
         }
@@ -110,36 +156,23 @@ namespace Balloondle.Script
         private void InitializeNextEntryDirector()
         {
             Entry nextEntry = _scriptContainer.ReadNext();
-            _entryStartTime = Time.realtimeSinceStartup;
+            _entryElapsedTime = 0f;
 
-            switch (nextEntry)
-            {
-                case SilenceEntry _:
-                    _currentEntryDirector = new SilenceEntryDirector();
-                    break;
-                case NarrativeEntry _:
-                    throw new NotImplementedException("NarrativeEntry direction has not been implemented yet.");
-                case CharacterEntry entry:
-                    if (_currentEntry is CharacterEntry currentCharacter &&
-                        entry.CharacterData.Id == currentCharacter.CharacterData.Id)
-                    {
-                        ((CharacterEntryDirector)_currentEntryDirector).UpdateText(currentCharacter);
-                    }
-                    else
-                    {
-                        _currentEntryDirector = new CharacterEntryDirector(entry,
-                            m_ScriptStyle.m_Components[0], m_SceneCanvas);
-                        _currentEntryDirector.In();
-                    }
-                    
-                    break;
-            }
+            IEntryDirector previousDirector = _currentEntryDirector;
 
             _currentEntry = nextEntry;
+
+            if (UpdateEntryDirectorForCurrentEntry())
+            {
+                previousDirector.Out();
+                _currentEntryDirector.In();
+            }
         }
 
         private void Update()
         {
+            _entryElapsedTime += Time.deltaTime;
+            
             DirectScript();
         }
     }
