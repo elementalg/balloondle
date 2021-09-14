@@ -13,6 +13,8 @@ namespace Balloondle.Script
 
         private InOutController _characterInOut;
         private InOutController _messageInOut;
+
+        public ulong CharacterId => _entry.CharacterData.Id;
         
         public CharacterEntryDirector(CharacterEntry entry, EntryStyleComponent entryStyle, Canvas canvas)
         {
@@ -23,8 +25,10 @@ namespace Balloondle.Script
             _characterInOut = _styleReferences.m_CharacterImage.GetComponent<InOutController>();
             _messageInOut = _styleReferences.m_MessageBox.GetComponent<InOutController>();
 
-            _messageInOut.m_InEnd += () => _messageInOut.InText();
-            _characterInOut.m_InEnd += () => _characterInOut.InText();
+            _messageInOut.m_InEnd = () => _messageInOut.InText();
+            _characterInOut.m_InEnd = () => _characterInOut.InText();
+
+            _styleReferences.m_MessageText.text = entry.Text;
         }
 
         public void In()
@@ -51,12 +55,13 @@ namespace Balloondle.Script
 
         public void Out()
         {
-            _characterInOut.Out();
             _characterInOut.OutText();
-            _messageInOut.Out();
+            _characterInOut.m_OutTextEnd = () => _characterInOut.Out();
+
             _messageInOut.OutText();
+            _messageInOut.m_OutTextEnd = () => _messageInOut.Out();
             
-            GameObject.Destroy(_styleReferences.gameObject, 1f);
+            _characterInOut.m_OutEnd = () => GameObject.Destroy(_styleReferences.gameObject, 2f);
         }
     }
 }
