@@ -48,7 +48,12 @@ namespace EditorTests.Script.Data
                                  "      'type': 'Silence'," +
                                  "      'object':" +
                                  "      {" +
-                                 "          'duration': 1" +
+                                 "          'duration': 1," +
+                                 "          'expire_event':" +
+                                 "          {" +
+                                 "              'enabled': false," +
+                                 "              'value': ''" +
+                                 "          }" +
                                  "      }" +
                                  "  }," +
                                  "  {" +
@@ -56,6 +61,11 @@ namespace EditorTests.Script.Data
                                  "      'object':" +
                                  "      {" +
                                  "          'duration': 4," +
+                                 "          'expire_event':" +
+                                 "          {" +
+                                 "              'enabled': false," +
+                                 "              'value': ''" +
+                                 "          }," +
                                  "          'text': 'Too many credit cards...'" +
                                  "      }" +
                                  "  }," +
@@ -64,6 +74,11 @@ namespace EditorTests.Script.Data
                                  "      'object':" +
                                  "      {" +
                                  "          'duration': 4," +
+                                 "          'expire_event':" +
+                                 "          {" +
+                                 "              'enabled': true," +
+                                 "              'value': 'S04_E08_09:02'" +
+                                 "          }," +
                                  "          'text': 'I DECLARE BANKRUPTCY'," +
                                  "          'character_data':" +
                                  "          {" +
@@ -84,17 +99,21 @@ namespace EditorTests.Script.Data
             Assert.IsInstanceOf<SilenceEntry>(entryBeingRead);
             SilenceEntry firstEntry = (SilenceEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(1f, firstEntry.Duration));
+            Assert.False(firstEntry.Expire.Enabled);
 
             entryBeingRead = extractedScriptContainer.ReadNext();
             Assert.IsInstanceOf<NarrativeEntry>(entryBeingRead);
             NarrativeEntry secondEntry = (NarrativeEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(4f, secondEntry.Duration));
+            Assert.False(firstEntry.Expire.Enabled);
             Assert.AreEqual("Too many credit cards...", (secondEntry).Text);
 
             entryBeingRead = extractedScriptContainer.ReadNext();
             Assert.IsInstanceOf<CharacterEntry>(entryBeingRead);
             CharacterEntry thirdEntry = (CharacterEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(4f, thirdEntry.Duration));
+            Assert.True(thirdEntry.Expire.Enabled);
+            Assert.AreEqual("S04_E08_09:02", thirdEntry.Expire.Value);
             Assert.AreEqual("I DECLARE BANKRUPTCY", thirdEntry.Text);
             Assert.AreEqual(0, thirdEntry.CharacterData.Id);
             Assert.AreEqual("Michael Scott", thirdEntry.CharacterData.Name);

@@ -26,6 +26,8 @@ namespace Balloondle.Script
         private float _entryElapsedTime;
         private IEntryDirector _currentEntryDirector;
 
+        private bool _hasExpireEventBeenTriggered;
+
         private void OnEnable()
         {
             if (m_ScriptJsonFile == null)
@@ -148,6 +150,12 @@ namespace Balloondle.Script
                 return true;
             }
 
+            // keep waiting for the expire event to be triggered.
+            if (_currentEntry.Expire.Enabled && !_hasExpireEventBeenTriggered)
+            {
+                return false;
+            }
+
             float entryProgress = _entryElapsedTime / _currentEntry.Duration;
 
             return entryProgress >= 1f;
@@ -157,6 +165,7 @@ namespace Balloondle.Script
         {
             Entry nextEntry = _scriptContainer.ReadNext();
             _entryElapsedTime = 0f;
+            _hasExpireEventBeenTriggered = false;
 
             IEntryDirector previousDirector = _currentEntryDirector;
 
@@ -174,6 +183,15 @@ namespace Balloondle.Script
             _entryElapsedTime += Time.deltaTime;
             
             DirectScript();
+        }
+
+        public void TriggerExpireEvent(string value)
+        {
+            if (_currentEntry.Expire.Enabled && _currentEntry.Expire.Value.Equals(value))
+            {
+                _entryElapsedTime = 0f;
+                _hasExpireEventBeenTriggered = true;
+            }
         }
     }
 }

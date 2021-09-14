@@ -8,5 +8,11 @@
         {
             Text = text;
         }
+        
+        public NarrativeEntry(float duration, ExpireEvent expireEvent, string text) : 
+            base(duration, expireEvent)
+        {
+            Text = text;
+        }
     }
 }

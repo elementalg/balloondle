@@ -13,5 +13,10 @@
         {
             
         }
+        
+        public SilenceEntry(float duration, ExpireEvent expireEvent) : base(duration, expireEvent)
+        {
+            
+        }
     }
 }

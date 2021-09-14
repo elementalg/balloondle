@@ -11,9 +11,14 @@ namespace Balloondle.Script.Data
         private const string EntryTypeKey = "type";
         private const string EntryObjectKey = "object";
         private const string EntryDurationKey = "duration";
+        
+        private const string EntryExpireEventKey = "expire_event";
+        private const string EntryExpireEventEnabledKey = "enabled";
+        private const string EntryExpireEventValueKey = "value";
+        
         private const string EntryTextKey = "text";
+        
         private const string EntryCharacterDataKey = "character_data";
-
         private const string EntryCharacterDataIdKey = "id";
         private const string EntryCharacterDataNameKey = "name";
 
@@ -48,19 +53,21 @@ namespace Balloondle.Script.Data
             string type = serializedEntry.Value<string>(EntryTypeKey);
             EntryType entryType = (EntryType)Enum.Parse(typeof(EntryType), type);
             serializedEntry = serializedEntry.Value<JObject>(EntryObjectKey);
+
+            ExpireEvent expireEvent = DeserializeExpireEvent(serializedEntry.Value<JObject>(EntryExpireEventKey));
             
             switch (entryType)
             {
                 case EntryType.Silence:
-                    return new SilenceEntry(serializedEntry.Value<float>(EntryDurationKey));
+                    return new SilenceEntry(serializedEntry.Value<float>(EntryDurationKey), expireEvent);
                 case EntryType.Narrative:
-                    return new NarrativeEntry(serializedEntry.Value<float>(EntryDurationKey),
+                    return new NarrativeEntry(serializedEntry.Value<float>(EntryDurationKey), expireEvent,
                         serializedEntry.Value<string>(EntryTextKey));
                 case EntryType.Character:
                     Character characterData =
                         DeserializeCharacterEntry(serializedEntry.Value<JObject>(EntryCharacterDataKey));
 
-                    return new CharacterEntry(serializedEntry.Value<float>(EntryDurationKey),
+                    return new CharacterEntry(serializedEntry.Value<float>(EntryDurationKey), expireEvent,
                         serializedEntry.Value<string>(EntryTextKey),
                         characterData);
                 default:
@@ -68,6 +75,14 @@ namespace Balloondle.Script.Data
             }
         }
 
+        private ExpireEvent DeserializeExpireEvent(JObject serializedExpireEvent)
+        {
+            bool enabled = serializedExpireEvent.Value<bool>(EntryExpireEventEnabledKey);
+            string value = serializedExpireEvent.Value<string>(EntryExpireEventValueKey);
+
+            return new ExpireEvent(enabled, value);
+        }
+        
         private Character DeserializeCharacterEntry(JObject serializedCharacterEntry)
         {
             ulong characterId = serializedCharacterEntry.Value<ulong>(EntryCharacterDataIdKey);
