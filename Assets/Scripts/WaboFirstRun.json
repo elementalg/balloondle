@@ -7,15 +7,43 @@
       "type": "Silence",
       "object":
       {
-        "duration": 1
+        "duration": 1,
+        "expire_event": 
+        {
+          "enabled": false,
+          "value": ""
+        }
       }
     },
     {
       "type": "Character",
       "object":
       {
-        "duration": 10,
-        "text": "Hey! Welcome to our imaginary world.",
+        "duration": 3,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "Hello! Welcome to Balloondle.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "duration": 3,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "I'm going to show you around so you can get comfortable.",
         "character_data":
         {
           "id": 0,
