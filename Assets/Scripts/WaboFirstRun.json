@@ -19,13 +19,13 @@
       "type": "Character",
       "object":
       {
-        "duration": 3,
+        "duration": 5,
         "expire_event":
         {
           "enabled": false,
           "value": ""
         },
-        "text": "Hello! Welcome to Balloondle.",
+        "text": "Be welcomed to the magic world of Kikyu! I'm Wabo!",
         "character_data":
         {
           "id": 0,
@@ -37,13 +37,13 @@
       "type": "Character",
       "object":
       {
-        "duration": 3,
+        "duration": 5,
         "expire_event":
         {
           "enabled": false,
           "value": ""
         },
-        "text": "I'm going to show you around so you can get comfortable.",
+        "text": "Let's start by warming up your knowledge about the mechanics of a balloon.",
         "character_data":
         {
           "id": 0,
