@@ -1,3 +1,4 @@
+using System;
 using Balloondle.Gameplay;
 using NUnit.Framework;
 using UnityEngine;
@@ -28,17 +29,6 @@ namespace EditorTests.Gameplay
         }
 
         [Test]
-        public void CannotRefillArmorWithNegativeAmount()
-        {
-            float startingArmor = _worldEntity.Armor;
-            
-            _worldEntity.RefillArmor(-1f);
-            
-            Assert.AreEqual(startingArmor, _worldEntity.Armor, WorldEntityFloatDelta, 
-                "Armor is not equal to the starting one, even though negative armor refilling must be ignored.");
-        }
-
-        [Test]
         public void ExcessiveHealingClampsToMaximumRealFloatNumber()
         {
             // Try to overflow health.
@@ -52,19 +42,6 @@ namespace EditorTests.Gameplay
         }
 
         [Test]
-        public void ExcessiveArmorRefillingClampsToMaximumRealFloatNumber()
-        {
-            // Try to overflow armor.
-            _worldEntity.RefillArmor(1f);
-            _worldEntity.RefillArmor(float.MaxValue);
-            
-            Assert.False(float.IsPositiveInfinity(_worldEntity.Armor), 
-                "Armor refilling does not avoid overflowing, thus the armor value is positive infinity.");
-            Assert.AreEqual(float.MaxValue, _worldEntity.Armor, WorldEntityFloatDelta, 
-                "RefillArmor does not avoid overflowing.");
-        }
-
-        [Test]
         public void HealClampsPositiveInfinityToMaximumRealFloatNumber()
         {
             _worldEntity.Heal(float.PositiveInfinity);
@@ -75,13 +52,80 @@ namespace EditorTests.Gameplay
         }
 
         [Test]
-        public void ArmorRefillClampsPositiveInfinityToMaximumRealFloatNumber()
+        public void CannotApplyNegativeOrZeroDamage()
         {
-            _worldEntity.RefillArmor(float.PositiveInfinity);
+            float startingHealth = _worldEntity.Health;
             
-            Assert.False(float.IsPositiveInfinity(_worldEntity.Armor), "ArmorRefill does not clamp positive infinity.");
-            Assert.AreEqual(float.MaxValue, _worldEntity.Armor, WorldEntityFloatDelta, 
-                "ArmorRefill does not clamp positive infinity to the float maximum existing value.");
+            _worldEntity.Damage(-1f);
+            _worldEntity.Damage(0f);
+            
+            Assert.AreEqual(startingHealth, _worldEntity.Health);
+        }
+
+        [Test]
+        public void PreHealthActionIsInvokedBeforeApplyingHealingToHealth()
+        {
+            bool onPreHealingActionExecuted = false;
+            bool healthIsNotAffectedOnPreHealth = false;
+            float startingHealth = _worldEntity.Health;
+            float healingToBeMade = 100f;
+            
+            _worldEntity.OnHealthPreReceived += (healing) =>
+            {
+                onPreHealingActionExecuted = true;
+
+                healthIsNotAffectedOnPreHealth = Math.Abs(startingHealth - _worldEntity.Health) < WorldEntityFloatDelta;
+            };
+            
+            _worldEntity.Heal(healingToBeMade);
+            
+            Assert.True(onPreHealingActionExecuted);
+            Assert.True(healthIsNotAffectedOnPreHealth);
+            Assert.True(Math.Abs(startingHealth + healingToBeMade - _worldEntity.Health) < WorldEntityFloatDelta);
+        }
+        
+        [Test]
+        public void PreDamageActionIsInvokedBeforeApplyingDamageToHealth()
+        {
+            bool onPreDamageActionExecuted = false;
+            bool healthIsNotAffectedOnPreDamage = false;
+            float startingHealth = _worldEntity.Health;
+            float damageToBeApplied = 99f;
+            
+            _worldEntity.OnDamagePreReceived += (damage) =>
+            {
+                onPreDamageActionExecuted = true;
+
+                healthIsNotAffectedOnPreDamage = Math.Abs(startingHealth - _worldEntity.Health) < WorldEntityFloatDelta;
+            };
+            
+            _worldEntity.Damage(damageToBeApplied);
+            
+            Assert.True(onPreDamageActionExecuted);
+            Assert.True(healthIsNotAffectedOnPreDamage);
+            Assert.True(Math.Abs(startingHealth - damageToBeApplied - _worldEntity.Health) < WorldEntityFloatDelta);
+        }
+
+        [Test]
+        public void OnDamageAllHealthPreDestroyPassesLastDamageAmount()
+        {
+            bool onPreDestroyActionExecuted = false;
+            bool isDamageEqualToLastDamageApplied = false;
+            float startingHealth = _worldEntity.Health;
+
+            float damageToBeApplied = startingHealth + 5f;
+            
+            _worldEntity.OnPreDestroy += (damage) =>
+            {
+                onPreDestroyActionExecuted = true;
+                isDamageEqualToLastDamageApplied =
+                    Math.Abs(damageToBeApplied - damage) < WorldEntityFloatDelta;
+            };
+            
+            _worldEntity.Damage(damageToBeApplied);
+            
+            Assert.True(onPreDestroyActionExecuted);
+            Assert.True(isDamageEqualToLastDamageApplied);
         }
     }
 }

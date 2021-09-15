@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Balloondle.Gameplay
@@ -12,8 +13,32 @@ namespace Balloondle.Gameplay
     /// </summary>
     public class WorldEntity : MonoBehaviour
     {
-        public float Health { get; private set; } = 0f;
-        public float Armor { get; private set; } = 0f;
+        /// <summary>
+        /// Called before applying the healing to the WorldEntity's health.
+        ///
+        /// [PARAMETERS]
+        /// - float: amount of healing received.
+        /// </summary>
+        public Action<float> OnHealthPreReceived;
+        
+        /// <summary>
+        /// Called before applying the damage received to the WorldEntity's health.
+        ///
+        /// [PARAMETERS]
+        /// - float: amount of damage received.
+        /// </summary>
+        public Action<float> OnDamagePreReceived;
+        
+        /// <summary>
+        /// Called before calling the Destroy() on the WorldEntity's GameObject.
+        ///
+        /// [PARAMETERS]
+        /// - float: amount of damage applied to the WorldEntity, which made its health reach 0.
+        /// </summary>
+        public Action<float> OnPreDestroy;
+
+        public float Health { get; private set; } = 100f;
+        public float DestroyAfterTime { get; set; } = 1f;
 
         /// <summary>
         /// Only increases the entity's health. When positive infinity is reached, health's value is clamped to the
@@ -27,6 +52,8 @@ namespace Balloondle.Gameplay
                 return;
             }
 
+            OnHealthPreReceived?.Invoke(healAmount);
+            
             // If the sum goes to infinite, proceed to limit it to the maximum real float number.
             if (healAmount + Health >= float.MaxValue)
             {
@@ -37,26 +64,28 @@ namespace Balloondle.Gameplay
             Health += healAmount;
         }
 
-        /// <summary>
-        /// Only increases the entity's armor. When positive infinity is reached, armor's value is clamped to the
-        /// maximum real <see cref="float"/> number.
-        /// </summary>
-        /// <param name="armorAmount"></param>
-        public void RefillArmor(float armorAmount)
+        public void Damage(float damageAmount)
         {
-            if (armorAmount <= 0f)
+            if (damageAmount <= 0f)
             {
                 return;
             }
-
-            // If the sum goes to infinite, proceed to limit it to the maximum real float number.
-            if (armorAmount + Armor > float.MaxValue)
+            
+            OnDamagePreReceived?.Invoke(damageAmount);
+            
+            if (Health - damageAmount <= 0f)
             {
-                Armor = float.MaxValue;
+                Health = 0f;
+                OnPreDestroy?.Invoke(damageAmount);
+                #if UNITY_EDITOR
+                    DestroyImmediate(gameObject);
+                #else
+                    Destroy(gameObject, DestroyAfterTime);
+                #endif
                 return;
             }
 
-            Armor += armorAmount;
+            Health -= damageAmount;
         }
     }
 }
