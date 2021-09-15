@@ -23,6 +23,7 @@ namespace Balloondle.Gameplay
             _rope2D = GetComponent<Rope2D>();
 
             _ropePoints = new List<Transform>();
+            
             _ropePoints.Add(_rope2D.GameObjectAttachedToStart.transform);
 
             for (int cell = 0; cell < _rope2D.RopeCells.Count; cell++)
@@ -32,7 +33,7 @@ namespace Balloondle.Gameplay
             
             _ropePoints.Add(_rope2D.BodyAttachedToEnd.transform);
 
-            _ropeSpriteShape = Instantiate(RopeSpriteShapePrefab, Vector3.zero, Quaternion.identity);
+            _ropeSpriteShape = Instantiate(RopeSpriteShapePrefab, Vector3.zero, Quaternion.identity, transform);
             
             _spriteShapeController = _ropeSpriteShape.GetComponent<SpriteShapeController>();
         }
