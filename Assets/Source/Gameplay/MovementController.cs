@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,15 +10,14 @@ namespace Balloondle.Gameplay
     /// </summary>
     public class MovementController : MonoBehaviour
     {
-        [SerializeField, Tooltip("Physics body to which the movement will be applied")]
-        private Rigidbody2D m_BodyToBeMoved;
-
         [SerializeField, Tooltip("Maximum velocity")]
         private Vector2 m_MaximumVelocity = new Vector2(5f, 5f);
 
         [SerializeField, Tooltip("Movement cooldown duration after a collision")]
         private float m_CollisionMovementCooldown;
 
+        private Rigidbody2D _bodyBeingMoved;
+        
         private bool _isCollisionCooldownApplied;
         private float _collisionStartTime;
 
@@ -25,6 +25,13 @@ namespace Balloondle.Gameplay
 
         private void OnEnable()
         {
+            if (GetComponent<Rigidbody2D>() == null)
+            {
+                throw new InvalidOperationException("MovementController requires a RigidBody2D component.");
+            }
+
+            _bodyBeingMoved = GetComponent<Rigidbody2D>();
+            
             _effectApplier = GetComponent<EffectApplier>();
         }
 
@@ -45,7 +52,7 @@ namespace Balloondle.Gameplay
     
             inputVelocity = inputVelocity * m_MaximumVelocity;
 
-            Vector2 currentVelocity = m_BodyToBeMoved.velocity;
+            Vector2 currentVelocity = _bodyBeingMoved.velocity;
 
             Vector2 movementForce = new Vector2();
 
@@ -68,11 +75,11 @@ namespace Balloondle.Gameplay
             }
 
             // Calculate the force required to obtain the previously calculated velocities.
-            movementForce *= m_BodyToBeMoved.mass;
+            movementForce *= _bodyBeingMoved.mass;
         
             if (!_isCollisionCooldownApplied)
             {
-                m_BodyToBeMoved.AddForce(movementForce, ForceMode2D.Impulse);
+                _bodyBeingMoved.AddForce(movementForce, ForceMode2D.Impulse);
             }
         }
 
