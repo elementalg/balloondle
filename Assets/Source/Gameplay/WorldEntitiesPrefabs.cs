@@ -4,13 +4,19 @@ using UnityEngine;
 
 namespace Balloondle.Gameplay
 {
-    public class WorldEntitiesPrefabs : MonoBehaviour
+    [CreateAssetMenu(fileName ="WorldEntitiesPrefabsData", menuName = "WorldEntities/Prefabs", order=1)]
+    public class WorldEntitiesPrefabs : ScriptableObject
     {
         [SerializeField, Tooltip("List containing prefabs which must have the component WorldEntity.")] 
-        private List<GameObject> m_EntitiesPrefabs;
+        public List<GameObject> m_EntitiesPrefabs;
 
         private void OnEnable()
         {
+            if (m_EntitiesPrefabs == null)
+            {
+                return;
+            }
+            
             foreach (GameObject prefab in m_EntitiesPrefabs)
             {
                 if (prefab.GetComponent<WorldEntity>() == null)
