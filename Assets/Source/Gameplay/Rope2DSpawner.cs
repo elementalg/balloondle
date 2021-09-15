@@ -7,7 +7,7 @@ namespace Balloondle.Gameplay
     public class Rope2DSpawner : MonoBehaviour
     {
         private const string RopeTag = "Rope";
-        private const string RopeGameObjectName = "GeneratedRope";
+        private const string RopeGameObjectName = "SpawnedRope";
         
         [SerializeField] private GameObject m_RopeCellPrefab;
         [SerializeField] private GameObject m_RopeCellSpriteShapePrefab;
