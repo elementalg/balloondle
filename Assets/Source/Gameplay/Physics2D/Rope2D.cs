@@ -14,7 +14,7 @@ namespace Balloondle.Gameplay.Physics2D
     /// </summary>
     public class Rope2D : MonoBehaviour
     {
-        public IRope2DCustomDestructor customDestructor;
+        public IRope2DCustomDestructor CustomDestructor;
         
         /// <summary>
         /// Maximum velocity supported before the rope proceeds to break.
@@ -133,9 +133,9 @@ namespace Balloondle.Gameplay.Physics2D
 
             RemoveJointsFromEnds();
 
-            if (customDestructor != null)
+            if (CustomDestructor != null)
             {
-                customDestructor.OnBreakRope();
+                CustomDestructor.OnBreakRope();
             }
             else
             {
