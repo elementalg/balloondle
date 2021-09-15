@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Balloondle.Gameplay
 {
-    public class RopeJointController : MonoBehaviour
+    public class Rope2DJointController : MonoBehaviour
     {
         private HingeJoint2D _hingeJoint2D;
         private DistanceJoint2D _distanceJoint2D;
@@ -42,7 +42,7 @@ namespace Balloondle.Gameplay
 
             if (RopeInstance != null)
             {
-                RopeInstance.OnRopeJointBreak();
+                RopeInstance.Break();
             }
         }
     }

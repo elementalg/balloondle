@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 
 namespace Balloondle.Gameplay
 {
-    public class RopeVisualizer : MonoBehaviour
+    public class Rope2DVisualizer : MonoBehaviour
     {
         private const float MinimalSafeDistanceBetweenPoints = 0.05f;
         

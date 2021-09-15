@@ -14,6 +14,8 @@ namespace Balloondle.Gameplay.Physics2D
     /// </summary>
     public class Rope2D : MonoBehaviour
     {
+        public IRope2DCustomDestructor customDestructor;
+        
         /// <summary>
         /// Maximum velocity supported before the rope proceeds to break.
         /// </summary>
@@ -98,21 +100,21 @@ namespace Balloondle.Gameplay.Physics2D
 
                 if (distance > _maximumDistanceBetweenStartAndEnd)
                 {
-                    OnRopeJointBreak();
+                    Break();
                     return;
                 }
 
                 if (GameObjectAttachedToStart.GetComponent<Rigidbody2D>().velocity.sqrMagnitude > 
                     MaximumSupportedVelocity * MaximumSupportedVelocity)
                 {
-                    OnRopeJointBreak();
+                    Break();
                     return;
                 }
 
                 if (BodyAttachedToEnd.velocity.sqrMagnitude > 
                     MaximumSupportedVelocity * MaximumSupportedVelocity)
                 {
-                    OnRopeJointBreak();
+                    Break();
                 }
             }
 
@@ -120,16 +122,25 @@ namespace Balloondle.Gameplay.Physics2D
         }
         
         /// <summary>
-        /// Removes the rope cells added to the Scene, and the added joints to the start and end. Finally, it proceeds
-        /// to self-destruct.
+        /// Removes the rope cells added to the Scene, and the added joints to the start and end.
+        /// Finally, it proceeds to self-destruct.
+        ///
+        /// First it checks if there's a CustomDestroyer assigned, otherwise it proceeds to call Destroy.
         /// </summary>
-        public void OnRopeJointBreak()
+        public void Break()
         {
             RemoveAllCells();
 
             RemoveJointsFromEnds();
 
-            Destroy(gameObject); // Self destruct.
+            if (customDestructor != null)
+            {
+                customDestructor.OnBreakRope();
+            }
+            else
+            {
+                Destroy(gameObject); // Self destruct.
+            }
         }
         
         /// <summary>
@@ -190,7 +201,7 @@ namespace Balloondle.Gameplay.Physics2D
 
                 if (ropeCellBody.velocity.sqrMagnitude > MaximumSupportedVelocity * MaximumSupportedVelocity)
                 {
-                    OnRopeJointBreak();
+                    Break();
                     return;
                 }
             }
@@ -254,7 +265,7 @@ namespace Balloondle.Gameplay.Physics2D
         {
             if (GameObjectAttachedToStart != null)
             {
-                Destroy(GameObjectAttachedToStart.GetComponent<RopeJointController>());
+                Destroy(GameObjectAttachedToStart.GetComponent<Rope2DJointController>());
                 AttachGameObjectToRigidBody(GameObjectAttachedToStart, null);
             }
 
@@ -263,8 +274,8 @@ namespace Balloondle.Gameplay.Physics2D
             // Enable collision with attached rope cell, in order to avoid the cell passing through the object.
             AddJointsToConnectingPoint(GameObjectAttachedToStart, true);
             
-            RopeJointController ropeJointController = GameObjectAttachedToStart.AddComponent<RopeJointController>();
-            ropeJointController.RopeInstance = this;
+            Rope2DJointController rope2DJointController = GameObjectAttachedToStart.AddComponent<Rope2DJointController>();
+            rope2DJointController.RopeInstance = this;
             
             if (RopeCells.Count > 0)
             {
@@ -402,14 +413,14 @@ namespace Balloondle.Gameplay.Physics2D
 
             // Disable collision between rope cells.
             AddJointsToConnectingPoint(ropeCell, true);
-            RopeJointController ropeJointController = ropeCell.AddComponent<RopeJointController>();
-            ropeJointController.RopeInstance = this;
+            Rope2DJointController rope2DJointController = ropeCell.AddComponent<Rope2DJointController>();
+            rope2DJointController.RopeInstance = this;
             
             RopeCells.Add(ropeCell);
 
             SynchronizeJointsAfterAddition();
 
-            ropeCell.AddComponent<RopeBreakerWhenTraversed>();
+            ropeCell.AddComponent<Rope2DBreakerWhenTraversed>();
         }
 
         /// <summary>

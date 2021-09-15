@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Balloondle.Gameplay.Physics2D
 {
-    public class RopeBreakerWhenTraversed : MonoBehaviour
+    public class Rope2DBreakerWhenTraversed : MonoBehaviour
     {
         private float _traversedRadiusDetection = 0.00025f;
         private Collider2D _sourceCollider2D;

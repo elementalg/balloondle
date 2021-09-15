@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Balloondle.Gameplay
 {
-    public class RopeCreator : MonoBehaviour
+    public class Rope2DCreator : MonoBehaviour
     {
         private const string RopeTag = "Rope";
         private const string RopeGameObjectName = "GeneratedRope";
@@ -57,9 +57,9 @@ namespace Balloondle.Gameplay
             rope.AddCellsForJoiningStartToEnd(start.gameObject, startAnchor,
                 end, endAnchor, limits.MaximumDistanceBetweenBodies);
 
-            RopeVisualizer ropeVisualizer = ropeGameObject.AddComponent<RopeVisualizer>();
-            ropeVisualizer.RopeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
-            ropeVisualizer.VisualizeRope();
+            Rope2DVisualizer rope2DVisualizer = ropeGameObject.AddComponent<Rope2DVisualizer>();
+            rope2DVisualizer.RopeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
+            rope2DVisualizer.VisualizeRope();
         }
     }
 }
