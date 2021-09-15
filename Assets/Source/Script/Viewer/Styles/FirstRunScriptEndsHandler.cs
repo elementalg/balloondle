@@ -41,6 +41,8 @@ namespace Balloondle.Script.Viewer.Styles
         public override void OnScriptEnd()
         {
             _animator.Play("BlurOut");
+            
+            // TODO: Spawn balloon and move camera towards balloon before finally attaching the camera to the balloon.
         }
     }
 }
