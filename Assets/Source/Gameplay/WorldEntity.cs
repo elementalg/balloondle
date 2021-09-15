@@ -7,7 +7,6 @@ namespace Balloondle.Gameplay
     /// Basic entity present in the game's world. It defines the basic stats of each destroyable in game entity:
     ///
     /// - Health.
-    /// - Armor.
     ///
     /// All the default values are set to 0.
     /// </summary>
@@ -37,8 +36,21 @@ namespace Balloondle.Gameplay
         /// </summary>
         public Action<float> OnPreDestroy;
 
+        [SerializeField, Tooltip("Time to wait, after the WorldEntity has reached 0, before destroying the object.")]
+        private float m_DestroyAfterTime = 1f;
+
+        [SerializeField, Tooltip("Maximum health of the object.")]
+        private float m_MaxHealth = Single.MaxValue;
+
+        [SerializeField, Tooltip("Starting health of the object.")]
+        private float m_StartingHealth = 100f;
+        
         public float Health { get; private set; } = 100f;
-        public float DestroyAfterTime { get; set; } = 1f;
+
+        private void OnEnable()
+        {
+            Health = m_StartingHealth;
+        }
 
         /// <summary>
         /// Only increases the entity's health. When positive infinity is reached, health's value is clamped to the
@@ -54,10 +66,10 @@ namespace Balloondle.Gameplay
 
             OnHealthPreReceived?.Invoke(healAmount);
             
-            // If the sum goes to infinite, proceed to limit it to the maximum real float number.
-            if (healAmount + Health >= float.MaxValue)
+            // If the sum exceeds the maximum health, proceed to limit it to the maximum health.
+            if (healAmount + Health >= m_MaxHealth)
             {
-                Health = float.MaxValue;
+                Health = m_MaxHealth;
                 return;
             }
 
@@ -77,11 +89,13 @@ namespace Balloondle.Gameplay
             {
                 Health = 0f;
                 OnPreDestroy?.Invoke(damageAmount);
+                
                 #if UNITY_EDITOR
                     DestroyImmediate(gameObject);
                 #else
-                    Destroy(gameObject, DestroyAfterTime);
+                    Destroy(gameObject, m_DestroyAfterTime);
                 #endif
+                
                 return;
             }
 
