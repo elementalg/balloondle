@@ -35,10 +35,10 @@ namespace Balloondle.Gameplay
         /// - float: amount of damage applied to the WorldEntity, which made its health reach 0.
         /// </summary>
         public Action<float> OnPreDestroy;
-
-        [SerializeField, Tooltip("Time to wait, after the WorldEntity has reached 0, before destroying the object.")]
-        private float m_DestroyAfterTime = 1f;
-
+        
+        [Tooltip("Time to wait, after the WorldEntity has reached 0, before destroying the object.")]
+        public float m_DestroyAfterTime = 1f;
+        
         [SerializeField, Tooltip("Maximum health of the object.")]
         private float m_MaxHealth = Single.MaxValue;
 
