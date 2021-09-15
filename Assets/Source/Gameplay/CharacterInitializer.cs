@@ -5,7 +5,7 @@ namespace Balloondle.Gameplay
 {
     public class CharacterInitializer : MonoBehaviour
     {
-        [SerializeField] private RopeCreator m_RopeCreator;
+        [SerializeField] private Rope2DSpawner m_Rope2DSpawner;
 
         [SerializeField] private GameObject m_StartGameObject;
         [SerializeField] private Rigidbody2D m_EndBody;
@@ -21,9 +21,9 @@ namespace Balloondle.Gameplay
         {
             Rope2DLimits ropeLimits = new Rope2DLimits(5f, m_EndPointJointBreakForce, 
                 m_EndPointJointBreakTorque, m_RopeCellJointBreakForce,
-                m_RopeCellJointBreakTorque, m_JointBetweenEndsBreakForce);
+                m_RopeCellJointBreakTorque, m_JointBetweenEndsBreakForce, 100f);
             
-            m_RopeCreator.CreateRopeConnectingTwoRigidBodies2D(m_StartGameObject.GetComponent<Rigidbody2D>(),
+            m_Rope2DSpawner.CreateRopeConnectingTwoRigidBodies2D(m_StartGameObject.GetComponent<Rigidbody2D>(),
                 new Vector2(0, -0.5f), m_EndBody, new Vector2(0, -0.32f), ropeLimits);
         }
     }
