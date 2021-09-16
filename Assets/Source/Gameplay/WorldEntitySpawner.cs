@@ -11,6 +11,9 @@ namespace Balloondle.Gameplay
         [SerializeField, Tooltip("Whether or not world entity spawner supports attaching.")]
         private bool m_IsAttachingSupported;
 
+        [SerializeField, Tooltip("Implementation which attaches entities.")]
+        private WorldEntityAttacher m_Attacher; 
+
         private void OnEnable()
         {
             if (m_WorldEntitiesPrefabs == null)
