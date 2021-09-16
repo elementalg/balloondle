@@ -90,25 +90,25 @@ namespace EditorTests.Script.Data
                                  "]" +
                                  "}";
 
-            ScriptContainer extractedScriptContainer = _extractor.FromJson(exampleJson);
+            ScriptText extractedScriptText = _extractor.FromJson(exampleJson);
             
-            Assert.True(extractedScriptContainer.HasNext());
+            Assert.True(extractedScriptText.HasNext());
 
-            Entry entryBeingRead = extractedScriptContainer.ReadNext();
+            Entry entryBeingRead = extractedScriptText.ReadNext();
             
             Assert.IsInstanceOf<SilenceEntry>(entryBeingRead);
             SilenceEntry firstEntry = (SilenceEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(1f, firstEntry.Duration));
             Assert.False(firstEntry.Expire.Enabled);
 
-            entryBeingRead = extractedScriptContainer.ReadNext();
+            entryBeingRead = extractedScriptText.ReadNext();
             Assert.IsInstanceOf<NarrativeEntry>(entryBeingRead);
             NarrativeEntry secondEntry = (NarrativeEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(4f, secondEntry.Duration));
             Assert.False(firstEntry.Expire.Enabled);
             Assert.AreEqual("Too many credit cards...", (secondEntry).Text);
 
-            entryBeingRead = extractedScriptContainer.ReadNext();
+            entryBeingRead = extractedScriptText.ReadNext();
             Assert.IsInstanceOf<CharacterEntry>(entryBeingRead);
             CharacterEntry thirdEntry = (CharacterEntry)entryBeingRead;
             Assert.True(Mathf.Approximately(4f, thirdEntry.Duration));

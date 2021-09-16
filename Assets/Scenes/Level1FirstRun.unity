@@ -1193,6 +1193,65 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &895710658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895710659}
+  - component: {fileID: 895710661}
+  - component: {fileID: 895710660}
+  m_Layer: 0
+  m_Name: PointerDemultiplexer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &895710659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895710658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &895710660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895710658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2381ac906b72764fb11b0598bdc9e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ListenToTouchscreen: 1
+  m_ListenToMouse: 1
+--- !u!114 &895710661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895710658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6801593af0a607a46a1961fd0639482a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PointerListener: {fileID: 895710660}
 --- !u!1 &917057003
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,7 +2287,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1893285840}
-  - component: {fileID: 1893285839}
   m_Layer: 0
   m_Name: ScriptDirector
   m_TagString: Untagged
@@ -2236,22 +2294,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1893285839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1893285838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03771f2d28b23264b9230265b11225fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ScriptJsonFile: {fileID: 4900000, guid: 4ff561d285981544f917350808b88139, type: 3}
-  m_ScriptStyle: {fileID: 11400000, guid: e26c559e9fd1d264fbe1d7a80ae17736, type: 2}
-  m_ScriptEndsHandler: {fileID: 11400000, guid: 3e23111c8f069b94fac8fbf6244349d4, type: 2}
-  m_SceneCanvas: {fileID: 1288074576}
 --- !u!4 &1893285840
 Transform:
   m_ObjectHideFlags: 0

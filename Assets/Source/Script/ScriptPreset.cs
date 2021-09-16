@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace Balloondle.Script
 {
-    public class ScriptDirector : MonoBehaviour
+    [CreateAssetMenu(fileName = "ScriptPreset", menuName = "Script/Preset", order = 1)]
+    public class ScriptPreset : ScriptableObject
     {
         [SerializeField] 
         private TextAsset m_ScriptJsonFile;
@@ -16,11 +17,10 @@ namespace Balloondle.Script
 
         [SerializeField] 
         private ScriptEndsHandler m_ScriptEndsHandler;
+        
+        private Canvas _sceneCanvas;
 
-        [SerializeField] 
-        private Canvas m_SceneCanvas;
-
-        private ScriptContainer _scriptContainer;
+        private ScriptText _scriptText;
 
         private Entry _currentEntry;
         private float _entryElapsedTime;
@@ -40,22 +40,18 @@ namespace Balloondle.Script
                 throw new InvalidOperationException("A script style must be assigned.");
             }
 
-            if (m_SceneCanvas == null)
+            _sceneCanvas = FindObjectOfType<Canvas>();
+            
+            if (_sceneCanvas == null)
             {
-                Debug.LogWarning("Scene canvas has not been assigned. Using first encountered one.");
-                m_SceneCanvas = FindObjectOfType<Canvas>();
-
-                if (m_SceneCanvas == null)
-                {
-                    throw new InvalidOperationException("Scene contains no Canvas.");
-                }
+                throw new InvalidOperationException("Scene contains no Canvas.");
             }
             
             string serializedScript = m_ScriptJsonFile.text;
             ScriptExtractorFromJson scriptExtractor = new ScriptExtractorFromJson();
-            _scriptContainer = scriptExtractor.FromJson(serializedScript);
+            _scriptText = scriptExtractor.FromJson(serializedScript);
 
-            if (!_scriptContainer.HasNext())
+            if (!_scriptText.HasNext())
             {
                 throw new InvalidOperationException("Script must contain at least an entry.");
             }
@@ -70,7 +66,7 @@ namespace Balloondle.Script
 
         private void InitializeScript()
         {
-            _currentEntry = _scriptContainer.ReadNext();
+            _currentEntry = _scriptText.ReadNext();
             _entryElapsedTime = 0f;
 
             if (UpdateEntryDirectorForCurrentEntry())
@@ -105,7 +101,7 @@ namespace Balloondle.Script
                     } 
 
                     _currentEntryDirector = new CharacterEntryDirector(entry,
-                        m_ScriptStyle.m_Components[0], m_SceneCanvas);
+                        m_ScriptStyle.m_Components[0], _sceneCanvas);
                     
                     break;
             }
@@ -117,7 +113,7 @@ namespace Balloondle.Script
         {
             if (HasCurrentEntryExpired())
             {
-                if (!_scriptContainer.HasNext())
+                if (!_scriptText.HasNext())
                 {
                     if (_currentEntry == null)
                     {
@@ -163,7 +159,7 @@ namespace Balloondle.Script
 
         private void InitializeNextEntryDirector()
         {
-            Entry nextEntry = _scriptContainer.ReadNext();
+            Entry nextEntry = _scriptText.ReadNext();
             _entryElapsedTime = 0f;
             _hasExpireEventBeenTriggered = false;
 

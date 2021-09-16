@@ -22,7 +22,7 @@ namespace Balloondle.Script.Data
         private const string EntryCharacterDataIdKey = "id";
         private const string EntryCharacterDataNameKey = "name";
 
-        public ScriptContainer FromJson(string json)
+        public ScriptText FromJson(string json)
         {
             if (json == null)
             {
@@ -36,16 +36,16 @@ namespace Balloondle.Script.Data
 
             JObject scriptRoot = JsonConvert.DeserializeObject<JObject>(json);
 
-            ScriptContainer scriptContainer = new ScriptContainer();
+            ScriptText scriptText = new ScriptText();
             
             JArray entriesRoot = scriptRoot.Value<JArray>(EntriesKey);
             foreach (JToken entry in entriesRoot)
             {
                 Entry deserializedEntry = DeserializeEntry(entry);
-                scriptContainer.Write(deserializedEntry);
+                scriptText.Write(deserializedEntry);
             }
 
-            return scriptContainer;
+            return scriptText;
         }
 
         private Entry DeserializeEntry(JToken serializedEntry)
