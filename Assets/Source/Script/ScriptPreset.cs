@@ -9,6 +9,8 @@ namespace Balloondle.Script
     [CreateAssetMenu(fileName = "ScriptPreset", menuName = "Script/Preset", order = 1)]
     public class ScriptPreset : ScriptableObject
     {
+        public Action OnScriptEnd;
+        
         [SerializeField] 
         private TextAsset m_ScriptJsonFile;
 
@@ -28,7 +30,7 @@ namespace Balloondle.Script
 
         private bool _hasExpireEventBeenTriggered;
 
-        private void OnEnable()
+        public void Start()
         {
             if (m_ScriptJsonFile == null)
             {
@@ -55,10 +57,7 @@ namespace Balloondle.Script
             {
                 throw new InvalidOperationException("Script must contain at least an entry.");
             }
-        }
-
-        private void Start()
-        {
+            
             m_ScriptEndsHandler.OnScriptStart();
 
             InitializeScript();
@@ -122,6 +121,7 @@ namespace Balloondle.Script
                     
                     _currentEntryDirector.Out();
                     m_ScriptEndsHandler.OnScriptEnd();
+                    OnScriptEnd?.Invoke();
                     
                     _currentEntry = null;
                     _currentEntryDirector = null;
@@ -174,20 +174,24 @@ namespace Balloondle.Script
             }
         }
 
-        private void Update()
+        public void Update()
         {
             _entryElapsedTime += Time.deltaTime;
             
             DirectScript();
         }
 
-        public void TriggerExpireEvent(string value)
+        public bool TriggerExpireEvent(string value)
         {
             if (_currentEntry.Expire.Enabled && _currentEntry.Expire.Value.Equals(value))
             {
                 _entryElapsedTime = 0f;
                 _hasExpireEventBeenTriggered = true;
+
+                return true;
             }
+
+            return false;
         }
     }
 }
