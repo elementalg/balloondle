@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Balloondle.Script.Viewer
+namespace Balloondle.Script
 {
     public abstract class ScriptEndsHandler : ScriptableObject
     {
