@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Balloondle.Gameplay.Physics2D
 {
@@ -8,6 +9,7 @@ namespace Balloondle.Gameplay.Physics2D
     /// NOTE: Limit is understood as an absolute value, thus negative or positive are treated the same for the limiting
     /// logic.
     /// </summary>
+    [Serializable]
     public struct Rope2DLimits
     {
         /// <summary>
