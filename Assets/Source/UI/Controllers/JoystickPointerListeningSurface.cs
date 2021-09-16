@@ -13,7 +13,7 @@ namespace Balloondle.UI.Controllers
             UsingPointer,
         }
 
-        [SerializeField, Tooltip("Touch Demultiplexer used in the current scene.")]
+        [SerializeField, Tooltip("Pointer Demultiplexer used in the current scene.")]
         private PointerDemultiplexerBehaviour m_PointerDemultiplexerBehaviour;
 
         [SerializeField] 
