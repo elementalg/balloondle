@@ -2,7 +2,7 @@
 using Balloondle.Gameplay;
 using UnityEngine;
 
-namespace Balloondle.Script.Viewer.Styles
+namespace Balloondle.Script.Handlers
 {
     [CreateAssetMenu(fileName = "FirstRunScriptEndsHandler", menuName = "Script/Ends Handler/First Run", order = 1)]
     public class FirstRunScriptEndsHandler : ScriptEndsHandler
