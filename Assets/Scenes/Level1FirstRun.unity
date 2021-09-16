@@ -1203,7 +1203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 917057004}
   m_Layer: 0
-  m_Name: World Entities
+  m_Name: Map Physics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1613,10 +1613,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1115685761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c499090627dd4126ba2690894b16e66d, type: 3}
+  m_Script: {fileID: 11500000, guid: 03771f2d28b23264b9230265b11225fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ScriptEndAnimationPrefab: {fileID: 7128146937218494711, guid: 79d9fd0b090330849bc066416d309f5a, type: 3}
+  m_ScriptJsonFile: {fileID: 4900000, guid: 4ff561d285981544f917350808b88139, type: 3}
+  m_ScriptStyle: {fileID: 0}
+  m_ScriptEndsHandler: {fileID: 0}
+  m_SceneCanvas: {fileID: 0}
 --- !u!1 &1288074573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,7 +1632,6 @@ GameObject:
   - component: {fileID: 1288074576}
   - component: {fileID: 1288074575}
   - component: {fileID: 1288074574}
-  - component: {fileID: 1288074578}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1717,19 +1719,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1288074578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288074573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc995d2f9bf44c5ae13e815457b0fd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Components: []
 --- !u!1 &1414398869
 GameObject:
   m_ObjectHideFlags: 0
