@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace Balloondle.Script.Viewer
 {
-    public class ScriptStyle : MonoBehaviour
+    [CreateAssetMenu(fileName = "ScriptStyle", menuName = "Script/Style", order = 1)]
+    public class ScriptStyle : ScriptableObject
     {
+        public string m_StyleName;
         public List<EntryStyleComponent> m_Components;
 
         private void Start()

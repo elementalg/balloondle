@@ -1573,53 +1573,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1115685761
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1115685762}
-  - component: {fileID: 1115685763}
-  m_Layer: 0
-  m_Name: FirstRun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1115685762
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115685761}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1649.1306, y: 535.2371, z: -221.51805}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1115685763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115685761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03771f2d28b23264b9230265b11225fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ScriptJsonFile: {fileID: 4900000, guid: 4ff561d285981544f917350808b88139, type: 3}
-  m_ScriptStyle: {fileID: 0}
-  m_ScriptEndsHandler: {fileID: 0}
-  m_SceneCanvas: {fileID: 0}
 --- !u!1 &1288074573
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,12 +2199,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1893285838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7139fb8609b6436da8c0b1107ab1a39e, type: 3}
+  m_Script: {fileID: 11500000, guid: 03771f2d28b23264b9230265b11225fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ScriptJsonFile: {fileID: 4900000, guid: 8e9773ce2530969418e43d17fd87d0ab, type: 3}
-  m_ScriptStyle: {fileID: 4673075192127174851, guid: 4c7b85559a129e44db814e2c336fa4cf, type: 3}
-  m_ScriptEndsHandler: {fileID: 1115685763}
+  m_ScriptJsonFile: {fileID: 4900000, guid: 4ff561d285981544f917350808b88139, type: 3}
+  m_ScriptStyle: {fileID: 11400000, guid: e26c559e9fd1d264fbe1d7a80ae17736, type: 2}
+  m_ScriptEndsHandler: {fileID: 11400000, guid: 3e23111c8f069b94fac8fbf6244349d4, type: 2}
   m_SceneCanvas: {fileID: 1288074576}
 --- !u!4 &1893285840
 Transform:

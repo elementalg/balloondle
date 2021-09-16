@@ -3,27 +3,16 @@ using UnityEngine;
 
 namespace Balloondle.Script.Viewer.Styles
 {
+    [CreateAssetMenu(fileName = "FirstRunScriptEndsHandler", menuName = "Script/Ends Handler/First Run", order = 1)]
     public class FirstRunScriptEndsHandler : ScriptEndsHandler
     {
         [SerializeField] 
-        private GameObject m_ScriptEndAnimationPrefab;
+        private GameObject m_ScriptEasingInAndOutPrefab;
+
+        [SerializeField, Tooltip("Amount of time to wait before destroying the created Animation's GameObject.")]
+        private float m_DestroyAnimationAfterTime = 1f;
 
         private Animator _animator;
-        
-        private void OnEnable()
-        {
-            if (m_ScriptEndAnimationPrefab == null)
-            {
-                throw new InvalidOperationException("Prefab containing animation is required.");
-            } 
-            
-            _animator = Instantiate(m_ScriptEndAnimationPrefab).GetComponent<Animator>();
-            
-            if (_animator == null)
-            {
-                throw new InvalidOperationException("Animator is required.");
-            }
-        }
 
         private void OnDestroy()
         {
@@ -35,13 +24,31 @@ namespace Balloondle.Script.Viewer.Styles
 
         public override void OnScriptStart()
         {
+            InitializeAnimation();
+            
             _animator.Play("BlurIn");
+        }
+        
+        private void InitializeAnimation()
+        {
+            if (m_ScriptEasingInAndOutPrefab == null)
+            {
+                throw new InvalidOperationException("Prefab containing animation is required.");
+            } 
+            
+            _animator = GameObject.Instantiate(m_ScriptEasingInAndOutPrefab).GetComponent<Animator>();
+            
+            if (_animator == null)
+            {
+                throw new InvalidOperationException("Animator is required.");
+            }
         }
 
         public override void OnScriptEnd()
         {
             _animator.Play("BlurOut");
             
+            Destroy(_animator.gameObject, m_DestroyAnimationAfterTime);
             // TODO: Spawn balloon and move camera towards balloon before finally attaching the camera to the balloon.
         }
     }
