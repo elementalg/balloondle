@@ -127,5 +127,16 @@ namespace EditorTests.Gameplay
             Assert.True(onPreDestroyActionExecuted);
             Assert.True(isDamageEqualToLastDamageApplied);
         }
+
+        [Test]
+        public void IndestructibleIgnoresDamage()
+        {
+            float startingHealth = _worldEntity.Health;
+            _worldEntity.m_Indestructible = true;
+
+            _worldEntity.Damage(100f);
+
+            Assert.True(Math.Abs(startingHealth - _worldEntity.Health) < WorldEntityFloatDelta);
+        }
     }
 }

@@ -38,6 +38,9 @@ namespace Balloondle.Gameplay
         
         [Tooltip("Time to wait, after the WorldEntity has reached 0, before destroying the object.")]
         public float m_DestroyAfterTime = 1f;
+
+        [Tooltip("Whether or not this object can be destroyed.")]
+        public bool m_Indestructible;
         
         [SerializeField, Tooltip("Maximum health of the object.")]
         private float m_MaxHealth = Single.MaxValue;
@@ -79,6 +82,11 @@ namespace Balloondle.Gameplay
         public void Damage(float damageAmount)
         {
             if (damageAmount <= 0f)
+            {
+                return;
+            }
+
+            if (m_Indestructible)
             {
                 return;
             }
