@@ -55,7 +55,7 @@ namespace Balloondle.Gameplay
         /// <returns></returns>
         /// <exception cref="ArgumentException">if 'entityName' is null, empty or
         /// there is no prefab with that name.</exception>
-        public GameObject Spawn(string entityName, Vector3 position, Quaternion rotation)
+        public WorldEntity Spawn(string entityName, Vector3 position, Quaternion rotation)
         {
             if (string.IsNullOrEmpty(entityName))
             {
@@ -63,9 +63,15 @@ namespace Balloondle.Gameplay
             }
             
             GameObject prefab = m_WorldEntitiesPrefabs.GetPrefabByName(entityName) ??
-                                 throw new ArgumentException($"No prefab with name '{entityName}'.", entityName);
+                                 throw new ArgumentException(
+                                     $"No prefab with name '{entityName}'.", nameof(entityName));
 
-            return Instantiate(prefab, position, rotation);
+            if (prefab.GetComponent<WorldEntity>() == null)
+            {
+                throw new InvalidOperationException("Prefab does not contain a WorldEntity component.");
+            }
+            
+            return Instantiate(prefab, position, rotation).GetComponent<WorldEntity>();
         }
     }
 }
