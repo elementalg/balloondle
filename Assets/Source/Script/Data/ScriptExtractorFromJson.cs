@@ -10,6 +10,7 @@ namespace Balloondle.Script.Data
         private const string EntriesKey = "entries";
         private const string EntryTypeKey = "type";
         private const string EntryObjectKey = "object";
+        private const string EntryId = "id";
         private const string EntryDurationKey = "duration";
         
         private const string EntryExpireEventKey = "expire_event";
@@ -59,15 +60,20 @@ namespace Balloondle.Script.Data
             switch (entryType)
             {
                 case EntryType.Silence:
-                    return new SilenceEntry(serializedEntry.Value<float>(EntryDurationKey), expireEvent);
+                    return new SilenceEntry(serializedEntry.Value<ulong>(EntryId),
+                        serializedEntry.Value<float>(EntryDurationKey),
+                        expireEvent);
                 case EntryType.Narrative:
-                    return new NarrativeEntry(serializedEntry.Value<float>(EntryDurationKey), expireEvent,
+                    return new NarrativeEntry(serializedEntry.Value<ulong>(EntryId),
+                        serializedEntry.Value<float>(EntryDurationKey),
+                        expireEvent,
                         serializedEntry.Value<string>(EntryTextKey));
                 case EntryType.Character:
                     Character characterData =
                         DeserializeCharacterEntry(serializedEntry.Value<JObject>(EntryCharacterDataKey));
 
-                    return new CharacterEntry(serializedEntry.Value<float>(EntryDurationKey), expireEvent,
+                    return new CharacterEntry(serializedEntry.Value<ulong>(EntryId),
+                        serializedEntry.Value<float>(EntryDurationKey), expireEvent,
                         serializedEntry.Value<string>(EntryTextKey),
                         characterData);
                 default:

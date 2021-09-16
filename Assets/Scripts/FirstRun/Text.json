@@ -4,6 +4,7 @@
   "entries":
   [
     {
+      "id": 0,
       "type": "Silence",
       "object":
       {
@@ -16,6 +17,7 @@
       }
     },
     {
+      "id": 1,
       "type": "Character",
       "object":
       {
@@ -34,6 +36,7 @@
       }
     },
     {
+      "id": 2,
       "type": "Character",
       "object":
       {

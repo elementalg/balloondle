@@ -8,13 +8,14 @@
         /// <summary>
         /// Creates a silence within the script with a duration of the specified value.
         /// </summary>
+        /// <param name="id">id of the silence.</param>
         /// <param name="duration">seconds of silence.</param>
-        public SilenceEntry(float duration) : base(duration)
+        public SilenceEntry(ulong id, float duration) : base(id, duration)
         {
             
         }
         
-        public SilenceEntry(float duration, ExpireEvent expireEvent) : base(duration, expireEvent)
+        public SilenceEntry(ulong id, float duration, ExpireEvent expireEvent) : base(id, duration, expireEvent)
         {
             
         }

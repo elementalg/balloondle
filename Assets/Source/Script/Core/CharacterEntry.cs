@@ -5,14 +5,14 @@
         public string Text { get; }
         public Character CharacterData { get; }
         
-        public CharacterEntry(float duration, string text, Character character) : base(duration)
+        public CharacterEntry(ulong id, float duration, string text, Character character) : base(id, duration)
         {
             Text = text;
             CharacterData = character;
         }
 
-        public CharacterEntry(float duration, ExpireEvent expireEvent, string text, Character character) : 
-            base(duration, expireEvent)
+        public CharacterEntry(ulong id, float duration, ExpireEvent expireEvent, string text, Character character) : 
+            base(id, duration, expireEvent)
         {
             Text = text;
             CharacterData = character;
