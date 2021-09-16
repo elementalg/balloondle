@@ -12,8 +12,23 @@ namespace Balloondle.Gameplay
         private bool m_IsAttachingSupported;
 
         [SerializeField, Tooltip("Implementation which attaches entities.")]
-        private WorldEntityAttacher m_Attacher; 
+        private WorldEntityAttacher m_Attacher;
 
+        public bool IsAttachingSupported => m_IsAttachingSupported;
+
+        public WorldEntityAttacher Attacher
+        {
+            get
+            {
+                if (!m_IsAttachingSupported)
+                {
+                    throw new NotSupportedException("Attaching is not supported.");
+                }
+
+                return m_Attacher;
+            }
+        }
+        
         private void OnEnable()
         {
             if (m_WorldEntitiesPrefabs == null)
@@ -23,7 +38,11 @@ namespace Balloondle.Gameplay
             
             if (m_IsAttachingSupported)
             {
-                // TODO: Add attaching capacity through abstract interface.
+                if (m_Attacher == null)
+                {
+                    throw new InvalidOperationException(
+                        "Must assign a WorldEntityAttacher in order to support attaching.");
+                }
             }
         }
 
