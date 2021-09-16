@@ -29,6 +29,8 @@ namespace Balloondle.Gameplay
             Transform ropeTransform = GetComponent<Transform>();
             ropeTransform.position = Vector3.zero;
             ropeTransform.rotation = Quaternion.identity;
+
+            ropeGameObject.AddComponent<WorldEntity>();
             
             Rope2D rope = ropeGameObject.AddComponent<Rope2D>();
             rope.Limits = limits;
@@ -38,6 +40,8 @@ namespace Balloondle.Gameplay
             Rope2DVisualizer rope2DVisualizer = ropeGameObject.AddComponent<Rope2DVisualizer>();
             rope2DVisualizer.RopeSpriteShapePrefab = m_RopeCellSpriteShapePrefab;
             rope2DVisualizer.VisualizeRope();
+
+            ropeGameObject.AddComponent<Rope2DWorldEntityConfigurator>();
         }
     }
 }
