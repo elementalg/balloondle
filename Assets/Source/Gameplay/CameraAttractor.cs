@@ -8,6 +8,12 @@ namespace Balloondle.Gameplay
     /// </summary>
     public class CameraAttractor : MonoBehaviour
     {
+        [SerializeField] 
+        private bool m_EnableEasing;
+
+        [SerializeField] 
+        private float m_EasingDuration = 1f;
+
         private Transform _attractedCameraTransform;
         
         private void OnEnable()
@@ -18,6 +24,22 @@ namespace Balloondle.Gameplay
             }
             
             _attractedCameraTransform = Camera.main.transform;
+
+            if (GetComponent<CameraAttractorEasing>() == null)
+            {
+                if (m_EnableEasing)
+                {
+                    CameraAttractorEasing attractorEasing = gameObject.AddComponent<CameraAttractorEasing>();
+                    attractorEasing.EasingDurationInSeconds = m_EasingDuration;
+                    
+                    // Disable, and wait for enable from CameraAttractorEasing when easing has been completed.
+                    enabled = false;
+                } 
+            }
+            else
+            {
+                Destroy(GetComponent<CameraAttractorEasing>());
+            }
         }
 
         void Update()

@@ -1,4 +1,5 @@
 ﻿using System;
+using Balloondle.Gameplay;
 using UnityEngine;
 
 namespace Balloondle.Script.Viewer.Styles
@@ -49,7 +50,9 @@ namespace Balloondle.Script.Viewer.Styles
             _animator.Play("BlurOut");
             
             Destroy(_animator.gameObject, m_DestroyAnimationAfterTime);
-            // TODO: Spawn balloon and move camera towards balloon before finally attaching the camera to the balloon.
+            
+            WorldEntitySpawner worldEntitySpawner = FindObjectOfType<WorldEntitySpawner>();
+            worldEntitySpawner.Spawn("Balloon", new Vector3(16.5f, -11.66f, 0f), Quaternion.identity);
         }
     }
 }
