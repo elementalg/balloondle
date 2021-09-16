@@ -13,9 +13,6 @@ namespace Balloondle.UI.Controllers
             UsingPointer,
         }
 
-        [SerializeField, Tooltip("Pointer Demultiplexer used in the current scene.")]
-        private PointerDemultiplexerBehaviour m_PointerDemultiplexerBehaviour;
-
         [SerializeField] 
         private JoystickPositionableSurface m_JoystickPositionableSurface;
 
@@ -28,6 +25,7 @@ namespace Balloondle.UI.Controllers
         [SerializeField] 
         private Joystick m_Joystick;
         
+        private PointerDemultiplexerBehaviour _pointerDemultiplexer;
         private ListeningState _listeningState;
 
         private JoystickAlphaSetter _joystickAlphaSetter;
@@ -36,11 +34,13 @@ namespace Balloondle.UI.Controllers
         private void Start()
         {
             InitializePressDetector();
+
+            _pointerDemultiplexer = FindObjectOfType<PointerDemultiplexerBehaviour>();
             
-            if (m_PointerDemultiplexerBehaviour == null)
+            if (_pointerDemultiplexer == null)
             {
-                throw new InvalidOperationException("Joystick's touch listening surface requires " +
-                                                    "an instance of TouchDemultiplexerBehaviour to be assigned.");
+                throw new InvalidOperationException("Joystick's touch listening surface requires an instance" +
+                                                    " of PointerDemultiplexerBehaviour to be available in the scene.");
             }
 
             if (m_JoystickRange == null)
@@ -98,7 +98,7 @@ namespace Balloondle.UI.Controllers
         private void ListenForPointerWithinTheSurface()
         {
             // Listen for pointers which are within the surface.
-            m_PointerDemultiplexerBehaviour
+            _pointerDemultiplexer
                 .Demultiplexer
                 .AddOutputToQueue(OnPointerUpdate, HasTouchBegunWithinTheSurface);
         }
