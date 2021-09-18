@@ -109,12 +109,8 @@ namespace Balloondle.Gameplay
             {
                 Health = 0f;
                 OnPreDestroy?.Invoke(damageAmount);
-                
-                #if UNITY_EDITOR
-                    DestroyImmediate(gameObject);
-                #else
+
                     Destroy(gameObject, m_DestroyAfterTime);
-                #endif
                 
                 return;
             }
@@ -138,16 +134,23 @@ namespace Balloondle.Gameplay
             
 #nullable enable
             _attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
+            otherEntity._attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
 #nullable disable
             
             WorldEntity attacher = Attacher.Attach(this, anchor, otherEntity, otherAnchor);
 
             if (_attachedTo.ContainsKey(otherEntity))
             {
-                throw new InvalidOperationException("Entity is already attached to the OtherEntity.");
+                throw new InvalidOperationException("Entity is already attached to OtherEntity.");
+            }
+
+            if (otherEntity._attachedTo.ContainsKey(this))
+            {
+                throw new InvalidOperationException("OtherEntity is already attached to Entity.");
             }
             
             _attachedTo.Add(otherEntity, attacher);
+            otherEntity._attachedTo.Add(this, attacher);
 
             return true;
         }
@@ -164,7 +167,7 @@ namespace Balloondle.Gameplay
             
             if (!_attachedTo.ContainsKey(otherEntity))
             {
-                Debug.LogWarning("Entity is not attached to the OtherEntity.");
+                Debug.LogWarning("Entity is not attached to OtherEntity.");
             }
 
             WorldEntity attacher = _attachedTo[otherEntity];
@@ -181,14 +184,30 @@ namespace Balloondle.Gameplay
         {
 #nullable enable
             _attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
+            otherEntity._attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
 #nullable disable
             
             if (!_attachedTo.ContainsKey(otherEntity))
             {
-                Debug.LogWarning("Entity is not attached to the OtherEntity.");
+                Debug.LogWarning("Entity is not attached to OtherEntity.");
+            }
+
+            if (!otherEntity._attachedTo.ContainsKey(this))
+            {
+                Debug.LogWarning("OtherEntity is not attached to Entity.");
             }
 
             _attachedTo.Remove(otherEntity);
+            otherEntity._attachedTo.Remove(this);
+        }
+
+        public bool IsAttachedTo(WorldEntity otherEntity)
+        {
+#nullable enable
+            _attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
+#nullable disable
+
+            return _attachedTo.ContainsKey(otherEntity);
         }
     }
 }
