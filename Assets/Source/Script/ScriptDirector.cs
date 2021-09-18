@@ -5,9 +5,21 @@ namespace Balloondle.Script
 {
     public class ScriptDirector : MonoBehaviour
     {
-        private ScriptPreset _script;
-        private bool _scriptEnabled;
+        [SerializeField, Tooltip("Script to begin on start.")] 
+        private ScriptPreset m_StartWithScript;
         
+        private ScriptPreset _scriptPreset;
+        
+        private bool _scriptEnabled;
+
+        private void Start()
+        {
+            if (m_StartWithScript != null)
+            {
+                StartScript(m_StartWithScript);
+            }
+        }
+
         /// <summary>
         /// Starts the specified script.
         /// </summary>
@@ -21,16 +33,16 @@ namespace Balloondle.Script
                 throw new NotSupportedException("Cannot start another script simultaneously.");
             }
             
-            _script = script;
-            _script.Start();
-            _script.OnScriptEnd += OnScriptEnd;
+            _scriptPreset = script;
+            _scriptPreset.Start();
+            _scriptPreset.OnScriptEnd += OnScriptEnd;
             
             _scriptEnabled = true;
         }
 
         public void OnScriptEnd()
         {
-            _script = null;
+            _scriptPreset = null;
             _scriptEnabled = false;
         }
         
@@ -38,7 +50,7 @@ namespace Balloondle.Script
         {
             if (_scriptEnabled)
             {
-                _script.Update();
+                _scriptPreset.Update();
             }
         }
         
@@ -51,7 +63,7 @@ namespace Balloondle.Script
         {
             if (_scriptEnabled)
             {
-                return _script.TriggerExpireEvent(value);
+                return _scriptPreset.TriggerExpireEvent(value);
             }
 
             return false;
