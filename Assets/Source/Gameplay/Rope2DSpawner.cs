@@ -15,7 +15,7 @@ namespace Balloondle.Gameplay
         [SerializeField, Tooltip("Multiplier applied to the current distance in order to define the maximum distance.")]
         private float m_Rope2DMaximumDistanceMultiplier = 1.25f;
         
-        public void CreateRopeConnectingTwoRigidBodies2D(Rigidbody2D start, Vector2 startAnchor, Rigidbody2D end,
+        public WorldEntity CreateRopeConnectingTwoRigidBodies2D(Rigidbody2D start, Vector2 startAnchor, Rigidbody2D end,
             Vector2 endAnchor, Rope2DLimits limits)
         {
             if (start == end)
@@ -36,7 +36,7 @@ namespace Balloondle.Gameplay
             ropeTransform.position = Vector3.zero;
             ropeTransform.rotation = Quaternion.identity;
 
-            ropeGameObject.AddComponent<WorldEntity>();
+            WorldEntity ropeEntity = ropeGameObject.AddComponent<WorldEntity>();
             
             Rope2D rope = ropeGameObject.AddComponent<Rope2D>();
             rope.Limits = limits;
@@ -48,6 +48,8 @@ namespace Balloondle.Gameplay
             rope2DVisualizer.VisualizeRope();
 
             ropeGameObject.AddComponent<Rope2DWorldEntityConfigurator>();
+
+            return ropeEntity;
         }
     }
 }

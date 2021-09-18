@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Balloondle.Gameplay
@@ -47,7 +48,18 @@ namespace Balloondle.Gameplay
 
         [SerializeField, Tooltip("Starting health of the object.")]
         private float m_StartingHealth = 100f;
+
+#nullable enable
+        private Dictionary<WorldEntity, WorldEntity>? _attachedTo;
+#nullable disable
         
+        /// <summary>
+        /// Set by <see cref="WorldEntitySpawner"/> when it gets started.
+        /// </summary>
+        public static WorldEntityAttacher Attacher { get; set; }
+
+        public static bool IsAttachingSupported => Attacher != null;
+
         public float Health { get; private set; } = 100f;
 
         private void OnEnable()
@@ -108,6 +120,75 @@ namespace Balloondle.Gameplay
             }
 
             Health -= damageAmount;
+        }
+
+        /// <summary>
+        /// Tries to attach this WorldEntity with other one.
+        /// </summary>
+        /// <param name="anchor"></param>
+        /// <param name="otherEntity"></param>
+        /// <param name="otherAnchor"></param>
+        /// <returns>True if attachment succeeded, false otherwise.</returns>
+        public bool TryAttachTo(Vector3 anchor, WorldEntity otherEntity, Vector3 otherAnchor)
+        {
+            if (ReferenceEquals(this, otherEntity))
+            {
+                return false;
+            }
+            
+#nullable enable
+            _attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
+#nullable disable
+            
+            WorldEntity attacher = Attacher.Attach(this, anchor, otherEntity, otherAnchor);
+
+            if (_attachedTo.ContainsKey(otherEntity))
+            {
+                throw new InvalidOperationException("Entity is already attached to the OtherEntity.");
+            }
+            
+            _attachedTo.Add(otherEntity, attacher);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Called in order to proceed to remove the existing attachment between this WorldEntity and other one.
+        /// </summary>
+        /// <param name="otherEntity"></param>
+        public void DetachFrom(WorldEntity otherEntity)
+        {
+#nullable enable
+            _attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
+#nullable disable
+            
+            if (!_attachedTo.ContainsKey(otherEntity))
+            {
+                Debug.LogWarning("Entity is not attached to the OtherEntity.");
+            }
+
+            WorldEntity attacher = _attachedTo[otherEntity];
+            
+            Attacher.Detach(attacher);
+        }
+
+        /// <summary>
+        /// To be used <b>EXCLUSIVELY</b> by <see cref="WorldEntityAttacher"/>
+        /// in order to synchronize the state of the attachments.
+        /// </summary>
+        /// <param name="otherEntity"></param>
+        public void RemoveAttachmentTo(WorldEntity otherEntity)
+        {
+#nullable enable
+            _attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
+#nullable disable
+            
+            if (!_attachedTo.ContainsKey(otherEntity))
+            {
+                Debug.LogWarning("Entity is not attached to the OtherEntity.");
+            }
+
+            _attachedTo.Remove(otherEntity);
         }
     }
 }

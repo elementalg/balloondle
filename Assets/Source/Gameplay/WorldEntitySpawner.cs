@@ -11,23 +11,11 @@ namespace Balloondle.Gameplay
         [SerializeField, Tooltip("Whether or not world entity spawner supports attaching.")]
         private bool m_IsAttachingSupported;
 
+        /// <summary>
+        /// Assigned statically to <see cref="WorldEntity"/>.
+        /// </summary>
         [SerializeField, Tooltip("Implementation which attaches entities.")]
         private WorldEntityAttacher m_Attacher;
-
-        public bool IsAttachingSupported => m_IsAttachingSupported;
-
-        public WorldEntityAttacher Attacher
-        {
-            get
-            {
-                if (!m_IsAttachingSupported)
-                {
-                    throw new NotSupportedException("Attaching is not supported.");
-                }
-
-                return m_Attacher;
-            }
-        }
         
         private void OnEnable()
         {
@@ -43,6 +31,8 @@ namespace Balloondle.Gameplay
                     throw new InvalidOperationException(
                         "Must assign a WorldEntityAttacher in order to support attaching.");
                 }
+
+                WorldEntity.Attacher = m_Attacher;
             }
         }
 
@@ -70,8 +60,10 @@ namespace Balloondle.Gameplay
             {
                 throw new InvalidOperationException("Prefab does not contain a WorldEntity component.");
             }
-            
-            return Instantiate(prefab, position, rotation).GetComponent<WorldEntity>();
+
+            WorldEntity spawnedEntity = Instantiate(prefab, position, rotation).GetComponent<WorldEntity>();
+
+            return spawnedEntity;
         }
     }
 }

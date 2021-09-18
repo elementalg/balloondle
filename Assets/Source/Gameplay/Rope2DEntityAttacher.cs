@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ namespace Balloondle.Gameplay
         [SerializeField, Tooltip("Limits applied to the Rope2D. Maximum distance is calculated by the spawner.")]
         private Rope2DLimits m_Rope2DLimits;
 
+        private readonly Dictionary<WorldEntity, Tuple<WorldEntity, WorldEntity>> _attachments =
+            new Dictionary<WorldEntity, Tuple<WorldEntity, WorldEntity>>();
+        
         /// <summary>
         /// Spawns a <see cref="Rope2D"/> which attaches the start and end entities.
         /// </summary>
@@ -20,9 +24,10 @@ namespace Balloondle.Gameplay
         /// <param name="startAnchor"></param>
         /// <param name="end"></param>
         /// <param name="endAnchor"></param>
+        /// <returns>WorldEntity of the attacher.</returns>
         /// <exception cref="ArgumentException">if <paramref name="start"/> or <paramref name="end"/>
         /// do not contain <see cref="Rigidbody2D"/> components.</exception>
-        public override void Attach(WorldEntity start, Vector3 startAnchor, WorldEntity end, Vector3 endAnchor)
+        public override WorldEntity Attach(WorldEntity start, Vector3 startAnchor, WorldEntity end, Vector3 endAnchor)
         {
             if (start.GetComponent<Rigidbody2D>() == null)
             {
@@ -34,23 +39,34 @@ namespace Balloondle.Gameplay
                 throw new ArgumentException("WorldEntity must contain a Rigidbody2D component.", nameof(end));
             }
             
-            m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(start.GetComponent<Rigidbody2D>(), startAnchor,
-                end.GetComponent<Rigidbody2D>(), endAnchor, m_Rope2DLimits);
+            WorldEntity ropeEntity = m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(
+                start.GetComponent<Rigidbody2D>(),
+                startAnchor,
+                end.GetComponent<Rigidbody2D>(),
+                endAnchor, m_Rope2DLimits);
+            
+            _attachments.Add(ropeEntity, new Tuple<WorldEntity, WorldEntity>(start, end));
+            
+            ropeEntity.OnPreDestroy += (damage) =>
+            {
+                if (_attachments.ContainsKey(ropeEntity))
+                {
+                    var (entity, otherEntity) = _attachments[ropeEntity];
+                    
+                    entity.RemoveAttachmentTo(otherEntity);
+                    otherEntity.RemoveAttachmentTo(entity);
+                    
+                    _attachments.Remove(ropeEntity);
+                }
+            };
+
+            return ropeEntity;
         }
 
-        /// <summary>
-        /// Checks whether or not the entity is attached by checking if it contains a <see cref="HingeJoint2D"/>
-        /// and a <see cref="DistanceJoint2D"/>.
-        ///
-        /// NOTE: It may return true even if there's no rope attaching the entity, since it checks
-        /// if there's a <see cref="HingeJoint2D"/> and a <see cref="DistanceJoint2D"/>.
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns>True if contains a <see cref="HingeJoint2D"/> and a <see cref="DistanceJoint2D"/>,
-        /// false otherwise.</returns>
-        public override bool IsAttached(WorldEntity entity)
+        public override void Detach(WorldEntity attacher)
         {
-            return entity.GetComponent<HingeJoint2D>() != null && entity.GetComponent<DistanceJoint2D>() != null;
+            // Kill it. (:
+            attacher.Damage(attacher.Health);
         }
     }
 }
