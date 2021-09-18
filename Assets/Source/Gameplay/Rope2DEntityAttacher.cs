@@ -54,7 +54,6 @@ namespace Balloondle.Gameplay
                     var (entity, otherEntity) = _attachments[ropeEntity];
                     
                     entity.RemoveAttachmentTo(otherEntity);
-                    otherEntity.RemoveAttachmentTo(entity);
                     
                     _attachments.Remove(ropeEntity);
                 }
