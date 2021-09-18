@@ -66,8 +66,8 @@ namespace Balloondle.Gameplay.Physics2D
             if (GameObjectAttachedToStart != null && BodyAttachedToEnd != null)
             {
                 float distance = Vector2
-                    .Distance(GameObjectAttachedToStart.transform.position,
-                        BodyAttachedToEnd.transform.position);
+                    .Distance(GameObjectAttachedToStart.transform.TransformPoint(StartGameObjectAnchorPoint),
+                        BodyAttachedToEnd.transform.TransformPoint(EndBodyAnchorPoint));
 
                 if (distance > Limits.MaximumDistanceBetweenBodies)
                 {
@@ -336,7 +336,7 @@ namespace Balloondle.Gameplay.Physics2D
             Vector2 direction = endPosition - startPosition;
             direction.Normalize();
 
-            ulong cells = (ulong) Mathf.Ceil(Mathf.Abs(distance) / Mathf.Abs(_ropeCellSize.x));
+            ulong cells = (ulong) Mathf.Ceil(Mathf.Abs(Limits.MaximumDistanceBetweenBodies) / Mathf.Abs(_ropeCellSize.x));
             // Fill in with cells the space created due to the overlapping of cells.
             cells = cells + (cells / 4);
 
