@@ -127,7 +127,6 @@ namespace Balloondle.Script
                     _currentEntryDirector = null;
                     _entryElapsedTime = 0f;
                     
-                    Destroy(this, 1f);
                     return;
                 }
 
