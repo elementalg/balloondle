@@ -29,6 +29,21 @@ namespace Balloondle.Gameplay
         /// do not contain <see cref="Rigidbody2D"/> components.</exception>
         public override WorldEntity Attach(WorldEntity start, Vector3 startAnchor, WorldEntity end, Vector3 endAnchor)
         {
+            ExceptionIfWorldEntitiesMissRigidBody2D(start, end);
+            
+            WorldEntity ropeEntity = m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(
+                start.GetComponent<Rigidbody2D>(),
+                startAnchor,
+                end.GetComponent<Rigidbody2D>(),
+                endAnchor, m_Rope2DLimits);
+
+            StoreAndConfigureRopeEntity(start, ropeEntity, end);
+
+            return ropeEntity;
+        }
+
+        private void ExceptionIfWorldEntitiesMissRigidBody2D(WorldEntity start, WorldEntity end)
+        {
             if (start.GetComponent<Rigidbody2D>() == null)
             {
                 throw new ArgumentException("WorldEntity must contain a Rigidbody2D component.", nameof(start));
@@ -38,13 +53,10 @@ namespace Balloondle.Gameplay
             {
                 throw new ArgumentException("WorldEntity must contain a Rigidbody2D component.", nameof(end));
             }
-            
-            WorldEntity ropeEntity = m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(
-                start.GetComponent<Rigidbody2D>(),
-                startAnchor,
-                end.GetComponent<Rigidbody2D>(),
-                endAnchor, m_Rope2DLimits);
-            
+        }
+
+        private void StoreAndConfigureRopeEntity(WorldEntity start, WorldEntity ropeEntity, WorldEntity end)
+        {
             _attachments.Add(ropeEntity, new Tuple<WorldEntity, WorldEntity>(start, end));
             
             ropeEntity.OnPreDestroy += (damage) =>
@@ -58,6 +70,21 @@ namespace Balloondle.Gameplay
                     _attachments.Remove(ropeEntity);
                 }
             };
+        }
+
+        public override WorldEntity Attach(WorldEntity start, Vector3 startAnchor, WorldEntity end, Vector3 endAnchor,
+            float distance)
+        {
+            ExceptionIfWorldEntitiesMissRigidBody2D(start, end);
+            
+            m_Rope2DLimits.MaximumDistanceBetweenBodies = distance;
+            WorldEntity ropeEntity = m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(
+                start.GetComponent<Rigidbody2D>(),
+                startAnchor,
+                end.GetComponent<Rigidbody2D>(),
+                endAnchor, m_Rope2DLimits, true);
+
+            StoreAndConfigureRopeEntity(start, ropeEntity, end);
 
             return ropeEntity;
         }

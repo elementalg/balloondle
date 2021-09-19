@@ -16,7 +16,7 @@ namespace Balloondle.Gameplay
         private float m_Rope2DMaximumDistanceMultiplier = 1.25f;
         
         public WorldEntity CreateRopeConnectingTwoRigidBodies2D(Rigidbody2D start, Vector2 startAnchor, Rigidbody2D end,
-            Vector2 endAnchor, Rope2DLimits limits)
+            Vector2 endAnchor, Rope2DLimits limits, bool useLimitsDistance = false)
         {
             if (start == end)
             {
@@ -29,9 +29,17 @@ namespace Balloondle.Gameplay
                 name = RopeGameObjectName
             };
 
-            limits.MaximumDistanceBetweenBodies = Vector2
-                .Distance(start.GetPoint(startAnchor), end.GetPoint(endAnchor)) * m_Rope2DMaximumDistanceMultiplier;
-            
+            if (!useLimitsDistance)
+            {
+                limits.MaximumDistanceBetweenBodies = Vector2
+                    .Distance(start.GetPoint(startAnchor), end.GetPoint(endAnchor)) *
+                                                      m_Rope2DMaximumDistanceMultiplier;
+            }
+            else
+            {
+                limits.MaximumDistanceBetweenBodies *= m_Rope2DMaximumDistanceMultiplier;
+            }
+
             Transform ropeTransform = ropeGameObject.GetComponent<Transform>();
             ropeTransform.position = Vector3.zero;
             ropeTransform.rotation = Quaternion.identity;
