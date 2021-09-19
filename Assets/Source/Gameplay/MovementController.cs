@@ -10,6 +10,8 @@ namespace Balloondle.Gameplay
     /// </summary>
     public class MovementController : MonoBehaviour
     {
+        public Action OnCharacterMove;
+        
         [SerializeField, Tooltip("Maximum velocity")]
         private Vector2 m_MaximumVelocity = new Vector2(5f, 5f);
 
@@ -38,6 +40,8 @@ namespace Balloondle.Gameplay
         public void OnMove(InputAction.CallbackContext input)
         {
             ApplyMovement(input.ReadValue<Vector2>());
+            
+            OnCharacterMove?.Invoke();
         }
 
         private void ApplyMovement(Vector2 inputVelocity)
