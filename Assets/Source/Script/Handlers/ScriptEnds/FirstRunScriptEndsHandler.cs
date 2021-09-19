@@ -2,13 +2,16 @@
 using Balloondle.Gameplay;
 using UnityEngine;
 
-namespace Balloondle.Script.Handlers
+namespace Balloondle.Script.Handlers.ScriptEnds
 {
     [CreateAssetMenu(fileName = "FirstRunScriptEndsHandler", menuName = "Script/Ends Handler/First Run", order = 1)]
     public class FirstRunScriptEndsHandler : ScriptEndsHandler
     {
         [SerializeField] 
         private GameObject m_ScriptEasingInAndOutPrefab;
+
+        [SerializeField] 
+        private ScriptPreset m_WaitForMovementPreset;
 
         [SerializeField, Tooltip("Amount of time to wait before destroying the created Animation's GameObject.")]
         private float m_DestroyAnimationAfterTime = 1f;
@@ -53,6 +56,9 @@ namespace Balloondle.Script.Handlers
             
             WorldEntitySpawner worldEntitySpawner = FindObjectOfType<WorldEntitySpawner>();
             worldEntitySpawner.Spawn("Balloon", new Vector3(16.5f, -11.66f, 0f), Quaternion.identity);
+
+            ScriptDirector director = FindObjectOfType<ScriptDirector>();
+            director.StartScript(m_WaitForMovementPreset);
         }
     }
 }
