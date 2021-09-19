@@ -124,8 +124,11 @@ namespace Balloondle.Gameplay
         /// <param name="anchor"></param>
         /// <param name="otherEntity"></param>
         /// <param name="otherAnchor"></param>
+        /// <param name="useCustomDistance"></param>
+        /// <param name="customDistance"></param>
         /// <returns>True if attachment succeeded, false otherwise.</returns>
-        public bool TryAttachTo(Vector3 anchor, WorldEntity otherEntity, Vector3 otherAnchor)
+        public bool TryAttachTo(Vector3 anchor, WorldEntity otherEntity, Vector3 otherAnchor,
+            bool useCustomDistance = false, float customDistance = 1f)
         {
             if (ReferenceEquals(this, otherEntity))
             {
@@ -137,7 +140,9 @@ namespace Balloondle.Gameplay
             otherEntity._attachedTo ??= new Dictionary<WorldEntity, WorldEntity>();
 #nullable disable
             
-            WorldEntity attacher = Attacher.Attach(this, anchor, otherEntity, otherAnchor);
+            WorldEntity attacher = useCustomDistance ?
+                Attacher.Attach(this, anchor, otherEntity, otherAnchor, customDistance) :
+                Attacher.Attach(this, anchor, otherEntity, otherAnchor);
 
             if (_attachedTo.ContainsKey(otherEntity))
             {
