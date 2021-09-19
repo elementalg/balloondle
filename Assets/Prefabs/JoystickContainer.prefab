@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MovementRange: 150
-  m_ControlPath: 
+  m_ControlPath: <Gamepad>/leftStick
 --- !u!222 &328980684982408516
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -281,7 +281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35739fa7a8c33b1489ef9ab3a806d4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TouchDemultiplexerBehaviour: {fileID: 0}
   m_JoystickPositionableSurface: {fileID: 328980685927403534}
   m_JoystickRange: {fileID: 328980685694621391}
   m_JoystickRangeCenter: {fileID: 739524138258971271}
