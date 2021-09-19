@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: EndsHandler
   m_EditorClassIdentifier: 
   m_ScriptEasingInAndOutPrefab: {fileID: 5131795504482910299, guid: 55625e7774b83f947906779f4e5a72ef, type: 3}
+  m_WaitForMovementPreset: {fileID: 11400000, guid: 3db5f05bb8c06bc43a47a7a6d54970a7, type: 2}
   m_DestroyAnimationAfterTime: 1
