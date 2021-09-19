@@ -1,0 +1,71 @@
+﻿{
+  "title": "Wabo - Wait For Movement",
+  "author": "Gabriel Ami",
+  "entries":
+  [
+    {
+      "id": 1,
+      "type": "Silence",
+      "object":
+      {
+        "duration": 2,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        }
+      }
+    },
+    {
+      "id": 0,
+      "type": "Character",
+      "object":
+      {
+        "duration": 0,
+        "expire_event":
+        {
+          "enabled": true,
+          "value": "player-moved"
+        },
+        "text": "Try to move your balloon by using the joystick on the left.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "Silence",
+      "object":
+      {
+        "duration": 2,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "Character",
+      "object":
+      {
+        "duration": 0,
+        "expire_event":
+        {
+          "enabled": true,
+          "value": "player-weapon-grabbed"
+        },
+        "text": "Try to grab the weapon which is on the floor.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    }
+  ]
+}
