@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Anchor: {x: 0, y: -0.5, z: 0}
+  m_DistanceFromWeapon: 1
 --- !u!114 &2048131356281663212
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,10 @@ namespace Balloondle.Gameplay
         public Action OnWeaponDropped;
 
         [SerializeField, Tooltip("Anchor where the weapon is attached to.")] 
-        private Vector3 m_Anchor; 
+        private Vector3 m_Anchor;
+
+        [SerializeField, Tooltip("Distance to be kept with the weapon.")]
+        private float m_DistanceFromWeapon = 1f;
 
         private WorldEntity _playerEntity;
         
@@ -39,7 +42,7 @@ namespace Balloondle.Gameplay
 
             Weapon weaponDetails = weapon.GetComponent<Weapon>();
             
-            if (_playerEntity.TryAttachTo(m_Anchor, weapon, weaponDetails.Anchor))
+            if (_playerEntity.TryAttachTo(m_Anchor, weapon, weaponDetails.Anchor, true, m_DistanceFromWeapon))
             {
                 _currentWeapon = weapon;
                 
