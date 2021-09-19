@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Balloondle.Script.Core;
 using Balloondle.Script.Data;
 using Balloondle.Script.Viewer;
@@ -10,7 +11,7 @@ namespace Balloondle.Script
     public class ScriptPreset : ScriptableObject
     {
         public Action OnScriptEnd;
-        
+
         [SerializeField] 
         private TextAsset m_ScriptJsonFile;
 
@@ -19,7 +20,10 @@ namespace Balloondle.Script
 
         [SerializeField] 
         private ScriptEndsHandler m_ScriptEndsHandler;
-        
+
+        [SerializeField] 
+        private List<EntriesEndsHandler> m_EntriesEndsHandler;
+
         private Canvas _sceneCanvas;
 
         private ScriptText _scriptText;
@@ -57,8 +61,11 @@ namespace Balloondle.Script
             {
                 throw new InvalidOperationException("Script must contain at least an entry.");
             }
-            
-            m_ScriptEndsHandler.OnScriptStart();
+
+            if (m_ScriptEndsHandler != null)
+            {
+                m_ScriptEndsHandler.OnScriptStart();
+            }
 
             InitializeScript();
         }
@@ -120,9 +127,13 @@ namespace Balloondle.Script
                     }
                     
                     _currentEntryDirector.Out();
-                    m_ScriptEndsHandler.OnScriptEnd();
+
                     OnScriptEnd?.Invoke();
-                    
+                    if (m_ScriptEndsHandler != null)
+                    {
+                        m_ScriptEndsHandler.OnScriptEnd();
+                    }
+
                     _currentEntry = null;
                     _currentEntryDirector = null;
                     _entryElapsedTime = 0f;
@@ -130,7 +141,7 @@ namespace Balloondle.Script
                     return;
                 }
 
-                InitializeNextEntryDirector();
+                InitializeNextEntry();
             }
             else
             {
@@ -156,11 +167,21 @@ namespace Balloondle.Script
             return entryProgress >= 1f;
         }
 
-        private void InitializeNextEntryDirector()
+        private void InitializeNextEntry()
         {
             Entry nextEntry = _scriptText.ReadNext();
             _entryElapsedTime = 0f;
             _hasExpireEventBeenTriggered = false;
+            
+            foreach (EntriesEndsHandler entriesEndsHandler in m_EntriesEndsHandler) 
+            {
+                if (_currentEntry != null)
+                {
+                    entriesEndsHandler.OnEntryEnd(_currentEntry.Id);
+                }
+                
+                entriesEndsHandler.OnEntryStart(nextEntry.Id);
+            }
 
             IEntryDirector previousDirector = _currentEntryDirector;
 
