@@ -4,12 +4,12 @@
     {
         public string Text { get; }
 
-        public NarrativeEntry(ulong id, float duration, string text) : base(id, duration)
+        public NarrativeEntry(int id, float duration, string text) : base(id, duration)
         {
             Text = text;
         }
         
-        public NarrativeEntry(ulong id, float duration, ExpireEvent expireEvent, string text) : 
+        public NarrativeEntry(int id, float duration, ExpireEvent expireEvent, string text) : 
             base(id, duration, expireEvent)
         {
             Text = text;

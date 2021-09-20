@@ -11,7 +11,7 @@ namespace Balloondle.Script.Handlers.EntriesEnds
         [SerializeField, Tooltip("Prefab containing the joystick container.")]
         private GameObject m_JoystickContainerPrefab;
         
-        public override void OnEntryStart(ulong entryId)
+        public override void OnEntryStart(int entryId)
         {
             if (entryId == 0)
             {
@@ -31,7 +31,7 @@ namespace Balloondle.Script.Handlers.EntriesEnds
             }
         }
 
-        public override void OnEntryEnd(ulong entryId)
+        public override void OnEntryEnd(int entryId)
         {
             
         }

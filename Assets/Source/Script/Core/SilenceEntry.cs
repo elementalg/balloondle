@@ -10,12 +10,12 @@
         /// </summary>
         /// <param name="id">id of the silence.</param>
         /// <param name="duration">seconds of silence.</param>
-        public SilenceEntry(ulong id, float duration) : base(id, duration)
+        public SilenceEntry(int id, float duration) : base(id, duration)
         {
             
         }
         
-        public SilenceEntry(ulong id, float duration, ExpireEvent expireEvent) : base(id, duration, expireEvent)
+        public SilenceEntry(int id, float duration, ExpireEvent expireEvent) : base(id, duration, expireEvent)
         {
             
         }

@@ -4,10 +4,10 @@
   "entries":
   [
     {
-      "id": 1,
       "type": "Silence",
       "object":
       {
+        "entry_id": 1,
         "duration": 2,
         "expire_event":
         {
@@ -17,10 +17,10 @@
       }
     },
     {
-      "id": 0,
       "type": "Character",
       "object":
       {
+        "entry_id": 0,
         "duration": 0,
         "expire_event":
         {
@@ -36,10 +36,10 @@
       }
     },
     {
-      "id": 2,
       "type": "Silence",
       "object":
       {
+        "entry_id": 2,
         "duration": 2,
         "expire_event":
         {
@@ -49,10 +49,10 @@
       }
     },
     {
-      "id": 3,
       "type": "Character",
       "object":
       {
+        "entry_id": 3,
         "duration": 0,
         "expire_event":
         {

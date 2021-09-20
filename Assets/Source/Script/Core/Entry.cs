@@ -2,18 +2,18 @@
 {
     public abstract class Entry
     {
-        public ulong Id { get; }
+        public int Id { get; }
         public float Duration { get; }
         public ExpireEvent Expire { get; }
 
-        protected Entry(ulong id, float duration)
+        protected Entry(int id, float duration)
         {
             Id = id;
             Duration = duration;
             Expire = new ExpireEvent();
         }
 
-        protected Entry(ulong id, float duration, ExpireEvent expireEvent)
+        protected Entry(int id, float duration, ExpireEvent expireEvent)
         {
             Id = id;
             Duration = duration;

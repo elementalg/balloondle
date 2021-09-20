@@ -6,12 +6,12 @@ namespace EditorTests.Script.Core
 {
     public class ScriptTest
     {
-        private Balloondle.Script.Core.ScriptText _scriptText;
+        private ScriptText _scriptText;
 
         [SetUp]
         public void Initialize()
         {
-            _scriptText = new Balloondle.Script.Core.ScriptText();
+            _scriptText = new ScriptText();
         }
 
         [Test]
@@ -26,15 +26,15 @@ namespace EditorTests.Script.Core
             Assert.Throws<InvalidOperationException>(() =>
             {
                 _scriptText.ReadNext();
-                _scriptText.Write(new SilenceEntry(0ul, 0f));
+                _scriptText.Write(new SilenceEntry(0, 0f));
             });
         }
 
         [Test]
         public void ReturnsCorrectlyExpectedEntry()
         {
-            SilenceEntry firstEntry = new SilenceEntry(0ul, 1);
-            SilenceEntry secondEntry = new SilenceEntry(1ul, 2);
+            SilenceEntry firstEntry = new SilenceEntry(0, 1);
+            SilenceEntry secondEntry = new SilenceEntry(1, 2);
             
             _scriptText.Write(firstEntry);
             _scriptText.Write(secondEntry);
@@ -48,7 +48,7 @@ namespace EditorTests.Script.Core
         {
             Assert.False(_scriptText.HasNext());
             
-            _scriptText.Write(new SilenceEntry(0ul, 1));
+            _scriptText.Write(new SilenceEntry(0, 1));
             
             Assert.True(_scriptText.HasNext());
 

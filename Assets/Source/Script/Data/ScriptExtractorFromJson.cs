@@ -10,7 +10,7 @@ namespace Balloondle.Script.Data
         private const string EntriesKey = "entries";
         private const string EntryTypeKey = "type";
         private const string EntryObjectKey = "object";
-        private const string EntryId = "id";
+        private const string EntryId = "entry_id";
         private const string EntryDurationKey = "duration";
         
         private const string EntryExpireEventKey = "expire_event";
@@ -43,7 +43,7 @@ namespace Balloondle.Script.Data
             foreach (JToken entry in entriesRoot)
             {
                 Entry deserializedEntry = DeserializeEntry(entry);
-                scriptText.Write(deserializedEntry);
+                 scriptText.Write(deserializedEntry);
             }
 
             return scriptText;
@@ -60,11 +60,11 @@ namespace Balloondle.Script.Data
             switch (entryType)
             {
                 case EntryType.Silence:
-                    return new SilenceEntry(serializedEntry.Value<ulong>(EntryId),
+                    return new SilenceEntry(serializedEntry.Value<int>(EntryId),
                         serializedEntry.Value<float>(EntryDurationKey),
                         expireEvent);
                 case EntryType.Narrative:
-                    return new NarrativeEntry(serializedEntry.Value<ulong>(EntryId),
+                    return new NarrativeEntry(serializedEntry.Value<int>(EntryId),
                         serializedEntry.Value<float>(EntryDurationKey),
                         expireEvent,
                         serializedEntry.Value<string>(EntryTextKey));
@@ -72,7 +72,7 @@ namespace Balloondle.Script.Data
                     Character characterData =
                         DeserializeCharacterEntry(serializedEntry.Value<JObject>(EntryCharacterDataKey));
 
-                    return new CharacterEntry(serializedEntry.Value<ulong>(EntryId),
+                    return new CharacterEntry(serializedEntry.Value<int>(EntryId),
                         serializedEntry.Value<float>(EntryDurationKey), expireEvent,
                         serializedEntry.Value<string>(EntryTextKey),
                         characterData);

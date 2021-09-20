@@ -48,6 +48,7 @@ namespace EditorTests.Script.Data
                                  "      'type': 'Silence'," +
                                  "      'object':" +
                                  "      {" +
+                                 "          'entry_id': 1," +
                                  "          'duration': 1," +
                                  "          'expire_event':" +
                                  "          {" +
@@ -60,6 +61,7 @@ namespace EditorTests.Script.Data
                                  "      'type': 'Narrative'," +
                                  "      'object':" +
                                  "      {" +
+                                 "          'entry_id': 2," +
                                  "          'duration': 4," +
                                  "          'expire_event':" +
                                  "          {" +
@@ -73,6 +75,7 @@ namespace EditorTests.Script.Data
                                  "      'type': 'Character'," +
                                  "      'object':" +
                                  "      {" +
+                                 "          'entry_id': 3," +
                                  "          'duration': 4," +
                                  "          'expire_event':" +
                                  "          {" +
@@ -98,12 +101,14 @@ namespace EditorTests.Script.Data
             
             Assert.IsInstanceOf<SilenceEntry>(entryBeingRead);
             SilenceEntry firstEntry = (SilenceEntry)entryBeingRead;
+            Assert.AreEqual(1, firstEntry.Id);
             Assert.True(Mathf.Approximately(1f, firstEntry.Duration));
             Assert.False(firstEntry.Expire.Enabled);
 
             entryBeingRead = extractedScriptText.ReadNext();
             Assert.IsInstanceOf<NarrativeEntry>(entryBeingRead);
             NarrativeEntry secondEntry = (NarrativeEntry)entryBeingRead;
+            Assert.AreEqual(2, secondEntry.Id);
             Assert.True(Mathf.Approximately(4f, secondEntry.Duration));
             Assert.False(firstEntry.Expire.Enabled);
             Assert.AreEqual("Too many credit cards...", (secondEntry).Text);
@@ -111,6 +116,7 @@ namespace EditorTests.Script.Data
             entryBeingRead = extractedScriptText.ReadNext();
             Assert.IsInstanceOf<CharacterEntry>(entryBeingRead);
             CharacterEntry thirdEntry = (CharacterEntry)entryBeingRead;
+            Assert.AreEqual(3, thirdEntry.Id);
             Assert.True(Mathf.Approximately(4f, thirdEntry.Duration));
             Assert.True(thirdEntry.Expire.Enabled);
             Assert.AreEqual("S04_E08_09:02", thirdEntry.Expire.Value);
