@@ -36,7 +36,9 @@ namespace Balloondle.Gameplay.World
         /// - float: amount of damage applied to the WorldEntity, which made its health reach 0.
         /// </summary>
         public Action<float> OnPreDestroy;
-        
+
+        public Action<WorldEntity> OnDetachedFrom;
+
         [Tooltip("Time to wait, after the WorldEntity has reached 0, before destroying the object.")]
         public float m_DestroyAfterTime = 1f;
 
@@ -204,6 +206,8 @@ namespace Balloondle.Gameplay.World
 
             _attachedTo.Remove(otherEntity);
             otherEntity._attachedTo.Remove(this);
+            
+            OnDetachedFrom?.Invoke(otherEntity);
         }
 
         public bool IsAttachedTo(WorldEntity otherEntity)

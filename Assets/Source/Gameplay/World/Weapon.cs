@@ -12,7 +12,8 @@ namespace Balloondle.Gameplay.World
         private float m_DamageCapacity = 1f;
         
         private WorldEntity _weaponEntity;
-
+        private BoxCollider2D _boxCollider2D;
+        
         public Vector3 Anchor => m_Anchor;
 
         private void OnEnable()
@@ -23,6 +24,17 @@ namespace Balloondle.Gameplay.World
             }
 
             _weaponEntity = GetComponent<WorldEntity>();
+            _boxCollider2D = GetComponent<BoxCollider2D>();
+        }
+
+        public void OnAttachToPlayer()
+        {
+            _boxCollider2D.enabled = false;
+        }
+
+        public void OnDetachFromPlayer()
+        {
+            _boxCollider2D.enabled = true;
         }
     }
 }

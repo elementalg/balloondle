@@ -15,6 +15,7 @@ namespace Balloondle.Gameplay.World
         private float m_DistanceFromWeapon = 1f;
 
         private WorldEntity _playerEntity;
+        private WeaponGrabber _weaponGrabber;
         
         private WorldEntity _currentWeapon;
 
@@ -26,6 +27,9 @@ namespace Balloondle.Gameplay.World
             }
             
             _playerEntity = GetComponent<WorldEntity>();
+            _weaponGrabber = GetComponent<WeaponGrabber>();
+
+            _playerEntity.OnDetachedFrom += OnEntityDetachedFromPlayer;
         }
 
         public void GiveWeapon(WorldEntity weapon)
@@ -45,7 +49,9 @@ namespace Balloondle.Gameplay.World
             if (_playerEntity.TryAttachTo(m_Anchor, weapon, weaponDetails.Anchor, true, m_DistanceFromWeapon))
             {
                 _currentWeapon = weapon;
-                
+                weaponDetails.OnAttachToPlayer();
+                _weaponGrabber.enabled = false;
+
                 OnWeaponGiven?.Invoke();
             }
             else
@@ -59,12 +65,26 @@ namespace Balloondle.Gameplay.World
             return _currentWeapon != null && _playerEntity.IsAttachedTo(_currentWeapon);
         }
 
-        public void DropWeapon()
+        public void DropWeapon(bool detachWeapon = true)
         {
-            _playerEntity.DetachFrom(_currentWeapon);
+            if (detachWeapon)
+            {
+                _playerEntity.DetachFrom(_currentWeapon);
+            }
+            
+            _currentWeapon.GetComponent<Weapon>().OnDetachFromPlayer();
+            _weaponGrabber.enabled = true;
             _currentWeapon = null;
             
             OnWeaponDropped?.Invoke();
+        }
+
+        private void OnEntityDetachedFromPlayer(WorldEntity entity)
+        {
+            if (entity.GetComponent<Weapon>() != null)
+            {
+                DropWeapon(false);
+            }
         }
     }
 }
