@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World
 {
     public abstract class WorldEntityAttacher : ScriptableObject
     {

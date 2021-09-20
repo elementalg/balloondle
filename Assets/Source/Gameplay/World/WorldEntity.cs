@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World
 {
     /// <summary>
     /// Basic entity present in the game's world. It defines the basic stats of each destroyable in game entity:

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World
 {
     [CreateAssetMenu(fileName ="WorldEntitiesPrefabsData", menuName = "WorldEntities/Prefabs", order=1)]
     public class WorldEntitiesPrefabs : ScriptableObject

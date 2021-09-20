@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World
 {
     public class WorldEntitySpawner : MonoBehaviour
     {
