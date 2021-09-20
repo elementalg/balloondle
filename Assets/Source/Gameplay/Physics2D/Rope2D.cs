@@ -392,17 +392,12 @@ namespace Balloondle.Gameplay.Physics2D
         {
             ulong cells = (ulong) Mathf.Ceil(distance / Mathf.Abs(_ropeCellSize.x));
             // Fill in with cells the space created due to the overlapping of cells.
-            cells = cells + (cells / 4);
-
             Vector2 cellPosition = new Vector2(start.x, start.y);
 
-            Vector2 cellOverlap = new Vector2(_ropeCellSize.x * 0.125f * direction.x,
-                _ropeCellSize.y * 0.125f * direction.y);
-            
             for (ulong cell = 0ul; cell < cells; cell++)
             {
-                cellPosition.Set(start.x + (_ropeCellSize.x * cell * direction.x) - ( cellOverlap.x * cell), 
-                    start.y + (_ropeCellSize.y * cell * direction.y) - (cellOverlap.y * cell));
+                cellPosition.Set(start.x + (_ropeCellSize.x * cell * direction.x), 
+                    start.y + (_ropeCellSize.y * cell * direction.y));
                 AddCellAtPosition(cellPosition);
             }
         }
