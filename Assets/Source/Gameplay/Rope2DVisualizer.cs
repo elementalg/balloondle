@@ -51,7 +51,7 @@ namespace Balloondle.Gameplay
                     Vector3 pointPosition;
                     if (i == 0)
                     {
-                        pointPosition = pointTransform.TransformPoint(_rope2D.StartGameObjectAnchorPoint);
+                        pointPosition = pointTransform.TransformPoint(_rope2D.StartBodyAnchorPoint);
                     }
                     else if (i == _ropePoints.Count - 1)
                     {

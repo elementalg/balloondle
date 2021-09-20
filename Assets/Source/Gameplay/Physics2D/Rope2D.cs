@@ -24,7 +24,7 @@ namespace Balloondle.Gameplay.Physics2D
         
         public List<GameObject> RopeCells { get; private set; }
         public GameObject GameObjectAttachedToStart { get; private set; }
-        public Vector2 StartGameObjectAnchorPoint { get; private set; }
+        public Vector2 StartBodyAnchorPoint { get; private set; }
         
         public Rigidbody2D BodyAttachedToEnd { get; private set; }
         public Vector2 EndBodyAnchorPoint { get; private set; }
@@ -66,7 +66,7 @@ namespace Balloondle.Gameplay.Physics2D
             if (GameObjectAttachedToStart != null && BodyAttachedToEnd != null)
             {
                 float distance = Vector2
-                    .Distance(GameObjectAttachedToStart.transform.TransformPoint(StartGameObjectAnchorPoint),
+                    .Distance(GameObjectAttachedToStart.transform.TransformPoint(StartBodyAnchorPoint),
                         BodyAttachedToEnd.transform.TransformPoint(EndBodyAnchorPoint));
 
                 if (distance > Limits.MaximumDistanceBetweenBodies)
@@ -194,13 +194,13 @@ namespace Balloondle.Gameplay.Physics2D
             
             RemoveAllCells();
             
-            StartGameObjectAnchorPoint = startAnchorPoint;
+            StartBodyAnchorPoint = startAnchorPoint;
             EndBodyAnchorPoint = endAnchorPoint;
 
             AttachJointToStart(start);
             AttachJointToEnd(end);
             
-            FillWithCellsDistanceBetweenStartAndEnd();
+            SpawnCellsBetweenStartAndEnd();
         }
 
         private void ExceptionIfInvalidRopeCell(GameObject prefab)
@@ -320,39 +320,92 @@ namespace Balloondle.Gameplay.Physics2D
                 body2D.gameObject.AddComponent<DistanceJoint2D>() :
                 body2D.gameObject.GetComponent<DistanceJoint2D>();
             
+            distanceJoint2D.anchor = EndBodyAnchorPoint;
             distanceJoint2D.connectedBody = GameObjectAttachedToStart.GetComponent<Rigidbody2D>();
+            distanceJoint2D.connectedAnchor = StartBodyAnchorPoint;
             distanceJoint2D.enableCollision = true;
+            distanceJoint2D.autoConfigureDistance = false;
+            distanceJoint2D.distance = Limits.MaximumDistanceBetweenBodies;
             distanceJoint2D.maxDistanceOnly = true;
-            distanceJoint2D.autoConfigureDistance = true;
             distanceJoint2D.breakForce = Limits.JointBetweenEndsBreakForce;
         }
         
-        private void FillWithCellsDistanceBetweenStartAndEnd()
+        private void SpawnCellsBetweenStartAndEnd()
         {
-            Vector3 startPosition = GameObjectAttachedToStart.transform.TransformPoint(StartGameObjectAnchorPoint);
+            Vector3 startPosition = GameObjectAttachedToStart.transform.TransformPoint(StartBodyAnchorPoint);
             Vector3 endPosition = BodyAttachedToEnd.transform.TransformPoint(EndBodyAnchorPoint);
 
             float distance = Vector2.Distance(startPosition, endPosition);
+
             Vector2 direction = endPosition - startPosition;
             direction.Normalize();
 
-            ulong cells = (ulong) Mathf.Ceil(Mathf.Abs(Limits.MaximumDistanceBetweenBodies) / Mathf.Abs(_ropeCellSize.x));
+            if (Limits.MaximumDistanceBetweenBodies / distance >= 2f)
+            {
+                SpawnCellsInZigZag(startPosition, endPosition, direction, 
+                    Limits.MaximumDistanceBetweenBodies, distance); 
+            }
+            else
+            {
+                SpawnCellsInLine(startPosition, direction, Limits.MaximumDistanceBetweenBodies);
+            }
+        }
+
+        private void SpawnCellsInZigZag(Vector2 start, Vector2 end, Vector2 direction, float length, float distance)
+        {
+            if (Mathf.CeilToInt(length / distance) < 2)
+            {
+                throw new InvalidOperationException(
+                    "ZigZag spawning method requires at least a length twice larger than the distance.");
+            }
+            
+            // + 2 -> include start and end half segments.
+            int halfSegments = Mathf.CeilToInt(length / distance) * 2 + 2;
+            float halfSegmentBase = distance / halfSegments;
+            float halfSegmentHypotenuse = length / halfSegments;
+            float zigZagHeight =
+                Mathf.Sqrt(halfSegmentHypotenuse * halfSegmentHypotenuse - halfSegmentBase * halfSegmentBase);
+            int zigZagSign = +1;
+            
+            Vector2 normal = Vector2.Perpendicular(direction);
+            
+            Vector2 zigZagVertex = new Vector2(start.x, start.y);
+            Vector2 previousPoint = new Vector2(start.x, start.y);
+            Vector2 lineDirection;
+            for (int i = 0; i < halfSegments; i += 2, zigZagSign *= -1)
+            { 
+                previousPoint.Set(zigZagVertex.x, zigZagVertex.y);
+
+                zigZagVertex = (start + (i + 1) * halfSegmentBase * direction) + zigZagHeight * normal * zigZagSign;
+                lineDirection = (zigZagVertex - previousPoint).normalized;
+                SpawnCellsInLine(previousPoint, lineDirection,
+                    (i == 0) ? halfSegmentHypotenuse : halfSegmentHypotenuse * 2);
+            }
+            
+            // Adapt last half segment's length to the distance between the last zig zag vertex and the end point.
+            lineDirection = (end - zigZagVertex).normalized;
+            SpawnCellsInLine(zigZagVertex, lineDirection, Vector2.Distance(end, zigZagVertex));
+        }
+
+        private void SpawnCellsInLine(Vector2 start, Vector2 direction, float distance)
+        {
+            ulong cells = (ulong) Mathf.Ceil(distance / Mathf.Abs(_ropeCellSize.x));
             // Fill in with cells the space created due to the overlapping of cells.
             cells = cells + (cells / 4);
 
-            Vector3 cellPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z);
+            Vector2 cellPosition = new Vector2(start.x, start.y);
 
             Vector2 cellOverlap = new Vector2(_ropeCellSize.x * 0.125f * direction.x,
                 _ropeCellSize.y * 0.125f * direction.y);
             
             for (ulong cell = 0ul; cell < cells; cell++)
             {
-                cellPosition.Set(startPosition.x + (_ropeCellSize.x * cell * direction.x) - ( cellOverlap.x * cell), 
-                    startPosition.y + (_ropeCellSize.y * cell * direction.y) - (cellOverlap.y * cell), startPosition.z);
+                cellPosition.Set(start.x + (_ropeCellSize.x * cell * direction.x) - ( cellOverlap.x * cell), 
+                    start.y + (_ropeCellSize.y * cell * direction.y) - (cellOverlap.y * cell));
                 AddCellAtPosition(cellPosition);
             }
         }
-        
+
         private void AddCellAtPosition(Vector3 ropeCellPosition)
         {
             Transform ropeTransform = transform;
@@ -417,8 +470,8 @@ namespace Balloondle.Gameplay.Physics2D
             
             if (source == GameObjectAttachedToStart)
             {
-                hingeJoint2D.anchor = StartGameObjectAnchorPoint;
-                distanceJoint2D.anchor = StartGameObjectAnchorPoint;
+                hingeJoint2D.anchor = StartBodyAnchorPoint;
+                distanceJoint2D.anchor = StartBodyAnchorPoint;
                 return;
             }
 
