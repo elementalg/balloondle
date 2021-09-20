@@ -13,8 +13,6 @@ namespace Balloondle.Gameplay
                 Quaternion.Euler(0, 0, 180f));
 
             Player player = balloon.GetComponent<Player>();
-            
-            player.GiveWeapon(weapon);
         }
     }
 }
