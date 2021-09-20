@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Balloondle.Gameplay.Physics2D
 {
@@ -16,7 +17,7 @@ namespace Balloondle.Gameplay.Physics2D
     {
         public IRope2DCustomDestructor CustomDestructor;
         
-        public Rope2DLimits Limits;
+        [FormerlySerializedAs("Limits")] public Rope2DArgs m_Args;
         
         private GameObject _ropeCellPrefab;
         
@@ -69,21 +70,21 @@ namespace Balloondle.Gameplay.Physics2D
                     .Distance(GameObjectAttachedToStart.transform.TransformPoint(StartBodyAnchorPoint),
                         BodyAttachedToEnd.transform.TransformPoint(EndBodyAnchorPoint));
 
-                if (distance > Limits.MaximumDistanceBetweenBodies)
+                if (distance > m_Args.MaximumDistanceBetweenBodies)
                 {
                     Break();
                     return;
                 }
 
                 if (GameObjectAttachedToStart.GetComponent<Rigidbody2D>().velocity.sqrMagnitude > 
-                    Limits.MaximumSupportedVelocity * Limits.MaximumSupportedVelocity)
+                    m_Args.MaximumSupportedVelocity * m_Args.MaximumSupportedVelocity)
                 {
                     Break();
                     return;
                 }
 
                 if (BodyAttachedToEnd.velocity.sqrMagnitude > 
-                    Limits.MaximumSupportedVelocity * Limits.MaximumSupportedVelocity)
+                    m_Args.MaximumSupportedVelocity * m_Args.MaximumSupportedVelocity)
                 {
                     Break();
                 }
@@ -171,7 +172,7 @@ namespace Balloondle.Gameplay.Physics2D
                 Rigidbody2D ropeCellBody = RopeCells[index].GetComponent<Rigidbody2D>();
 
                 if (ropeCellBody.velocity.sqrMagnitude > 
-                    Limits.MaximumSupportedVelocity * Limits.MaximumSupportedVelocity)
+                    m_Args.MaximumSupportedVelocity * m_Args.MaximumSupportedVelocity)
                 {
                     Break();
                     return;
@@ -265,11 +266,11 @@ namespace Balloondle.Gameplay.Physics2D
                 connectingPoint.GetComponent<HingeJoint2D>();
 
             float jointBreakForce = IsJointOfConnectingPointRelatedToAnEndPoint(connectingPoint)
-                ? Limits.EndBodiesJointBreakForce
-                : Limits.RopeCellsJointBreakForce;
+                ? m_Args.EndBodiesJointBreakForce
+                : m_Args.RopeCellsJointBreakForce;
             float jointBreakTorque = IsJointOfConnectingPointRelatedToAnEndPoint(connectingPoint)
-                ? Limits.EndBodiesJointBreakTorque
-                : Limits.RopeCellsJointBreakTorque;
+                ? m_Args.EndBodiesJointBreakTorque
+                : m_Args.RopeCellsJointBreakTorque;
             
             hingeJoint2D.enableCollision = enableCollision;
             hingeJoint2D.autoConfigureConnectedAnchor = enableCollision;
@@ -325,9 +326,9 @@ namespace Balloondle.Gameplay.Physics2D
             distanceJoint2D.connectedAnchor = StartBodyAnchorPoint;
             distanceJoint2D.enableCollision = true;
             distanceJoint2D.autoConfigureDistance = false;
-            distanceJoint2D.distance = Limits.MaximumDistanceBetweenBodies;
+            distanceJoint2D.distance = m_Args.Length;
             distanceJoint2D.maxDistanceOnly = true;
-            distanceJoint2D.breakForce = Limits.JointBetweenEndsBreakForce;
+            distanceJoint2D.breakForce = m_Args.JointBetweenEndsBreakForce;
         }
         
         private void SpawnCellsBetweenStartAndEnd()
@@ -340,14 +341,14 @@ namespace Balloondle.Gameplay.Physics2D
             Vector2 direction = endPosition - startPosition;
             direction.Normalize();
 
-            if (Limits.MaximumDistanceBetweenBodies / distance >= 2f)
+            if (m_Args.MaximumDistanceBetweenBodies / distance >= 2f)
             {
                 SpawnCellsInZigZag(startPosition, endPosition, direction, 
-                    Limits.MaximumDistanceBetweenBodies, distance); 
+                    m_Args.MaximumDistanceBetweenBodies, distance); 
             }
             else
             {
-                SpawnCellsInLine(startPosition, direction, Limits.MaximumDistanceBetweenBodies);
+                SpawnCellsInLine(startPosition, direction, m_Args.MaximumDistanceBetweenBodies);
             }
         }
 

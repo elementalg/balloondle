@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Balloondle.Gameplay
 {
@@ -11,8 +12,8 @@ namespace Balloondle.Gameplay
         [SerializeField, Tooltip("Rope2DSpawner prefab.")]
         private Rope2DSpawner m_Rope2DSpawnerPrefab;
 
-        [SerializeField, Tooltip("Limits applied to the Rope2D. Maximum distance is calculated by the spawner.")]
-        private Rope2DLimits m_Rope2DLimits;
+        [FormerlySerializedAs("m_Rope2DLimits")] [SerializeField, Tooltip("Limits applied to the Rope2D. Maximum distance is calculated by the spawner.")]
+        private Rope2DArgs m_Rope2DArgs;
 
         private readonly Dictionary<WorldEntity, Tuple<WorldEntity, WorldEntity>> _attachments =
             new Dictionary<WorldEntity, Tuple<WorldEntity, WorldEntity>>();
@@ -35,7 +36,7 @@ namespace Balloondle.Gameplay
                 start.GetComponent<Rigidbody2D>(),
                 startAnchor,
                 end.GetComponent<Rigidbody2D>(),
-                endAnchor, m_Rope2DLimits);
+                endAnchor, m_Rope2DArgs);
 
             StoreAndConfigureRopeEntity(start, ropeEntity, end);
 
@@ -76,13 +77,14 @@ namespace Balloondle.Gameplay
             float distance)
         {
             ExceptionIfWorldEntitiesMissRigidBody2D(start, end);
-            
-            m_Rope2DLimits.MaximumDistanceBetweenBodies = distance;
+
+            m_Rope2DArgs.Length = distance;
+            m_Rope2DArgs.MaximumDistanceBetweenBodies = distance;
             WorldEntity ropeEntity = m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(
                 start.GetComponent<Rigidbody2D>(),
                 startAnchor,
                 end.GetComponent<Rigidbody2D>(),
-                endAnchor, m_Rope2DLimits, true);
+                endAnchor, m_Rope2DArgs, true);
 
             StoreAndConfigureRopeEntity(start, ropeEntity, end);
 

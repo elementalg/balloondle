@@ -16,7 +16,7 @@ namespace Balloondle.Gameplay
         private float m_Rope2DMaximumDistanceMultiplier = 1.25f;
         
         public WorldEntity CreateRopeConnectingTwoRigidBodies2D(Rigidbody2D start, Vector2 startAnchor, Rigidbody2D end,
-            Vector2 endAnchor, Rope2DLimits limits, bool useLimitsDistance = false)
+            Vector2 endAnchor, Rope2DArgs ropeArgs, bool useLimitsDistance = false)
         {
             if (start == end)
             {
@@ -31,13 +31,12 @@ namespace Balloondle.Gameplay
 
             if (!useLimitsDistance)
             {
-                limits.MaximumDistanceBetweenBodies = Vector2
-                    .Distance(start.GetPoint(startAnchor), end.GetPoint(endAnchor)) *
-                                                      m_Rope2DMaximumDistanceMultiplier;
+                ropeArgs.Length = Vector2.Distance(start.GetPoint(startAnchor), end.GetPoint(endAnchor));
+                ropeArgs.MaximumDistanceBetweenBodies = ropeArgs.Length * m_Rope2DMaximumDistanceMultiplier;
             }
             else
             {
-                limits.MaximumDistanceBetweenBodies *= m_Rope2DMaximumDistanceMultiplier;
+                ropeArgs.MaximumDistanceBetweenBodies *= m_Rope2DMaximumDistanceMultiplier;
             }
 
             Transform ropeTransform = ropeGameObject.GetComponent<Transform>();
@@ -47,7 +46,7 @@ namespace Balloondle.Gameplay
             WorldEntity ropeEntity = ropeGameObject.AddComponent<WorldEntity>();
             
             Rope2D rope = ropeGameObject.AddComponent<Rope2D>();
-            rope.Limits = limits;
+            rope.m_Args = ropeArgs;
             rope.RopeCellPrefab = m_Rope2DCellPrefab;
             rope.AddCellsForJoiningStartToEnd(start.gameObject, startAnchor, end, endAnchor);
 

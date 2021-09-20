@@ -10,8 +10,13 @@ namespace Balloondle.Gameplay.Physics2D
     /// logic.
     /// </summary>
     [Serializable]
-    public struct Rope2DLimits
+    public struct Rope2DArgs
     {
+        /// <summary>
+        /// Initial length of the rope.
+        /// </summary>
+        public float Length;
+        
         /// <summary>
         /// Maximum distance allowed between the connected bodies.
         /// </summary>
@@ -47,9 +52,25 @@ namespace Balloondle.Gameplay.Physics2D
         /// </summary>
         public float MaximumSupportedVelocity;
 
-        public Rope2DLimits(float maximumDistanceBetweenBodies, float endBodiesJointBreakForce, float endBodiesJointBreakTorque,
+        public Rope2DArgs(float length, float maximumDistanceBetweenBodies, float endBodiesJointBreakForce,
+            float endBodiesJointBreakTorque,
+            float ropeCellsJointBreakForce, float ropeCellsJointBreakTorque, float jointBetweenEndsBreakForce,
+            float maximumSupportedVelocity)
+        {
+            Length = length;
+            MaximumDistanceBetweenBodies = maximumDistanceBetweenBodies;
+            EndBodiesJointBreakForce = endBodiesJointBreakForce;
+            EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
+            RopeCellsJointBreakForce = ropeCellsJointBreakForce;
+            RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
+            JointBetweenEndsBreakForce = jointBetweenEndsBreakForce;
+            MaximumSupportedVelocity = maximumSupportedVelocity;
+        }
+        
+        public Rope2DArgs(float maximumDistanceBetweenBodies, float endBodiesJointBreakForce, float endBodiesJointBreakTorque,
             float ropeCellsJointBreakForce, float ropeCellsJointBreakTorque, float jointBetweenEndsBreakForce, float maximumSupportedVelocity)
         {
+            Length = maximumDistanceBetweenBodies;
             MaximumDistanceBetweenBodies = maximumDistanceBetweenBodies;
             EndBodiesJointBreakForce = endBodiesJointBreakForce;
             EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
