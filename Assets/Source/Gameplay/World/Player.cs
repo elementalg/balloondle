@@ -41,7 +41,8 @@ namespace Balloondle.Gameplay.World
             
             if (HasWeapon())
             {
-                DropWeapon();
+                Debug.LogWarning("Tried to give weapon to Player, meanwhile having already one.");
+                return;
             }
 
             Weapon weaponDetails = weapon.GetComponent<Weapon>();
