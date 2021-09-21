@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4903909130853790825}
   - component: {fileID: -1638192597396881737}
   - component: {fileID: 4518537103685635176}
+  - component: {fileID: -4115982020517085664}
   m_Layer: 9
   m_Name: GreenVenom
   m_TagString: Untagged
@@ -200,6 +201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Anchor: {x: 0, y: -0.32, z: 0}
   m_DamageCapacity: 50
+  m_MinSquaredVelocityForDamage: 10
+  m_MaxSquaredVelocityForMaxDamage: 100
 --- !u!61 &-1638192597396881737
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -282,3 +285,16 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &-4115982020517085664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614256405655819216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e441a524008460ca75def10e93c5e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxVolume: 0.8
