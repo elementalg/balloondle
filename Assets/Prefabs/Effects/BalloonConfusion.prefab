@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8258682081154684663}
   - component: {fileID: 8258682081154684660}
   m_Layer: 0
-  m_Name: Confusion
+  m_Name: BalloonConfusion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
