@@ -16,7 +16,7 @@ namespace Balloondle.Script
 
         public ulong CharacterId => _entry.CharacterData.Id;
         
-        public CharacterEntryDirector(CharacterEntry entry, StyleComponent entryStyle, Canvas canvas)
+        public CharacterEntryDirector(CharacterEntry entry, EntryStyleComponent entryStyle, Canvas canvas)
         {
             _entry = entry;
             _styleReferences = GameObject.Instantiate(entryStyle.m_Prefab, canvas.transform)
