@@ -32,12 +32,12 @@ namespace Balloondle.Gameplay
 
             if (!useLimitsDistance)
             {
-                ropeArgs.Length = Vector2.Distance(start.GetPoint(startAnchor), end.GetPoint(endAnchor));
-                ropeArgs.MaximumDistanceBetweenBodies = ropeArgs.Length * m_Rope2DMaximumDistanceMultiplier;
+                ropeArgs.m_Length = Vector2.Distance(start.GetPoint(startAnchor), end.GetPoint(endAnchor));
+                ropeArgs.m_MaximumDistanceBetweenBodies = ropeArgs.m_Length * m_Rope2DMaximumDistanceMultiplier;
             }
             else
             {
-                ropeArgs.MaximumDistanceBetweenBodies *= m_Rope2DMaximumDistanceMultiplier;
+                ropeArgs.m_MaximumDistanceBetweenBodies *= m_Rope2DMaximumDistanceMultiplier;
             }
 
             Transform ropeTransform = ropeGameObject.GetComponent<Transform>();

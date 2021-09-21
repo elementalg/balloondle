@@ -2,26 +2,27 @@
 using Balloondle.Script.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Type = Balloondle.Script.Core.Type;
 
 namespace Balloondle.Script.Data
 {
     public class ScriptExtractorFromJson
     {
         private const string EntriesKey = "entries";
-        private const string EntryTypeKey = "type";
-        private const string EntryObjectKey = "object";
-        private const string EntryId = "entry_id";
-        private const string EntryDurationKey = "duration";
+        private const string TypeKey = "type";
+        private const string ObjectKey = "object";
+        private const string Id = "entry_id";
+        private const string DurationKey = "duration";
         
-        private const string EntryExpireEventKey = "expire_event";
-        private const string EntryExpireEventEnabledKey = "enabled";
-        private const string EntryExpireEventValueKey = "value";
+        private const string ExpireEventKey = "expire_event";
+        private const string ExpireEventEnabledKey = "enabled";
+        private const string ExpireEventValueKey = "value";
         
-        private const string EntryTextKey = "text";
+        private const string TextKey = "text";
         
-        private const string EntryCharacterDataKey = "character_data";
-        private const string EntryCharacterDataIdKey = "id";
-        private const string EntryCharacterDataNameKey = "name";
+        private const string CharacterDataKey = "character_data";
+        private const string CharacterDataIdKey = "id";
+        private const string CharacterDataNameKey = "name";
 
         public ScriptText FromJson(string json)
         {
@@ -51,30 +52,30 @@ namespace Balloondle.Script.Data
 
         private Entry DeserializeEntry(JToken serializedEntry)
         {
-            string type = serializedEntry.Value<string>(EntryTypeKey);
-            EntryType entryType = (EntryType)Enum.Parse(typeof(EntryType), type);
-            serializedEntry = serializedEntry.Value<JObject>(EntryObjectKey);
+            string type = serializedEntry.Value<string>(TypeKey);
+            Type entryType = (Type)Enum.Parse(typeof(Type), type);
+            serializedEntry = serializedEntry.Value<JObject>(ObjectKey);
 
-            ExpireEvent expireEvent = DeserializeExpireEvent(serializedEntry.Value<JObject>(EntryExpireEventKey));
+            ExpireEvent expireEvent = DeserializeExpireEvent(serializedEntry.Value<JObject>(ExpireEventKey));
             
             switch (entryType)
             {
-                case EntryType.Silence:
-                    return new SilenceEntry(serializedEntry.Value<int>(EntryId),
-                        serializedEntry.Value<float>(EntryDurationKey),
+                case Type.Silence:
+                    return new SilenceEntry(serializedEntry.Value<int>(Id),
+                        serializedEntry.Value<float>(DurationKey),
                         expireEvent);
-                case EntryType.Narrative:
-                    return new NarrativeEntry(serializedEntry.Value<int>(EntryId),
-                        serializedEntry.Value<float>(EntryDurationKey),
+                case Type.Narrative:
+                    return new NarrativeEntry(serializedEntry.Value<int>(Id),
+                        serializedEntry.Value<float>(DurationKey),
                         expireEvent,
-                        serializedEntry.Value<string>(EntryTextKey));
-                case EntryType.Character:
+                        serializedEntry.Value<string>(TextKey));
+                case Type.Character:
                     Character characterData =
-                        DeserializeCharacterEntry(serializedEntry.Value<JObject>(EntryCharacterDataKey));
+                        DeserializeCharacterEntry(serializedEntry.Value<JObject>(CharacterDataKey));
 
-                    return new CharacterEntry(serializedEntry.Value<int>(EntryId),
-                        serializedEntry.Value<float>(EntryDurationKey), expireEvent,
-                        serializedEntry.Value<string>(EntryTextKey),
+                    return new CharacterEntry(serializedEntry.Value<int>(Id),
+                        serializedEntry.Value<float>(DurationKey), expireEvent,
+                        serializedEntry.Value<string>(TextKey),
                         characterData);
                 default:
                     throw new InvalidOperationException("Unknown entry type detected.");
@@ -83,16 +84,16 @@ namespace Balloondle.Script.Data
 
         private ExpireEvent DeserializeExpireEvent(JObject serializedExpireEvent)
         {
-            bool enabled = serializedExpireEvent.Value<bool>(EntryExpireEventEnabledKey);
-            string value = serializedExpireEvent.Value<string>(EntryExpireEventValueKey);
+            bool enabled = serializedExpireEvent.Value<bool>(ExpireEventEnabledKey);
+            string value = serializedExpireEvent.Value<string>(ExpireEventValueKey);
 
             return new ExpireEvent(enabled, value);
         }
         
         private Character DeserializeCharacterEntry(JObject serializedCharacterEntry)
         {
-            ulong characterId = serializedCharacterEntry.Value<ulong>(EntryCharacterDataIdKey);
-            string characterName = serializedCharacterEntry.Value<string>(EntryCharacterDataNameKey);
+            ulong characterId = serializedCharacterEntry.Value<ulong>(CharacterDataIdKey);
+            string characterName = serializedCharacterEntry.Value<string>(CharacterDataNameKey);
 
             return new Character(characterId, characterName);
         }

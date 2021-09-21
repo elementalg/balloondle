@@ -78,8 +78,8 @@ namespace Balloondle.Gameplay.World
         {
             ExceptionIfWorldEntitiesMissRigidBody2D(start, end);
 
-            m_Rope2DArgs.Length = distance;
-            m_Rope2DArgs.MaximumDistanceBetweenBodies = distance;
+            m_Rope2DArgs.m_Length = distance;
+            m_Rope2DArgs.m_MaximumDistanceBetweenBodies = distance;
             WorldEntity ropeEntity = m_Rope2DSpawnerPrefab.CreateRopeConnectingTwoRigidBodies2D(
                 start.GetComponent<Rigidbody2D>(),
                 startAnchor,

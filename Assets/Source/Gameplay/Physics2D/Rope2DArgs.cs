@@ -15,69 +15,69 @@ namespace Balloondle.Gameplay.Physics2D
         /// <summary>
         /// Initial length of the rope.
         /// </summary>
-        public float Length;
+        public float m_Length;
         
         /// <summary>
         /// Maximum distance allowed between the connected bodies.
         /// </summary>
-        public float MaximumDistanceBetweenBodies;
+        public float m_MaximumDistanceBetweenBodies;
         
         /// <summary>
         /// Maximum force allowed for the joints connecting an end body with a rope cell.
         /// </summary>
-        public float EndBodiesJointBreakForce;
+        public float m_EndBodiesJointBreakForce;
         
         /// <summary>
         /// Maximum torque allowed for the joints connecting an end body with a rope cell.
         /// </summary>
-        public float EndBodiesJointBreakTorque;
+        public float m_EndBodiesJointBreakTorque;
         
         /// <summary>
         /// Maximum force allowed for the joints connecting two rope cells.
         /// </summary>
-        public float RopeCellsJointBreakForce;
+        public float m_RopeCellsJointBreakForce;
         
         /// <summary>
         /// Maximum torque allowed for the joints connecting two rope cells. 
         /// </summary>
-        public float RopeCellsJointBreakTorque;
+        public float m_RopeCellsJointBreakTorque;
         
         /// <summary>
         /// Maximum force allowed for the joint connecting the end bodies.
         /// </summary>
-        public float JointBetweenEndsBreakForce;
+        public float m_JointBetweenEndsBreakForce;
 
         /// <summary>
         /// Maximum velocity supported.
         /// </summary>
-        public float MaximumSupportedVelocity;
+        public float m_MaximumSupportedVelocity;
 
         public Rope2DArgs(float length, float maximumDistanceBetweenBodies, float endBodiesJointBreakForce,
             float endBodiesJointBreakTorque,
             float ropeCellsJointBreakForce, float ropeCellsJointBreakTorque, float jointBetweenEndsBreakForce,
             float maximumSupportedVelocity)
         {
-            Length = length;
-            MaximumDistanceBetweenBodies = maximumDistanceBetweenBodies;
-            EndBodiesJointBreakForce = endBodiesJointBreakForce;
-            EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
-            RopeCellsJointBreakForce = ropeCellsJointBreakForce;
-            RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
-            JointBetweenEndsBreakForce = jointBetweenEndsBreakForce;
-            MaximumSupportedVelocity = maximumSupportedVelocity;
+            m_Length = length;
+            m_MaximumDistanceBetweenBodies = maximumDistanceBetweenBodies;
+            m_EndBodiesJointBreakForce = endBodiesJointBreakForce;
+            m_EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
+            m_RopeCellsJointBreakForce = ropeCellsJointBreakForce;
+            m_RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
+            m_JointBetweenEndsBreakForce = jointBetweenEndsBreakForce;
+            m_MaximumSupportedVelocity = maximumSupportedVelocity;
         }
         
         public Rope2DArgs(float maximumDistanceBetweenBodies, float endBodiesJointBreakForce, float endBodiesJointBreakTorque,
             float ropeCellsJointBreakForce, float ropeCellsJointBreakTorque, float jointBetweenEndsBreakForce, float maximumSupportedVelocity)
         {
-            Length = maximumDistanceBetweenBodies;
-            MaximumDistanceBetweenBodies = maximumDistanceBetweenBodies;
-            EndBodiesJointBreakForce = endBodiesJointBreakForce;
-            EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
-            RopeCellsJointBreakForce = ropeCellsJointBreakForce;
-            RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
-            JointBetweenEndsBreakForce = jointBetweenEndsBreakForce;
-            MaximumSupportedVelocity = maximumSupportedVelocity;
+            m_Length = maximumDistanceBetweenBodies;
+            m_MaximumDistanceBetweenBodies = maximumDistanceBetweenBodies;
+            m_EndBodiesJointBreakForce = endBodiesJointBreakForce;
+            m_EndBodiesJointBreakTorque = endBodiesJointBreakTorque;
+            m_RopeCellsJointBreakForce = ropeCellsJointBreakForce;
+            m_RopeCellsJointBreakTorque = ropeCellsJointBreakTorque;
+            m_JointBetweenEndsBreakForce = jointBetweenEndsBreakForce;
+            m_MaximumSupportedVelocity = maximumSupportedVelocity;
         }
     }
 }

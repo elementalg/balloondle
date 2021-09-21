@@ -7,13 +7,13 @@ namespace Balloondle.Script.Viewer
     public class ScriptStyle : ScriptableObject
     {
         public string m_StyleName;
-        public List<EntryStyleComponent> m_Components;
+        public List<StyleComponent> m_Components;
 
         private void Start()
         {
             if (m_Components == null)
             {
-                m_Components = new List<EntryStyleComponent>();
+                m_Components = new List<StyleComponent>();
             }
         }
     }
