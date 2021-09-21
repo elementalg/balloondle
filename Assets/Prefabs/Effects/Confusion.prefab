@@ -43,7 +43,7 @@ Animator:
   m_GameObject: {fileID: 8258682081154684648}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b6272765494f89a419d6d8ced75089d1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 34946075a4add724fb517aff57748cfc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -100,7 +100,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!82 &8258682081154684660
@@ -113,7 +113,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 558d1327ab5e7cd47a64fc4ccdc46994, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 48de439da2c949a49b89539ee4f5d48d, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
