@@ -17,3 +17,5 @@ MonoBehaviour:
     m_Prefab: {fileID: 8258682081154684648, guid: 8e56a7ea035cb5e4da14aca2edc023f1, type: 3}
   - m_Name: BalloonCollision
     m_Prefab: {fileID: 5356106046143957329, guid: f6e3b05e8aa03df4ab637f793fe8e8ff, type: 3}
+  - m_Name: WeaponHit0
+    m_Prefab: {fileID: 794612648133235917, guid: 92dcc5f24d0c5914192efd76d029297a, type: 3}

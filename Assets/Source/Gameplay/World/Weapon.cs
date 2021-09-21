@@ -1,4 +1,5 @@
 ﻿using System;
+using Balloondle.Effects.Implementations;
 using UnityEngine;
 
 namespace Balloondle.Gameplay.World
@@ -10,10 +11,17 @@ namespace Balloondle.Gameplay.World
         
         [SerializeField, Tooltip("Maximum damage which this weapon can apply.")] 
         private float m_DamageCapacity = 1f;
+
+        [SerializeField, Tooltip("Minimum squared velocity for damage to be applied.")]
+        private float m_MinSquaredVelocityForDamage = 10f;
+
+        [SerializeField, Tooltip("Maximum squared velocity for maximum damage.")]
+        private float m_MaxSquaredVelocityForMaxDamage = 100f;
         
         private WorldEntity _weaponEntity;
         private BoxCollider2D _boxCollider2D;
         private EdgeCollider2D _edgeCollider2D;
+        private WeaponEffects _weaponEffects;
         
         public Vector3 Anchor => m_Anchor;
 
@@ -27,6 +35,13 @@ namespace Balloondle.Gameplay.World
             _weaponEntity = GetComponent<WorldEntity>();
             _boxCollider2D = GetComponent<BoxCollider2D>();
             _edgeCollider2D = GetComponent<EdgeCollider2D>();
+            
+            if (GetComponent<WeaponEffects>() == null)
+            {
+                throw new InvalidOperationException("Weapon requires a WeaponEffects component.");
+            }
+            
+            _weaponEffects = GetComponent<WeaponEffects>();
         }
 
         public void OnAttachToPlayer()
@@ -39,17 +54,35 @@ namespace Balloondle.Gameplay.World
             _boxCollider2D.enabled = true;
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            if (_edgeCollider2D.IsTouching(other))
+            WorldEntity otherEntity = other.gameObject.GetComponent<WorldEntity>();
+            
+            if (otherEntity == null)
             {
-                WorldEntity otherEntity = other.gameObject.GetComponent<WorldEntity>();
-
-                if (otherEntity != null)
-                {
-                    otherEntity.Damage(m_DamageCapacity);
-                }
+                return;
             }
+
+            if (otherEntity.m_Indestructible)
+            {
+                return;
+            }
+            
+            if (other.collider != _edgeCollider2D || other.gameObject == gameObject)
+            {
+                return;
+            }
+
+            if (other.relativeVelocity.sqrMagnitude < m_MinSquaredVelocityForDamage)
+            {
+                return;
+            }
+            
+            float hitIntensity = Mathf.Min(1f,
+                other.relativeVelocity.sqrMagnitude / m_MaxSquaredVelocityForMaxDamage);
+            
+            _weaponEffects.PlayHitEffect(hitIntensity);
+            otherEntity.Damage(m_DamageCapacity * hitIntensity);
         }
     }
 }
