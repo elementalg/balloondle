@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6913595711057561276}
   - component: {fileID: 2048131356281663212}
   - component: {fileID: 3881248111861783880}
+  - component: {fileID: 2128055181749644130}
   m_Layer: 8
   m_Name: Balloon
   m_TagString: Untagged
@@ -303,3 +304,16 @@ CircleCollider2D:
   m_Offset: {x: 0.0000016313214, y: -0.4546237}
   serializedVersion: 2
   m_Radius: 0.14108717
+--- !u!114 &2128055181749644130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661392484594478092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a9a38119024959be477f5702fbdc19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSquaredVelocityMagnitudeForSound: 1

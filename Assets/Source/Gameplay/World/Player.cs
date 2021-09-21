@@ -80,6 +80,11 @@ namespace Balloondle.Gameplay.World
             OnWeaponDropped?.Invoke();
         }
 
+        public WorldEntity GetWeapon()
+        {
+            return _currentWeapon;
+        }
+
         private void OnEntityDetachedFromPlayer(WorldEntity entity)
         {
             if (entity.GetComponent<Weapon>() != null)
