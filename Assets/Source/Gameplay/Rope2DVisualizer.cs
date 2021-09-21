@@ -48,6 +48,11 @@ namespace Balloondle.Gameplay
                 {
                     Transform pointTransform = _ropePoints[i];
 
+                    if (pointTransform == null)
+                    {
+                        continue;
+                    }
+                    
                     Vector3 pointPosition;
                     if (i == 0)
                     {
