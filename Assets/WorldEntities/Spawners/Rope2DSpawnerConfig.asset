@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435e4840703033049a4e7d547d3f8134, type: 3}
+  m_Name: Rope2DSpawnerConfig
+  m_EditorClassIdentifier: 
+  m_Rope2DCellPrefab: {fileID: 4293430157769732305, guid: 1bdb29267ceb7dd4eaae5160968f008d, type: 3}
+  m_Rope2DCellSpriteShapePrefab: {fileID: 833072182032837485, guid: 8ea8c11cdadf9694f8590a74a9b436eb, type: 3}
+  m_Rope2DMaximumDistanceMultiplier: 1.5
