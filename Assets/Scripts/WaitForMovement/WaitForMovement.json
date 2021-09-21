@@ -27,24 +27,11 @@
           "enabled": true,
           "value": "player-moved"
         },
-        "text": "Try to move your balloon by using the joystick on the left.",
+        "text": "Try to move by pressing and moving the circle on the left.",
         "character_data":
         {
           "id": 0,
           "name": "Wabo"
-        }
-      }
-    },
-    {
-      "type": "Silence",
-      "object":
-      {
-        "entry_id": 2,
-        "duration": 4,
-        "expire_event":
-        {
-          "enabled": false,
-          "value": ""
         }
       }
     },
@@ -59,7 +46,7 @@
           "enabled": true,
           "value": "player-weapon-grabbed"
         },
-        "text": "Try to grab the weapon which is on the floor.",
+        "text": "Good Job! Wow! A weapon just appeared out of nowhere. Get close enough to it and grab it!",
         "character_data":
         {
           "id": 0,
@@ -72,13 +59,32 @@
       "object":
       {
         "entry_id": 4,
+        "duration": 2,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "A barrel seems to want some trouble...",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 5,
         "duration": 0,
         "expire_event":
         {
           "enabled": true,
           "value": "player-destroy-object"
         },
-        "text": "Destroy the barrel!",
+        "text": "DESTROY THE BARREL!",
         "character_data":
         {
           "id": 0,
