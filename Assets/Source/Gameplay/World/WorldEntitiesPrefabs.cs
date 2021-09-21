@@ -10,23 +10,6 @@ namespace Balloondle.Gameplay.World
         [SerializeField, Tooltip("List containing prefabs which must have the component WorldEntity.")] 
         public List<GameObject> m_EntitiesPrefabs;
 
-        private void OnEnable()
-        {
-            if (m_EntitiesPrefabs == null)
-            {
-                return;
-            }
-            
-            foreach (GameObject prefab in m_EntitiesPrefabs)
-            {
-                if (prefab.GetComponent<WorldEntity>() == null)
-                {
-                    throw new InvalidOperationException(
-                        "WorldEntitiesPrefabs can only contain Prefabs with a WorldEntity component.");
-                }
-            }
-        }
-
 #nullable enable
         /// <summary>
         /// Looks for a prefab by its name.

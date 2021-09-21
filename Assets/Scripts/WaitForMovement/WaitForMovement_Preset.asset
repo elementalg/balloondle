@@ -17,3 +17,5 @@ MonoBehaviour:
   m_ScriptEndsHandler: {fileID: 0}
   m_EntriesEndsHandler:
   - {fileID: 11400000, guid: 284b8b622a9c3404683d7310676a3492, type: 2}
+  - {fileID: 11400000, guid: 6fa0202198fcc9c40a25ae00f736f564, type: 2}
+  - {fileID: 11400000, guid: 616deccd405da784297a8be77cc179e1, type: 2}

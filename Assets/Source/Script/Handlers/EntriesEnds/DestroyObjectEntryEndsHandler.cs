@@ -9,11 +9,11 @@ namespace Balloondle.Script.Handlers.EntriesEnds
     {
         public override void OnEntryStart(int entryId)
         {
-            if (entryId == 3)
+            if (entryId == 4)
             {
                 WorldEntitySpawner worldEntitySpawner = FindObjectOfType<WorldEntitySpawner>();
-                WorldEntity barrel = worldEntitySpawner.Spawn("Barrel", new Vector3(44.529f, -18.249f), 
-                    Quaternion.Euler(0f, 0f, 280.952f));
+                WorldEntity barrel = worldEntitySpawner.Spawn("Barrel", new Vector3(52.78f, -16.22f, 0f), 
+                    Quaternion.identity);
 
                 barrel.OnPreDestroy += (damage) =>
                 {

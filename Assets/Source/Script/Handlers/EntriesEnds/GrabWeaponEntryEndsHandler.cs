@@ -13,7 +13,7 @@ namespace Balloondle.Script.Handlers.EntriesEnds
             {
                 WorldEntitySpawner worldEntitySpawner = FindObjectOfType<WorldEntitySpawner>();
                 WorldEntity weapon = worldEntitySpawner.Spawn("GreenVenom", new Vector3(44.529f, -18.249f), 
-                    Quaternion.Euler(0f, 0f, 280.952f));
+                    Quaternion.Euler(0f, 0f, 90));
 
                 Player player = FindObjectOfType<Player>();
                 player.OnWeaponGiven += () =>
