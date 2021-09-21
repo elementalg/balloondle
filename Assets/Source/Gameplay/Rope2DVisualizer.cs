@@ -33,7 +33,7 @@ namespace Balloondle.Gameplay
             
             _ropePoints.Add(_rope2D.BodyAttachedToEnd.transform);
 
-            _ropeSpriteShape = Instantiate(RopeSpriteShapePrefab, Vector3.zero, Quaternion.identity, transform);
+            _ropeSpriteShape = Instantiate(RopeSpriteShapePrefab, _rope2D.GameObjectAttachedToStart.transform.position, Quaternion.identity, transform);
             
             _spriteShapeController = _ropeSpriteShape.GetComponent<SpriteShapeController>();
         }
@@ -42,7 +42,9 @@ namespace Balloondle.Gameplay
         {
             if (_rope2D != null)
             {
+                _ropeSpriteShape.transform.position = _rope2D.GameObjectAttachedToStart.transform.position;
                 _spriteShapeController.spline.Clear();
+                Vector3 ropePosition = _ropeSpriteShape.transform.position;
 
                 for (int i = 0; i < _ropePoints.Count; i++)
                 {
@@ -56,15 +58,15 @@ namespace Balloondle.Gameplay
                     Vector3 pointPosition;
                     if (i == 0)
                     {
-                        pointPosition = pointTransform.TransformPoint(_rope2D.StartBodyAnchorPoint);
+                        pointPosition = pointTransform.TransformPoint(_rope2D.StartBodyAnchorPoint) - ropePosition;
                     }
                     else if (i == _ropePoints.Count - 1)
                     {
-                        pointPosition = pointTransform.TransformPoint(_rope2D.EndBodyAnchorPoint);
+                        pointPosition = pointTransform.TransformPoint(_rope2D.EndBodyAnchorPoint) - ropePosition;
                     }
                     else
                     {
-                        pointPosition = pointTransform.position;
+                        pointPosition = pointTransform.position - ropePosition;
                     }
                     
                     if (i % 2 == 0)
@@ -74,7 +76,7 @@ namespace Balloondle.Gameplay
                         if (i > 0)
                         {
                             _spriteShapeController.spline
-                                .SetRightTangent(i / 2, _ropePoints[i - 1].transform.position);
+                                .SetRightTangent(i / 2, _ropePoints[i - 1].transform.position - ropePosition);
                         }
                     }
                     else
