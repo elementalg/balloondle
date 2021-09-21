@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Balloondle.Effects
 {
-    public class EffectLifetimeHandlerBasedOnSound : MonoBehaviour
+    public class DestroyAfterSoundCompleted : MonoBehaviour
     {
         private AudioSource _audioSource;
 
