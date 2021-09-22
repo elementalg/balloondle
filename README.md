@@ -26,6 +26,10 @@ Although, it's worth to be mentioned that the proprietary assets, such as images
 
 Our game is being developed with Unity 2020.3 [LTS]. Minor version updates should not interfer with the functionality of the created features.
 
+### Stay in touch!
+
+Join our Discord server: https://discord.gg/2P47fb2ZYA
+
 ### Powered by Jetbrains' Tools
 
 [![Jetbrains Logo](https://i.imgur.com/jBMe7CB.png)](https://jb.gg/OpenSource)
