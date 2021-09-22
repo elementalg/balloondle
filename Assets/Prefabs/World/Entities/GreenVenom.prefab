@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6614256405655819217}
   - component: {fileID: 6614256405655819221}
   - component: {fileID: 4903909130853790825}
-  - component: {fileID: -1638192597396881737}
   - component: {fileID: 4518537103685635176}
   - component: {fileID: -4115982020517085664}
+  - component: {fileID: 3125273825946200124}
   m_Layer: 9
   m_Name: GreenVenom
   m_TagString: Untagged
@@ -229,32 +229,6 @@ MonoBehaviour:
   m_DamageCapacity: 50
   m_MinSquaredVelocityForDamage: 10
   m_MaxSquaredVelocityForMaxDamage: 100
---- !u!61 &-1638192597396881737
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6614256405655819216}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.004523188, y: -0.022118151}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.2734375, y: 0.6640625}
-    newSize: {x: 0.2734375, y: 0.6640625}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.45578068, y: 0.9193119}
-  m_EdgeRadius: 0
 --- !u!68 &4518537103685635176
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -324,3 +298,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxVolume: 0.8
+--- !u!61 &3125273825946200124
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614256405655819216}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.004013419, y: -0.032168806}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.2734375, y: 0.6640625}
+    newSize: {x: 0.2734375, y: 0.6640625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.0032582, y: 1.5313822}
+  m_EdgeRadius: 0
