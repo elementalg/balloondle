@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Rope2DEntityAttacher
   m_EditorClassIdentifier: 
   m_Rope2DSpawnerPrefab: {fileID: 11400000, guid: 04bcb4165273e2b459ebd5b3ef7c54cb, type: 2}
-  m_Rope2DLimits:
-    MaximumDistanceBetweenBodies: 1
-    EndBodiesJointBreakForce: 10
-    EndBodiesJointBreakTorque: 10
-    RopeCellsJointBreakForce: 2
-    RopeCellsJointBreakTorque: 2
-    JointBetweenEndsBreakForce: 1000
-    MaximumSupportedVelocity: 100
+  m_Rope2DArgs:
+    m_Length: 1.5
+    m_MaximumDistanceBetweenBodies: 2.5
+    m_EndBodiesJointBreakForce: 10
+    m_EndBodiesJointBreakTorque: 10
+    m_RopeCellsJointBreakForce: 2
+    m_RopeCellsJointBreakTorque: 2
+    m_JointBetweenEndsBreakForce: 1000
+    m_MaximumSupportedVelocity: 100
