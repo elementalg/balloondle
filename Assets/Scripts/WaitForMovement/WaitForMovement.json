@@ -1,0 +1,96 @@
+﻿{
+  "title": "Wabo - Wait For Movement",
+  "author": "Gabriel Ami",
+  "entries":
+  [
+    {
+      "type": "Silence",
+      "object":
+      {
+        "entry_id": 1,
+        "duration": 2,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 0,
+        "duration": 0,
+        "expire_event":
+        {
+          "enabled": true,
+          "value": "player-moved"
+        },
+        "text": "Try to move by pressing and moving the circle on the left.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 3,
+        "duration": 0,
+        "expire_event":
+        {
+          "enabled": true,
+          "value": "player-weapon-grabbed"
+        },
+        "text": "Good Job! Wow! A weapon just appeared out of nowhere. Get close enough to it and grab it!",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 4,
+        "duration": 2,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "A barrel seems to want some trouble...",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 5,
+        "duration": 0,
+        "expire_event":
+        {
+          "enabled": true,
+          "value": "player-destroy-object"
+        },
+        "text": "DESTROY THE BARREL!",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    }
+  ]
+}

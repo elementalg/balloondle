@@ -1,0 +1,35 @@
+{
+    "title": "Template Script",
+    "author": "Le Baguette",
+    "entries":
+    [
+        {
+            "type": "Silence",
+            "object":
+            {
+                "duration": 1
+            }
+        },
+        {
+            "type": "Narrative",
+            "object": 
+            { 
+                "duration": 4,
+                "text": "Too many credit cards..."
+            }
+        },
+        {
+            "type": "Character",
+            "object": 
+            {
+                "duration": 2,
+                "text": "I DECLARE BANKRUPTCY!",
+                "character_data": 
+                {
+                    "id": 0,
+                    "name": "Michael Scott"
+                }
+            }
+        }
+    ]
+}

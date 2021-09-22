@@ -1,0 +1,58 @@
+﻿{
+  "title": "Wabo - First Run",
+  "author": "Gabriel Ami",
+  "entries":
+  [
+    {
+      "type": "Silence",
+      "object":
+      {
+        "entry_id": 0,
+        "duration": 1,
+        "expire_event": 
+        {
+          "enabled": false,
+          "value": ""
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 1,
+        "duration": 5,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "Be welcomed to the magic world of Kikyu! I'm Wabo!",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 2,
+        "duration": 5,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "Let's start by warming up your knowledge about the mechanics of a balloon.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    }
+  ]
+}

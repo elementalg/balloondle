@@ -1,0 +1,18 @@
+{
+    "name": "Source",
+    "rootNamespace": "Balloondle",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.2D.SpriteShape.Runtime",
+        "Unity.Postprocessing.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

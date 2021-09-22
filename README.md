@@ -6,7 +6,7 @@ You may have to protect the world from the infamous alien based balloons, which 
 
 #### Mobile game
 
-Balloondle will be released initially only for Android (+4.2). iOS releases are planned too!
+Balloondle will be released initially only for Android (+4.4). iOS releases are planned too!
 
 #### Levels
 
@@ -22,6 +22,19 @@ Why shouldn't you be able to learn from games? With Balloondle you can learn a g
 
 Although, it's worth to be mentioned that the proprietary assets, such as images, sprites, sounds, videos... are not included within the open source license.
 
+### Unity
+
+Our game is being developed with Unity 2020.3 [LTS]. Minor version updates should not interfer with the functionality of the created features.
+
 ### Stay in touch!
 
 Join our Discord server: https://discord.gg/2P47fb2ZYA
+
+### Powered by Jetbrains' Tools
+
+[![Jetbrains Logo](https://i.imgur.com/jBMe7CB.png)](https://jb.gg/OpenSource)
+
+A huge thanks to Jetbrains' Open Source iniciative, which has given us access to a bundle of the greatest software developments there are, for free! 
+This support means a lot for us.
+
+Copyright © 2000-2021 JetBrains s.r.o. JetBrains and the JetBrains logo are registered trademarks of JetBrains s.r.o.

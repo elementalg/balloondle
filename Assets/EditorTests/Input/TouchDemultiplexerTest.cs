@@ -18,7 +18,7 @@ namespace EditorTests.UI
         public void TransfersTouchToFirstOutput()
         {
             bool outputCalled = false;
-            Touch touchThatJustBegun = new Touch(1) {phase = TouchPhase.Began};
+            Touch touchThatJustBegun = new Touch(1) {Phase = TouchPhase.Began};
 
             _touchDemultiplexer.AddOutputToQueue(touch =>
             {
@@ -33,18 +33,18 @@ namespace EditorTests.UI
         public void TransfersTouchOnlyToSelectedOutput()
         {
             // Random numbers used as id.
-            Touch touchForFirstOutput = new Touch(1431) {phase = TouchPhase.Began};
-            Touch touchForSecondOutput = new Touch(5654) {phase = TouchPhase.Began};
+            Touch touchForFirstOutput = new Touch(1431) {Phase = TouchPhase.Began};
+            Touch touchForSecondOutput = new Touch(5654) {Phase = TouchPhase.Began};
             bool firstOutputCorrect = false;
             bool secondOutputCorrect = false;
             
             _touchDemultiplexer.AddOutputToQueue(touch =>
             {
-                firstOutputCorrect = (touch.pointerId == touchForFirstOutput.touchId);
+                firstOutputCorrect = (touch.PointerId == touchForFirstOutput.TouchId);
             });
             _touchDemultiplexer.AddOutputToQueue(touch =>
             {
-                secondOutputCorrect = (touch.pointerId == touchForSecondOutput.touchId);
+                secondOutputCorrect = (touch.PointerId == touchForSecondOutput.TouchId);
             });
             _touchDemultiplexer.OnPointerUpdate(touchForFirstOutput);
             _touchDemultiplexer.OnPointerUpdate(touchForFirstOutput);
@@ -62,21 +62,21 @@ namespace EditorTests.UI
         {
             const int expectedCallCount = 3;
             int callCount = 0;
-            Touch touchWhichWillEnd = new Touch(32) {phase = TouchPhase.Began};
+            Touch touchWhichWillEnd = new Touch(32) {Phase = TouchPhase.Began};
             
             _touchDemultiplexer.AddOutputToQueue(touch =>
             {
                 callCount++;
             });
             _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
-            touchWhichWillEnd.phase = TouchPhase.Moved;
+            touchWhichWillEnd.Phase = TouchPhase.Moved;
             _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
-            touchWhichWillEnd.phase = TouchPhase.Ended;
+            touchWhichWillEnd.Phase = TouchPhase.Ended;
             _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
             
             // This call must be ignored by the touch demultiplexer, if it is not ignored, and he output action is
             // called, then the demultiplexer does not work correctly.
-            touchWhichWillEnd.phase = TouchPhase.Began;
+            touchWhichWillEnd.Phase = TouchPhase.Began;
             _touchDemultiplexer.OnPointerUpdate(touchWhichWillEnd);
 
             Assert.AreEqual(expectedCallCount, callCount);

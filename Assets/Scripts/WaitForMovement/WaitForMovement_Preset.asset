@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03771f2d28b23264b9230265b11225fe, type: 3}
+  m_Name: WaitForMovement_Preset
+  m_EditorClassIdentifier: 
+  m_ScriptJsonFile: {fileID: 4900000, guid: 916893a8b1f950f499e258bbc950145c, type: 3}
+  m_ScriptStyle: {fileID: 11400000, guid: d0b5b6b39c075914395f8d5c4a2a77ab, type: 2}
+  m_ScriptEndsHandler: {fileID: 0}
+  m_EntriesEndsHandler:
+  - {fileID: 11400000, guid: 284b8b622a9c3404683d7310676a3492, type: 2}
+  - {fileID: 11400000, guid: 6fa0202198fcc9c40a25ae00f736f564, type: 2}
+  - {fileID: 11400000, guid: 616deccd405da784297a8be77cc179e1, type: 2}

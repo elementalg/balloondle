@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cebeb82262432ca8a646ee9f132365, type: 3}
+  m_Name: Rope2DEntityAttacher
+  m_EditorClassIdentifier: 
+  m_Rope2DSpawnerPrefab: {fileID: 11400000, guid: 04bcb4165273e2b459ebd5b3ef7c54cb, type: 2}
+  m_Rope2DLimits:
+    MaximumDistanceBetweenBodies: 1
+    EndBodiesJointBreakForce: 10
+    EndBodiesJointBreakTorque: 10
+    RopeCellsJointBreakForce: 2
+    RopeCellsJointBreakTorque: 2
+    JointBetweenEndsBreakForce: 1000
+    MaximumSupportedVelocity: 100
