@@ -19,3 +19,5 @@ MonoBehaviour:
     m_Prefab: {fileID: 5356106046143957329, guid: f6e3b05e8aa03df4ab637f793fe8e8ff, type: 3}
   - m_Name: WeaponHit0
     m_Prefab: {fileID: 794612648133235917, guid: 92dcc5f24d0c5914192efd76d029297a, type: 3}
+  - m_Name: Destroy0
+    m_Prefab: {fileID: 7742478071354407654, guid: cf5e8a59ab307124cb4f0dd650a00f91, type: 3}

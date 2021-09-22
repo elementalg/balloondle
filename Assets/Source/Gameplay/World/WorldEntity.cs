@@ -64,6 +64,8 @@ namespace Balloondle.Gameplay.World
 
         public float Health { get; private set; } = 100f;
 
+        public float MaxHealth => m_MaxHealth;
+
         private void OnEnable()
         {
             Health = m_StartingHealth;

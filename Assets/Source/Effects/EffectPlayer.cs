@@ -13,7 +13,17 @@ namespace Balloondle.Effects
             {
                 if (effect.m_Name.Equals(effectName))
                 {
-                    GameObject effectObject = Instantiate(effect.m_Prefab, position, rotation, target.transform);
+                    GameObject effectObject;
+                    
+                    if (target != null)
+                    {
+                        effectObject = Instantiate(effect.m_Prefab, position, rotation, target.transform);
+                    }
+                    else
+                    {
+                        effectObject = Instantiate(effect.m_Prefab, position, rotation);
+                    }
+                    
 
                     if (effectObject.GetComponent<AudioSource>())
                     {

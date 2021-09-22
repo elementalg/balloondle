@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1891085467538077146}
   - component: {fileID: 1891085467538077147}
   - component: {fileID: 1891085467538077148}
+  - component: {fileID: 7397959574884124305}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -186,7 +187,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f896e5a759e454ea34695ff6985897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DestroyAfterTime: 1
+  m_DestroyAfterTime: 0
   m_Indestructible: 0
   m_MaxHealth: 400
   m_StartingHealth: 100
+--- !u!114 &7397959574884124305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891085467538077151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ff67f8d70054267a49900a8c72074e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxVolume: 0.8
+  m_MinVolume: 0.1
