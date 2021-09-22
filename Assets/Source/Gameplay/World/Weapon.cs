@@ -68,7 +68,7 @@ namespace Balloondle.Gameplay.World
                 return;
             }
             
-            if (other.collider != _edgeCollider2D || other.gameObject == gameObject)
+            if (other.otherCollider != _edgeCollider2D || other.gameObject == gameObject)
             {
                 return;
             }
@@ -80,9 +80,15 @@ namespace Balloondle.Gameplay.World
             
             float hitIntensity = Mathf.Min(1f,
                 other.relativeVelocity.sqrMagnitude / m_MaxSquaredVelocityForMaxDamage);
+
+            float damageApplied = m_DamageCapacity * hitIntensity;
+
+            if (damageApplied < otherEntity.Health)
+            {
+                _weaponEffects.PlayHitEffect(hitIntensity);
+            }
             
-            _weaponEffects.PlayHitEffect(hitIntensity);
-            otherEntity.Damage(m_DamageCapacity * hitIntensity);
+            otherEntity.Damage(damageApplied);
         }
     }
 }
