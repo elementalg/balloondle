@@ -87,6 +87,7 @@ namespace Balloondle.Gameplay.Physics2D
                     m_Args.m_MaximumSupportedVelocity * m_Args.m_MaximumSupportedVelocity)
                 {
                     Break();
+                    return;
                 }
             }
 
