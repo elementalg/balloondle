@@ -21,3 +21,7 @@ MonoBehaviour:
     m_Prefab: {fileID: 794612648133235917, guid: 92dcc5f24d0c5914192efd76d029297a, type: 3}
   - m_Name: Destroy0
     m_Prefab: {fileID: 7742478071354407654, guid: cf5e8a59ab307124cb4f0dd650a00f91, type: 3}
+  - m_Name: Success0
+    m_Prefab: {fileID: 8184515435270600856, guid: cde45f367b0cf8f4ba1a55da26bd4d17, type: 3}
+  - m_Name: Success1
+    m_Prefab: {fileID: 8857667303084338036, guid: 6c0d022a307ed964da36d1b92b007fd8, type: 3}

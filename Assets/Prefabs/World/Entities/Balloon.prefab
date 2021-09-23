@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 2048131356281663212}
   - component: {fileID: 3881248111861783880}
   - component: {fileID: 2128055181749644130}
+  - component: {fileID: -15768324351933904}
   m_Layer: 8
   m_Name: Balloon
   m_TagString: Untagged
@@ -101,7 +102,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 3661392484594478092}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 522cfd6106ab64443bfba8f97600e3d9, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -167,7 +168,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 522cfd6106ab64443bfba8f97600e3d9, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -317,3 +318,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MinSquaredVelocityMagnitudeForSound: 1
+  m_MaxSoundSquaredVelocityMagnitudeForSound: 200
+  m_MaxVolume: 0.8
+--- !u!114 &-15768324351933904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661392484594478092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581f1b9ace61ef44d9a4412a2a640959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DynamicOutline: {fileID: 2100000, guid: 84b0e927ed216ac4499303520913e715, type: 2}
+  m_OutlineAngleRadius: 0.3
+  m_OutlineAngleSpacing: 0.03
+  m_SecondaryOutlineAngleDiameter: 0.1
+  m_LightSource: {x: 29.92, y: 12.5, z: 0}

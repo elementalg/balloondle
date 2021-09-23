@@ -8,9 +8,9 @@ namespace Balloondle.Gameplay
         private void Start()
         {
             WorldEntitySpawner worldEntitySpawner = GetComponent<WorldEntitySpawner>();
-            WorldEntity balloon = worldEntitySpawner.Spawn("Balloon", new Vector3(45f, 1f), Quaternion.identity);
+            WorldEntity balloon = worldEntitySpawner.Spawn("Balloon", new Vector3(0f, 1f), Quaternion.identity);
             WorldEntity weapon = worldEntitySpawner.Spawn("GreenVenom",
-                new Vector3(45, -5.95f, 0f), 
+                new Vector3(0f, -5.95f, 0f), 
                 Quaternion.Euler(0, 0, 90f));
             WorldEntity weapon2 = worldEntitySpawner.Spawn("GreenVenom",
                 new Vector3(50, -5.95f, 0f), 

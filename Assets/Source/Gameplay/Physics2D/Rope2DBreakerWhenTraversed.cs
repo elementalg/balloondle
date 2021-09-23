@@ -14,6 +14,11 @@ namespace Balloondle.Gameplay.Physics2D
 
         private void OnCollisionStay2D(Collision2D other)
         {
+            if (_sourceCollider2D == null)
+            {
+                return;
+            }
+
             bool breakJoint = false;
 
             Vector2 sourcePosition = _sourceCollider2D.attachedRigidbody.position;
@@ -22,6 +27,16 @@ namespace Balloondle.Gameplay.Physics2D
             
             foreach (var contact in other.contacts)
             {
+                if (_sourceCollider2D == null)
+                {
+                    return;
+                }
+                
+                if (contact.collider == null)
+                {
+                    continue;
+                }
+                
                 Vector2 direction = _sourceCollider2D.attachedRigidbody.position - 
                                     contact.collider.attachedRigidbody.position;
                 direction.Normalize();

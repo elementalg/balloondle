@@ -15,4 +15,5 @@ MonoBehaviour:
   m_ScriptJsonFile: {fileID: 4900000, guid: 3b8c5d520f80bc844bf04007dae52202, type: 3}
   m_ScriptStyle: {fileID: 11400000, guid: e26c559e9fd1d264fbe1d7a80ae17736, type: 2}
   m_ScriptEndsHandler: {fileID: 11400000, guid: 33af0fdcbf80e514d975428109200e62, type: 2}
-  m_EntriesEndsHandler: []
+  m_EntriesEndsHandler:
+  - {fileID: 11400000, guid: ab1c4490443a0814f98e6dbcd8f4ff82, type: 2}

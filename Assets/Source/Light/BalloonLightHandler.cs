@@ -19,7 +19,7 @@ namespace Balloondle.Light
         private float m_SecondaryOutlineAngleDiameter = 0.36f;
 
         [SerializeField, Tooltip("Transform of the GameObject which acts as a light source.")]
-        private Transform m_LightSource;
+        private Vector3 m_LightSource;
         
         private int _frameHitCount;
         private int _outlineBiSegmentPropertyId;
@@ -37,7 +37,7 @@ namespace Balloondle.Light
         {
             // Obtain the lighting incision angle by calculating the direction from the balloon's center to the
             // center of the GameObject acting as light source.
-            Vector3 worldDirection = m_LightSource.position - transform.position;
+            Vector3 worldDirection = m_LightSource - transform.position;
 
             Vector2 circumferencePoint = transform.InverseTransformDirection(worldDirection).normalized;
             float angle = Mathf.Atan2(circumferencePoint.y, circumferencePoint.x) / Mathf.PI;

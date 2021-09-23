@@ -1,6 +1,8 @@
 ﻿using System;
 using Balloondle.Ambient;
+using Balloondle.Effects;
 using Balloondle.Gameplay;
+using Balloondle.Gameplay.World;
 using UnityEngine;
 
 namespace Balloondle.Script.Handlers.EntriesEnds
@@ -38,7 +40,12 @@ namespace Balloondle.Script.Handlers.EntriesEnds
 
         public override void OnEntryEnd(int entryId)
         {
-            
+            if (entryId == 0)
+            {
+                EffectPlayer effectPlayer = FindObjectOfType<EffectPlayer>();
+                effectPlayer.Play("Success1", FindObjectOfType<Player>().gameObject,
+                    Vector3.zero, Quaternion.identity, 0.4f);
+            }
         }
     }
 }

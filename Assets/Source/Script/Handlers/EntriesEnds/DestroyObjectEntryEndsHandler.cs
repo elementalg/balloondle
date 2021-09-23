@@ -1,4 +1,5 @@
 ﻿using Balloondle.Ambient;
+using Balloondle.Effects;
 using Balloondle.Gameplay.World;
 using Balloondle.UI.Controllers;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace Balloondle.Script.Handlers.EntriesEnds
                 };
                 
                 AmbientPlayer player = FindObjectOfType<AmbientPlayer>();
+                player.Volume = 0.2f;
                 player.Play("Aggressive");
             }
         }
@@ -37,7 +39,12 @@ namespace Balloondle.Script.Handlers.EntriesEnds
                 }
 
                 AmbientPlayer player = FindObjectOfType<AmbientPlayer>();
+                player.Volume = 0.05f;
                 player.Play("Relaxing");
+                
+                EffectPlayer effectPlayer = FindObjectOfType<EffectPlayer>();
+                effectPlayer.Play("Success1", FindObjectOfType<Player>().gameObject,
+                    Vector3.zero, Quaternion.identity, 0.4f);
             }
         }
     }

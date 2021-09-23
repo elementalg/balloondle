@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Rope2DSpawnerPrefab: {fileID: 11400000, guid: 04bcb4165273e2b459ebd5b3ef7c54cb, type: 2}
   m_Rope2DArgs:
-    m_Length: 1.5
-    m_MaximumDistanceBetweenBodies: 2.5
+    m_Length: 2
+    m_MaximumDistanceBetweenBodies: 2
     m_EndBodiesJointBreakForce: 10
     m_EndBodiesJointBreakTorque: 10
     m_RopeCellsJointBreakForce: 2
