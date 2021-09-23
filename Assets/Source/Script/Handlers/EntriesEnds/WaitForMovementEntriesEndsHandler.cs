@@ -1,4 +1,5 @@
 ﻿using System;
+using Balloondle.Ambient;
 using Balloondle.Gameplay;
 using UnityEngine;
 
@@ -28,6 +29,10 @@ namespace Balloondle.Script.Handlers.EntriesEnds
                 {
                     FindObjectOfType<ScriptDirector>().TryTriggerExpireEvent("player-moved");
                 };
+                
+                AmbientPlayer player = FindObjectOfType<AmbientPlayer>();
+                player.Volume = 0.05f;
+                player.Play("Relaxing");
             }
         }
 
