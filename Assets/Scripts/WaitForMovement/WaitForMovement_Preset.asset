@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ScriptJsonFile: {fileID: 4900000, guid: 916893a8b1f950f499e258bbc950145c, type: 3}
   m_ScriptStyle: {fileID: 11400000, guid: d0b5b6b39c075914395f8d5c4a2a77ab, type: 2}
-  m_ScriptEndsHandler: {fileID: 0}
+  m_ScriptEndsHandler: {fileID: 11400000, guid: c1c306216f638e3479f64ac2c23ffc94, type: 2}
   m_EntriesEndsHandler:
   - {fileID: 11400000, guid: 284b8b622a9c3404683d7310676a3492, type: 2}
   - {fileID: 11400000, guid: 6fa0202198fcc9c40a25ae00f736f564, type: 2}

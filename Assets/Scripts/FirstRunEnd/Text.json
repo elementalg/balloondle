@@ -1,0 +1,71 @@
+﻿{
+  "title": "Wabo - First Run's End",
+  "author": "Gabriel Ami",
+  "entries":
+  [
+    {
+      "type": "Silence",
+      "object":
+      {
+        "entry_id": 0,
+        "duration": 1,
+        "expire_event": 
+        {
+          "enabled": false,
+          "value": ""
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 1,
+        "duration": 4,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "Congratulations! You've finished the basic training.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Character",
+      "object":
+      {
+        "entry_id": 2,
+        "duration": 3,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        },
+        "text": "Now you are ready to go on your path.",
+        "character_data":
+        {
+          "id": 0,
+          "name": "Wabo"
+        }
+      }
+    },
+    {
+      "type": "Silence",
+      "object":
+      {
+        "entry_id": 3,
+        "duration": 2,
+        "expire_event":
+        {
+          "enabled": false,
+          "value": ""
+        }
+      }
+    }
+  ]
+}

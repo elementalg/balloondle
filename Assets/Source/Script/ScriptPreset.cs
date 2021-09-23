@@ -128,6 +128,11 @@ namespace Balloondle.Script
                     
                     _currentEntryDirector.Out();
 
+                    foreach (EntriesEndsHandler entriesEndsHandler in m_EntriesEndsHandler)
+                    {
+                        entriesEndsHandler.OnEntryEnd(_currentEntry.Id);
+                    }
+
                     OnScriptEnd?.Invoke();
                     if (m_ScriptEndsHandler != null)
                     {

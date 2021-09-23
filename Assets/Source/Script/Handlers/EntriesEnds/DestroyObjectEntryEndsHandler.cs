@@ -1,5 +1,6 @@
 ﻿using Balloondle.Ambient;
 using Balloondle.Gameplay.World;
+using Balloondle.UI.Controllers;
 using UnityEngine;
 
 namespace Balloondle.Script.Handlers.EntriesEnds
@@ -28,7 +29,16 @@ namespace Balloondle.Script.Handlers.EntriesEnds
 
         public override void OnEntryEnd(int entryId)
         {
-            
+            if (entryId == 5)
+            {
+                if (FindObjectOfType<JoystickPointerListeningSurface>() != null)
+                {
+                    FindObjectOfType<JoystickPointerListeningSurface>().DestroyJoystick();
+                }
+
+                AmbientPlayer player = FindObjectOfType<AmbientPlayer>();
+                player.Play("Relaxing");
+            }
         }
     }
 }

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb971d13b21b4749926f749abacb0320, type: 3}
+  m_Name: FirstRunEndScriptEndsHandler
+  m_EditorClassIdentifier: 
+  m_ScriptEasingInAndOutPrefab: {fileID: 5131795504482910299, guid: 55625e7774b83f947906779f4e5a72ef, type: 3}
+  m_UIEventSystemPrefab: {fileID: 2509475836202216469, guid: 63510f350ca147643ba9a50b2098dbf7, type: 3}
+  m_FirstRunContinuePrefab: {fileID: 4685298601778935385, guid: 81d5afe00589b564abd6365d9671e346, type: 3}
