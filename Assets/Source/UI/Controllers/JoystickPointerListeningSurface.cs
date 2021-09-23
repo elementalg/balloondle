@@ -156,5 +156,12 @@ namespace Balloondle.UI.Controllers
             
             ListenForPointerWithinTheSurface();
         }
+
+        public void DestroyJoystick()
+        {
+            _pointerDemultiplexer.Demultiplexer.DeselectSelectedPointers();
+            
+            Destroy(gameObject);
+        }
     }
 }
