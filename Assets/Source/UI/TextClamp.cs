@@ -44,6 +44,10 @@ namespace Balloondle.UI
 
                 _text.text = clampedText;
             }
+            else
+            {
+                _text.text = text;
+            }
         }
     }
 }
