@@ -1,6 +1,4 @@
 ﻿using System;
-using Balloondle.Gameplay.World;
-using Balloondle.Script;
 using Balloondle.UI.Controllers;
 using UnityEngine;
 
@@ -13,6 +11,9 @@ namespace Balloondle.MiniGame
 
         [SerializeField, Tooltip("Prefab containing the HUD for the mini-game.")]
         private GameObject m_HUDPrefab;
+
+        [SerializeField, Tooltip("Spawn boundaries for the barrels.")]
+        private Rect m_BarrelSpawnBoundaries;
         
         private ScoreManager _scoreManager;
         private JoystickPointerListeningSurface _joystickContainer;
@@ -58,6 +59,7 @@ namespace Balloondle.MiniGame
             _actorsSpawner = gameObject.AddComponent<ActorsSpawner>();
             _actorsSpawner.Score = _scoreManager;
             _actorsSpawner.HUD = _hudController;
+            _actorsSpawner.PointSpawnBoundaries = m_BarrelSpawnBoundaries;
         }
         
         public void EndGame()

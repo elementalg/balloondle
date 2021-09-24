@@ -1,4 +1,5 @@
 using System;
+using Balloondle.Effects.Implementations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,15 +17,13 @@ namespace Balloondle.Gameplay
         private Vector2 m_MaximumVelocity = new Vector2(5f, 5f);
 
         [SerializeField, Tooltip("Movement cooldown duration after a collision")]
-        private float m_CollisionMovementCooldown;
+        private float m_CollisionMovementCooldown = 2f;
 
         private Rigidbody2D _bodyBeingMoved;
         
         private bool _isCollisionCooldownApplied;
         private float _collisionStartTime;
-
-        private EffectApplier _effectApplier;
-
+        
         private void OnEnable()
         {
             if (GetComponent<Rigidbody2D>() == null)
@@ -34,7 +33,6 @@ namespace Balloondle.Gameplay
 
             _bodyBeingMoved = GetComponent<Rigidbody2D>();
             
-            _effectApplier = GetComponent<EffectApplier>();
         }
 
         public void OnMove(InputAction.CallbackContext input)
@@ -87,9 +85,9 @@ namespace Balloondle.Gameplay
             }
         }
 
-        private void OnCollisionEnter2D()
+        public void ApplyCooldown()
         {
-            // Ignore further collisions, if the cooldown is already applied.
+            // Ignore if the cooldown is already applied.
             if (_isCollisionCooldownApplied)
             {
                 return;
@@ -97,11 +95,9 @@ namespace Balloondle.Gameplay
             
             _isCollisionCooldownApplied = true;
             _collisionStartTime = Time.realtimeSinceStartup;
-
-            if (_effectApplier != null)
-            {
-                _effectApplier.ApplyEffect();
-            }
+            
+            PlayerEffects playerEffects = GetComponent<PlayerEffects>();
+            playerEffects.Confusion();
         }
     }
 }

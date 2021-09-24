@@ -1,4 +1,5 @@
 ﻿using System;
+using Balloondle.Effects.Implementations;
 using UnityEngine;
 
 namespace Balloondle.Gameplay.World
@@ -95,6 +96,14 @@ namespace Balloondle.Gameplay.World
             {
                 DropWeapon(false);
             }
+        }
+
+        public void CooldownMovement()
+        {
+            MovementController movementController = GetComponent<MovementController>();
+            
+            movementController.ApplyCooldown();
+            
         }
     }
 }

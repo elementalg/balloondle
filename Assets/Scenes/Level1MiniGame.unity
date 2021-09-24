@@ -858,7 +858,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1156,7 +1156,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1556703215
 MonoBehaviour:
@@ -1218,6 +1218,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_JoystickContainerPrefab: {fileID: 328980686127124062, guid: 36283d083247ceb4f8bcf4aa62d32673, type: 3}
   m_HUDPrefab: {fileID: 7183106810944228449, guid: 451fc7394b48ba54fa93d72fda632974, type: 3}
+  m_BarrelSpawnBoundaries:
+    serializedVersion: 2
+    x: 0.2
+    y: -15.7
+    width: 65.4
+    height: 20
 --- !u!1 &1585691268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,7 +1366,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4895063821361945767, guid: 389081c3dde11a44aa00a95a7f8b7915, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4895063821361945767, guid: 389081c3dde11a44aa00a95a7f8b7915, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1435,7 +1441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6180273436042274067, guid: 7ba4189ea651e2a4f94b997a4bf9128d, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6180273436042274067, guid: 7ba4189ea651e2a4f94b997a4bf9128d, type: 3}
       propertyPath: m_LocalPosition.x

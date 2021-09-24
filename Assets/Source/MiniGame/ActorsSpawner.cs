@@ -3,6 +3,7 @@ using Balloondle.Gameplay;
 using Balloondle.Gameplay.World;
 using Balloondle.Script;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Balloondle.MiniGame
 {
@@ -16,6 +17,7 @@ namespace Balloondle.MiniGame
 
         public ScoreManager Score { get; set; }
         public HUDController HUD { get; set; }
+        public Rect PointSpawnBoundaries { get; set; }
         
         private void Start()
         {
@@ -63,8 +65,12 @@ namespace Balloondle.MiniGame
         
         public void SpawnPointEntity()
         {
-            WorldEntity pointEntity = _spawner.Spawn(PointEntityName, new Vector3(3.8f, -15f, 0f),
-                Quaternion.identity);
+            Vector2 randomPosition = new Vector2(
+                Random.Range(PointSpawnBoundaries.xMin, PointSpawnBoundaries.xMax),
+                Random.Range(PointSpawnBoundaries.yMin, PointSpawnBoundaries.yMax));
+            Quaternion randomAngle = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+            
+            WorldEntity pointEntity = _spawner.Spawn(PointEntityName, randomPosition, randomAngle);
 
             pointEntity.OnPreDestroy += damage =>
             {

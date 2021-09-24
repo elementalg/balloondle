@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaximumVelocity: {x: 5, y: 5}
-  m_CollisionMovementCooldown: 0
+  m_CollisionMovementCooldown: 2
 --- !u!114 &3978895374356715517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,6 +321,7 @@ MonoBehaviour:
   m_MinSquaredVelocityMagnitudeForSound: 1
   m_MaxSoundSquaredVelocityMagnitudeForSound: 200
   m_MaxVolume: 0.8
+  m_ConfusionRelativeVolume: 0.5
 --- !u!114 &-15768324351933904
 MonoBehaviour:
   m_ObjectHideFlags: 0
