@@ -248,7 +248,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 766036416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db6596f4d23c4f17a7de6e50976d1d9c, type: 3}
+  m_Script: {fileID: 11500000, guid: f2089e2118a481443a871f3fd95b7496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 979562234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc9fdb40bedafe64fa031e5b202c168c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b25de52a33b51644829781465260659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SecondsPerMessage: 2
@@ -380,7 +380,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1249538882}
   - component: {fileID: 1249538881}
-  - component: {fileID: 1249538880}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -388,14 +387,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1249538880
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1249538879}
-  m_Enabled: 1
 --- !u!20 &1249538881
 Camera:
   m_ObjectHideFlags: 0
@@ -641,10 +632,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1532474500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25bfe6921dc6f034bb8233298809a4f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 940cabc26a0656543a85661533aad832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ZRotationPerFrame: -0.5
+  m_ZRotationPerFrame: 0.05
 --- !u!1 &1660632775
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +676,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1660632775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd7082645c6ed9d4fa98af3121340a83, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e164a78b7490a340b6c7e08a02076a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_CircleMask: {fileID: 2121227414}
