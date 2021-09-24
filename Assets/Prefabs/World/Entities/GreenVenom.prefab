@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4518537103685635176}
   - component: {fileID: -4115982020517085664}
   - component: {fileID: 3125273825946200124}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: GreenVenom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
