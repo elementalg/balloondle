@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3881248111861783880}
   - component: {fileID: 2128055181749644130}
   - component: {fileID: -15768324351933904}
+  - component: {fileID: -2717220511982687933}
   m_Layer: 8
   m_Name: Balloon
   m_TagString: Untagged
@@ -185,9 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f896e5a759e454ea34695ff6985897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DestroyAfterTime: 1
+  m_DestroyAfterTime: 0
   m_Indestructible: 1
-  m_MaxHealth: 200
+  m_MaxHealth: 100
   m_StartingHealth: 100
 --- !u!114 &3661392484594478324
 MonoBehaviour:
@@ -337,3 +338,17 @@ MonoBehaviour:
   m_OutlineAngleSpacing: 0.03
   m_SecondaryOutlineAngleDiameter: 0.1
   m_LightSource: {x: 29.92, y: 12.5, z: 0}
+--- !u!114 &-2717220511982687933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661392484594478092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ff67f8d70054267a49900a8c72074e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxVolume: 0.8
+  m_MinVolume: 0.1

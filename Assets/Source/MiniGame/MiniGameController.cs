@@ -17,31 +17,15 @@ namespace Balloondle.MiniGame
         private ScoreManager _scoreManager;
         private JoystickPointerListeningSurface _joystickContainer;
         private HUDController _hudController;
+        private ActorsSpawner _actorsSpawner;
         
         public void StartGame()
         {
             _scoreManager = new ScoreManager();
             
             ShowHUD();
-            SpawnPlayer();
+            StartActorsSpawner();           
             EnableJoystick();
-        }
-
-        private void SpawnPlayer()
-        {
-            WorldEntitySpawner spawner = FindObjectOfType<WorldEntitySpawner>();
-
-            WorldEntity player = spawner.Spawn("Balloon", new Vector3(8.47f, 1.79f, 0f), Quaternion.identity);
-            player.m_Indestructible = false;
-            player.OnPreDestroy += damage =>
-            {
-                FindObjectOfType<ScriptDirector>().TryTriggerExpireEvent("player-destroyed");
-            };
-
-            player.OnDamagePreReceived += damage =>
-            {
-                _hudController.UpdateHealth(player.MaxHealth, Mathf.Min(0f, player.Health - damage));
-            };
         }
 
         private void EnableJoystick()
@@ -59,19 +43,30 @@ namespace Balloondle.MiniGame
 
         private void ShowHUD()
         {
-            GameObject hud = Instantiate(m_HUDPrefab);
+            Canvas canvas = FindObjectOfType<Canvas>();
 
-            if (hud.GetComponent<HUDController>() == null)
+            if (canvas == null)
             {
-                throw new InvalidOperationException("Missing HUDController from HUD prefab.");
+                throw new InvalidOperationException("Canvas could not be found.");
             }
-            
-            _hudController = hud.GetComponent<HUDController>();
+
+            _hudController = Instantiate(m_HUDPrefab, canvas.transform).GetComponent<HUDController>();
         }
 
+        private void StartActorsSpawner()
+        {
+            _actorsSpawner = gameObject.AddComponent<ActorsSpawner>();
+            _actorsSpawner.Score = _scoreManager;
+            _actorsSpawner.HUD = _hudController;
+        }
+        
         public void EndGame()
         {
+            Debug.Log("End.");
             
+            _joystickContainer.DestroyJoystick();
+            // Blur background.
+            // Show retry button with obtained score, and also discord server button link.
         }
     }
 }

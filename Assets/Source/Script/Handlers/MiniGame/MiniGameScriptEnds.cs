@@ -1,4 +1,3 @@
-﻿using System;
 using Balloondle.MiniGame;
 using UnityEngine;
 
@@ -9,12 +8,7 @@ namespace Balloondle.Script.Handlers.MiniGame
     {
         public override void OnScriptStart()
         {
-            if (m_MiniGamePrefab == null)
-            {
-                throw new InvalidOperationException("Missing mini-game prefab.");
-            }
-            
-            FindObjectOfType<MiniGameController>().StartGame();   
+            FindObjectOfType<MiniGameController>().StartGame();
         }
 
         public override void OnScriptEnd()

@@ -72,10 +72,14 @@ namespace Balloondle.Gameplay.World
             {
                 _playerEntity.DetachFrom(_currentWeapon);
             }
-            
-            _currentWeapon.GetComponent<Weapon>().OnDetachFromPlayer();
-            _weaponGrabber.enabled = true;
-            _currentWeapon = null;
+
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.GetComponent<Weapon>().OnDetachFromPlayer();
+                _weaponGrabber.enabled = true;
+                _currentWeapon = null;
+            }
+           
             
             OnWeaponDropped?.Invoke();
         }

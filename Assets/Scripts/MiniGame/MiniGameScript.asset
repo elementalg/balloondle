@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03771f2d28b23264b9230265b11225fe, type: 3}
   m_Name: MiniGameScript
   m_EditorClassIdentifier: 
-  m_ScriptJsonFile: {fileID: 0}
+  m_ScriptJsonFile: {fileID: 4900000, guid: da85532abe4c3334b98e04eee1bcec57, type: 3}
   m_ScriptStyle: {fileID: 0}
-  m_ScriptEndsHandler: {fileID: 0}
+  m_ScriptEndsHandler: {fileID: 11400000, guid: 0071434aecc78f1449f3708dc5abe37d, type: 2}
   m_EntriesEndsHandler: []
