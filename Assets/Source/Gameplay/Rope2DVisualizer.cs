@@ -21,7 +21,8 @@ namespace Balloondle.Gameplay
         public void VisualizeRope()
         {
             _rope2D = GetComponent<Rope2D>();
-
+            _rope2D.OnRopeBreak += DisableVisualizer;
+            
             _ropePoints = new List<Transform>();
             
             _ropePoints.Add(_rope2D.GameObjectAttachedToStart.transform);
@@ -38,6 +39,11 @@ namespace Balloondle.Gameplay
             _spriteShapeController = _ropeSpriteShape.GetComponent<SpriteShapeController>();
         }
 
+        private void DisableVisualizer()
+        {
+            enabled = false;
+        }
+        
         public void Update()
         {
             if (_rope2D != null)

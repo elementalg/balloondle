@@ -27,16 +27,16 @@ namespace Balloondle.Gameplay.Physics2D
             
             foreach (var contact in other.contacts)
             {
-                if (_sourceCollider2D == null)
+                if (_sourceCollider2D == null || contact.collider == null)
                 {
                     return;
                 }
-                
-                if (contact.collider == null)
+
+                if (_sourceCollider2D.attachedRigidbody == null || contact.collider.attachedRigidbody == null)
                 {
-                    continue;
+                    return;
                 }
-                
+
                 Vector2 direction = _sourceCollider2D.attachedRigidbody.position - 
                                     contact.collider.attachedRigidbody.position;
                 direction.Normalize();

@@ -15,6 +15,7 @@ namespace Balloondle.Gameplay.Physics2D
     /// </summary>
     public class Rope2D : MonoBehaviour
     {
+        public Action OnRopeBreak;
         public IRope2DCustomDestructor CustomDestructor;
         
         [FormerlySerializedAs("Limits")] public Rope2DArgs m_Args;
@@ -102,17 +103,18 @@ namespace Balloondle.Gameplay.Physics2D
         /// </summary>
         public void Break()
         {
+            OnRopeBreak?.Invoke();
             RemoveAllCells();
 
             RemoveJointsFromEnds();
-
+            
             if (CustomDestructor != null)
             {
                 CustomDestructor.OnBreakRope();
             }
             else
             {
-                Destroy(gameObject); // Self destruct.
+                DestroyImmediate(gameObject); // Self destruct.
             }
         }
         
