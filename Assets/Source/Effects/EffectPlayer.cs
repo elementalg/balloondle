@@ -18,6 +18,8 @@ namespace Balloondle.Effects
                     if (target != null)
                     {
                         effectObject = Instantiate(effect.m_Prefab, position, rotation, target.transform);
+                        effectObject.transform.localPosition = position;
+                        effectObject.transform.localRotation = rotation;
                     }
                     else
                     {
