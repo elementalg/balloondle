@@ -15,6 +15,8 @@ namespace Balloondle
         [SerializeField, Tooltip("Circle mask used for creating a transition to the loaded scene.")] 
         private RectTransform m_CircleMask;
 
+        private string _sceneBeingLoaded;
+        
         private void Start()
         {
             // 0 -> not the first run, 1 -> first run
@@ -26,23 +28,26 @@ namespace Balloondle
             }
             else
             {
-                LoadNextLevel();
+                LoadMainMenu();
             }
         }
 
         private void LoadFirstRun()
         {
+            _sceneBeingLoaded = SceneNames.FirstRun;
             AsyncOperation operation = SceneManager.LoadSceneAsync(SceneNames.FirstRun, LoadSceneMode.Additive);
             operation.completed += ApplyTransition;
         }
 
-        private void LoadNextLevel()
+        private void LoadMainMenu()
         {
             throw new NotImplementedException();
         }
 
         private void ApplyTransition(AsyncOperation operation)
         {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(_sceneBeingLoaded));
+            
             if (!operation.isDone)
             {
                 return;
