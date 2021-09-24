@@ -36,23 +36,13 @@ namespace Balloondle.Script
 
         public void Start()
         {
+            ResetRuntime();
+            
             if (m_ScriptJsonFile == null)
             {
                 throw new InvalidOperationException("A script must be assigned.");
             }
 
-            if (m_ScriptStyle == null)
-            {
-                throw new InvalidOperationException("A script style must be assigned.");
-            }
-
-            _sceneCanvas = FindObjectOfType<Canvas>();
-
-            if (_sceneCanvas == null)
-            {
-                throw new InvalidOperationException("Scene contains no Canvas.");
-            }
-            
             string serializedScript = m_ScriptJsonFile.text;
             ScriptExtractorFromJson scriptExtractor = new ScriptExtractorFromJson();
             _scriptText = scriptExtractor.FromJson(serializedScript);
@@ -68,6 +58,14 @@ namespace Balloondle.Script
             }
 
             InitializeScript();
+        }
+
+        private void ResetRuntime()
+        {
+            OnScriptEnd = null;
+            _currentEntry = null;
+            _entryElapsedTime = 0f;
+            _hasExpireEventBeenTriggered = false;
         }
 
         private void InitializeScript()
@@ -88,13 +86,6 @@ namespace Balloondle.Script
         /// <exception cref="NotImplementedException">if a NarrativeEntry is detected.</exception>
         private bool UpdateEntryDirectorForCurrentEntry()
         {
-            _sceneCanvas = FindObjectOfType<Canvas>();
-
-            if (_sceneCanvas == null)
-            {
-                throw new InvalidOperationException("Scene contains no Canvas.");
-            }
-            
             switch (_currentEntry)
             {
                 case SilenceEntry _:
@@ -103,6 +94,13 @@ namespace Balloondle.Script
                 case NarrativeEntry _:
                     throw new NotImplementedException("NarrativeEntry direction has not been implemented yet.");
                 case CharacterEntry entry:
+                    _sceneCanvas = FindObjectOfType<Canvas>();
+
+                    if (_sceneCanvas == null)
+                    {
+                        throw new InvalidOperationException("Scene contains no Canvas.");
+                    }
+                    
                     if (_currentEntryDirector != null &&
                         _currentEntryDirector is CharacterEntryDirector currentDirector)
                     {
