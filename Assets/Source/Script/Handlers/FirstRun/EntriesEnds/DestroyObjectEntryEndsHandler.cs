@@ -4,7 +4,7 @@ using Balloondle.Gameplay.World;
 using Balloondle.UI.Controllers;
 using UnityEngine;
 
-namespace Balloondle.Script.Handlers.EntriesEnds
+namespace Balloondle.Script.Handlers.FirstRun.EntriesEnds
 {
     [CreateAssetMenu(fileName = "DestroyObjectEntryEndsHandler",
         menuName = "Script/Entries Ends Handler/Destroy Object", order = 1)]

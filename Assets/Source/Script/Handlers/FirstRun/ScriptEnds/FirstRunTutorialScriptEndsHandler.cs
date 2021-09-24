@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Balloondle.Script.Handlers.ScriptEnds
+namespace Balloondle.Script.Handlers.FirstRun.ScriptEnds
 {
     [CreateAssetMenu(fileName = "FirstRunTutorialScriptEndsHandler", 
         menuName = "Script/Ends Handler/First Run Tutorial", order = 1)]

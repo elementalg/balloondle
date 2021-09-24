@@ -1,21 +1,20 @@
 ﻿using System;
-using Balloondle.Gameplay;
-using Balloondle.Gameplay.World;
 using UnityEngine;
 
-namespace Balloondle.Script.Handlers.ScriptEnds
+namespace Balloondle.Script.Handlers.FirstRun.ScriptEnds
 {
-    [CreateAssetMenu(fileName = "FirstRunScriptEndsHandler", menuName = "Script/Ends Handler/First Run", order = 1)]
-    public class FirstRunScriptEndsHandler : ScriptEndsHandler
+    [CreateAssetMenu(fileName = "FirstRunEndScriptEndsHandler",
+        menuName = "Script/Ends Handler/First Run End", order = 1)]
+    public class FirstRunEndScriptEndsHandler : ScriptEndsHandler
     {
         [SerializeField] 
         private GameObject m_ScriptEasingInAndOutPrefab;
 
         [SerializeField] 
-        private ScriptPreset m_WaitForMovementPreset;
-
-        [SerializeField, Tooltip("Amount of time to wait before destroying the created Animation's GameObject.")]
-        private float m_DestroyAnimationAfterTime = 1f;
+        private GameObject m_UIEventSystemPrefab;
+        
+        [SerializeField] 
+        private GameObject m_FirstRunContinuePrefab;
 
         private Animator _animator;
 
@@ -51,15 +50,15 @@ namespace Balloondle.Script.Handlers.ScriptEnds
 
         public override void OnScriptEnd()
         {
-            _animator.Play("BlurOut");
-            
-            Destroy(_animator.gameObject, m_DestroyAnimationAfterTime);
-            
-            WorldEntitySpawner worldEntitySpawner = FindObjectOfType<WorldEntitySpawner>();
-            worldEntitySpawner.Spawn("Balloon", new Vector3(16.5f, -11.66f, 0f), Quaternion.identity);
+            if (FindObjectOfType<Canvas>() == null)
+            {
+                throw new InvalidOperationException("Canvas is missing from scene.");
+            }
 
-            ScriptDirector director = FindObjectOfType<ScriptDirector>();
-            director.StartScript(m_WaitForMovementPreset);
+            GameObject.Instantiate(m_UIEventSystemPrefab);
+            
+            Transform canvasTransform = FindObjectOfType<Canvas>().transform;
+            GameObject.Instantiate(m_FirstRunContinuePrefab, canvasTransform);
         }
     }
 }

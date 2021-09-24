@@ -2,7 +2,7 @@
 using Balloondle.Gameplay.World;
 using UnityEngine;
 
-namespace Balloondle.Script.Handlers.EntriesEnds
+namespace Balloondle.Script.Handlers.FirstRun.EntriesEnds
 {
     [CreateAssetMenu(fileName = "GrabWeaponEntryEndsHandler",
         menuName = "Script/Entries Ends Handler/Grab Weapon", order = 1)]

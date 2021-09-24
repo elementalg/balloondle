@@ -1,22 +1,20 @@
 ﻿using System;
-using Balloondle.Effects;
 using Balloondle.Gameplay.World;
 using UnityEngine;
 
-namespace Balloondle.Script.Handlers.ScriptEnds
+namespace Balloondle.Script.Handlers.FirstRun.ScriptEnds
 {
-    [CreateAssetMenu(fileName = "FirstRunEndScriptEndsHandler",
-        menuName = "Script/Ends Handler/First Run End", order = 1)]
-    public class FirstRunEndScriptEndsHandler : ScriptEndsHandler
+    [CreateAssetMenu(fileName = "FirstRunScriptEndsHandler", menuName = "Script/Ends Handler/First Run", order = 1)]
+    public class FirstRunScriptEndsHandler : ScriptEndsHandler
     {
         [SerializeField] 
         private GameObject m_ScriptEasingInAndOutPrefab;
 
         [SerializeField] 
-        private GameObject m_UIEventSystemPrefab;
-        
-        [SerializeField] 
-        private GameObject m_FirstRunContinuePrefab;
+        private ScriptPreset m_WaitForMovementPreset;
+
+        [SerializeField, Tooltip("Amount of time to wait before destroying the created Animation's GameObject.")]
+        private float m_DestroyAnimationAfterTime = 1f;
 
         private Animator _animator;
 
@@ -52,15 +50,15 @@ namespace Balloondle.Script.Handlers.ScriptEnds
 
         public override void OnScriptEnd()
         {
-            if (FindObjectOfType<Canvas>() == null)
-            {
-                throw new InvalidOperationException("Canvas is missing from scene.");
-            }
-
-            GameObject.Instantiate(m_UIEventSystemPrefab);
+            _animator.Play("BlurOut");
             
-            Transform canvasTransform = FindObjectOfType<Canvas>().transform;
-            GameObject.Instantiate(m_FirstRunContinuePrefab, canvasTransform);
+            Destroy(_animator.gameObject, m_DestroyAnimationAfterTime);
+            
+            WorldEntitySpawner worldEntitySpawner = FindObjectOfType<WorldEntitySpawner>();
+            worldEntitySpawner.Spawn("Balloon", new Vector3(16.5f, -11.66f, 0f), Quaternion.identity);
+
+            ScriptDirector director = FindObjectOfType<ScriptDirector>();
+            director.StartScript(m_WaitForMovementPreset);
         }
     }
 }
