@@ -47,7 +47,7 @@ namespace Balloondle.Script
             }
 
             _sceneCanvas = FindObjectOfType<Canvas>();
-            
+
             if (_sceneCanvas == null)
             {
                 throw new InvalidOperationException("Scene contains no Canvas.");
@@ -88,6 +88,13 @@ namespace Balloondle.Script
         /// <exception cref="NotImplementedException">if a NarrativeEntry is detected.</exception>
         private bool UpdateEntryDirectorForCurrentEntry()
         {
+            _sceneCanvas = FindObjectOfType<Canvas>();
+
+            if (_sceneCanvas == null)
+            {
+                throw new InvalidOperationException("Scene contains no Canvas.");
+            }
+            
             switch (_currentEntry)
             {
                 case SilenceEntry _:
