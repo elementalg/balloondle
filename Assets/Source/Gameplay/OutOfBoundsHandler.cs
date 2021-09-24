@@ -1,4 +1,5 @@
 ﻿using Balloondle.Gameplay.World;
+using Balloondle.MiniGame;
 using UnityEngine;
 
 namespace Balloondle.Gameplay
@@ -7,6 +8,16 @@ namespace Balloondle.Gameplay
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (other.gameObject.GetComponent<WorldLevelObstacle>() != null)
+            {
+                if (other is PolygonCollider2D)
+                {
+                    other.gameObject.GetComponent<WorldLevelObstacle>().HandleOutOfBounds();
+                }
+                
+                return;
+            }
+            
             // Move player to spawn.
             if (other.gameObject.GetComponent<Player>() != null)
             {

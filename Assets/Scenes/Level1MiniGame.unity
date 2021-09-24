@@ -1376,6 +1376,28 @@ MonoBehaviour:
     y: -15.7
     width: 65.4
     height: 20
+  m_ObstacleSpawnZones:
+  - serializedVersion: 2
+    x: -29
+    y: -17.2
+    width: 15.1
+    height: 24.6
+  - serializedVersion: 2
+    x: -8
+    y: 11.4
+    width: 65.4
+    height: 8
+  - serializedVersion: 2
+    x: 74.1
+    y: -17.2
+    width: 15.1
+    height: 24.6
+  - serializedVersion: 2
+    x: -8
+    y: -28
+    width: 65.4
+    height: 8
+  m_MinAndMaxForceForObstacle: {x: 1, y: 2}
 --- !u!1 &1585691268
 GameObject:
   m_ObjectHideFlags: 0
