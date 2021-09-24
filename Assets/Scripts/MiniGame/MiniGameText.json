@@ -1,0 +1,20 @@
+﻿{
+  "title": "Destroy the barrels - Mini Game",
+  "author": "Gabriel Ami",
+  "entries":
+  [
+    {
+      "type": "Silence",
+      "object":
+      {
+        "entry_id": 0,
+        "duration": 0,
+        "expire_event":
+        {
+          "enabled": true,
+          "value": "player-destroyed"
+        }
+      }
+    }
+  ]
+}
