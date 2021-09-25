@@ -33,7 +33,7 @@ namespace Balloondle.MiniGame
         
         private float _elapsedTime;
 
-        private int _currentObstacleStageIndex = 0;
+        private int _currentObstacleStageIndex;
         private float _elapsedTimeAfterObstacleSpawn;
 
         private void Start()
@@ -101,7 +101,7 @@ namespace Balloondle.MiniGame
 
             if (m_ObstacleStages.Count > _currentObstacleStageIndex + 1)
             {
-                if (m_ObstacleStages[_currentObstacleStageIndex + 1].ElapsedTimeRequired <= _elapsedTime)
+                if (m_ObstacleStages[_currentObstacleStageIndex + 1].m_ElapsedTimeRequired <= _elapsedTime)
                 {
                     _currentObstacleStageIndex += 1;
                 }
@@ -109,9 +109,9 @@ namespace Balloondle.MiniGame
             
             ObstacleStage stage = m_ObstacleStages[_currentObstacleStageIndex];
             
-            if (_elapsedTimeAfterObstacleSpawn >= stage.SpawnEachSeconds)
+            if (_elapsedTimeAfterObstacleSpawn >= stage.m_SpawnEachSeconds)
             {
-                for (int i = 0; i < stage.ObstaclesAmount; i++)
+                for (int i = 0; i < stage.m_ObstaclesAmount; i++)
                 {
                     _actorsSpawner.SpawnObstacle();
                 }

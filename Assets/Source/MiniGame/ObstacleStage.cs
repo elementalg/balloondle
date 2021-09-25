@@ -5,8 +5,8 @@ namespace Balloondle.MiniGame
     [Serializable]
     public struct ObstacleStage
     {
-        public float ElapsedTimeRequired;
-        public float SpawnEachSeconds;
-        public int ObstaclesAmount;
+        public float m_ElapsedTimeRequired;
+        public float m_SpawnEachSeconds;
+        public int m_ObstaclesAmount;
     }
 }
