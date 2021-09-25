@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e25617e9f1268754e9395a52a3a8e947, type: 3}
   m_Name: MiniGameScriptEndsHandler
   m_EditorClassIdentifier: 
+  m_BlurPrefab: {fileID: 7128146937218494711, guid: 9dcc018a6444ffe45988256cc610d8e9, type: 3}

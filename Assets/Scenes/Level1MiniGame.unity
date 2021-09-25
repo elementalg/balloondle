@@ -914,7 +914,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 45.11773, y: 44}
+  m_Offset: {x: 50.50035, y: 35.31857}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -925,7 +925,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 111.63545, y: 30}
+  m_Size: {x: 122.400696, y: 47.36286}
   m_EdgeRadius: 0
 --- !u!61 &1350743553
 BoxCollider2D:
@@ -940,7 +940,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -25.77, y: 2.5966892}
+  m_Offset: {x: -30.313782, y: -0.26107788}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -951,7 +951,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 112.60663}
+  m_Size: {x: 39.087563, y: 118.32216}
   m_EdgeRadius: 0
 --- !u!61 &1350743554
 BoxCollider2D:
@@ -966,7 +966,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 29.987114, y: -34.61}
+  m_Offset: {x: 29.987114, y: -39.3049}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -977,7 +977,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 81.3905, y: 30}
+  m_Size: {x: 81.3905, y: 39.38981}
   m_EdgeRadius: 0
 --- !u!61 &1350743555
 BoxCollider2D:
@@ -992,7 +992,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 85.8, y: -12.175364}
+  m_Offset: {x: 91.30037, y: -23.545338}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1003,7 +1003,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 82.35072}
+  m_Size: {x: 41.000725, y: 70.225334}
   m_EdgeRadius: 0
 --- !u!114 &1350743556
 MonoBehaviour:
@@ -1370,6 +1370,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_JoystickContainerPrefab: {fileID: 328980686127124062, guid: 36283d083247ceb4f8bcf4aa62d32673, type: 3}
   m_HUDPrefab: {fileID: 7183106810944228449, guid: 451fc7394b48ba54fa93d72fda632974, type: 3}
+  m_EventSystemPrefab: {fileID: 2509475836202216469, guid: 63510f350ca147643ba9a50b2098dbf7, type: 3}
+  m_GameOverPrefab: {fileID: 7229559467857822970, guid: d3b4b591ba99ce34fab480ddb17c4816, type: 3}
   m_BarrelSpawnBoundaries:
     serializedVersion: 2
     x: 0.2
@@ -1399,24 +1401,24 @@ MonoBehaviour:
     height: 8
   m_MinAndMaxForceForObstacle: {x: 1, y: 2}
   m_ObstacleStages:
-  - ElapsedTimeRequired: 0
-    SpawnEachSeconds: 5
-    ObstaclesAmount: 1
-  - ElapsedTimeRequired: 5
-    SpawnEachSeconds: 3
-    ObstaclesAmount: 1
-  - ElapsedTimeRequired: 15
-    SpawnEachSeconds: 3
-    ObstaclesAmount: 2
-  - ElapsedTimeRequired: 30
-    SpawnEachSeconds: 3
-    ObstaclesAmount: 3
-  - ElapsedTimeRequired: 60
-    SpawnEachSeconds: 3
-    ObstaclesAmount: 5
-  - ElapsedTimeRequired: 120
-    SpawnEachSeconds: 3
-    ObstaclesAmount: 10
+  - m_ElapsedTimeRequired: 0
+    m_SpawnEachSeconds: 4
+    m_ObstaclesAmount: 1
+  - m_ElapsedTimeRequired: 5
+    m_SpawnEachSeconds: 3
+    m_ObstaclesAmount: 1
+  - m_ElapsedTimeRequired: 15
+    m_SpawnEachSeconds: 3
+    m_ObstaclesAmount: 2
+  - m_ElapsedTimeRequired: 30
+    m_SpawnEachSeconds: 3
+    m_ObstaclesAmount: 3
+  - m_ElapsedTimeRequired: 60
+    m_SpawnEachSeconds: 3
+    m_ObstaclesAmount: 4
+  - m_ElapsedTimeRequired: 120
+    m_SpawnEachSeconds: 2
+    m_ObstaclesAmount: 5
 --- !u!1 &1585691268
 GameObject:
   m_ObjectHideFlags: 0

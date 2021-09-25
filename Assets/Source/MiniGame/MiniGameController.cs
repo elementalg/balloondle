@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Balloondle.Gameplay.World;
+using Balloondle.UI;
 using Balloondle.UI.Controllers;
 using UnityEngine;
 
@@ -13,6 +14,12 @@ namespace Balloondle.MiniGame
 
         [SerializeField, Tooltip("Prefab containing the HUD for the mini-game.")]
         private GameObject m_HUDPrefab;
+
+        [SerializeField, Tooltip("Prefab containing the EventSystem.")]
+        private GameObject m_EventSystemPrefab;
+        
+        [SerializeField, Tooltip("Prefab containing the GameOver UI.")]
+        private GameObject m_GameOverPrefab;
 
         [SerializeField, Tooltip("Spawn boundaries for the barrels.")]
         private Rect m_BarrelSpawnBoundaries;
@@ -122,10 +129,34 @@ namespace Balloondle.MiniGame
 
         public void EndGame()
         {
-            Debug.Log("End");
             _joystickContainer.DestroyJoystick();
-            // Blur background.
-            // Show retry button with obtained score, and also discord server button link.
+            Destroy(_hudController.gameObject);
+
+            ShowGameOver();
+        }
+
+        private void ShowGameOver()
+        {
+            Canvas canvas = FindObjectOfType<Canvas>();
+
+            if (canvas == null)
+            {
+                throw new InvalidOperationException("Canvas could not be found.");
+            }
+
+            Instantiate(m_EventSystemPrefab);
+            
+            GameObject gameOver = Instantiate(m_GameOverPrefab, canvas.transform);
+            GameOverSynchronizer synchronizer = gameOver.GetComponent<GameOverSynchronizer>();
+            
+            synchronizer.m_ScoreClamp.SetText(_scoreManager.CurrentScore.ToString("0."));
+
+            if (!_scoreManager.IsHighScore())
+            {
+                synchronizer.m_HighScoreText.enabled = false;
+            }
+            
+            _scoreManager.SaveScore();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Balloondle.UI
         private int m_MaxCharacters = 16;
 
         private Text _text;
+        private string _textBeforeStart = "";
 
         private void Start()
         {
@@ -29,6 +30,11 @@ namespace Balloondle.UI
             }
 
             _text = GetComponent<Text>();
+            
+            if (!_textBeforeStart.Equals(""))
+            {
+                SetText(_textBeforeStart);
+            }
         }
 
         /// <summary>
@@ -38,6 +44,12 @@ namespace Balloondle.UI
         /// <param name="text"></param>
         public void SetText(string text)
         {
+            if (_text == null)
+            {
+                _textBeforeStart = text;
+                return;
+            }
+            
             if (text.Length > m_MaxCharacters)
             {
                 string clampedText = $"{text.Substring(0, m_MaxCharacters)}{m_ClampedEndIndicator}";

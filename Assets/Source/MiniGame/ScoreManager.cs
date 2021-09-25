@@ -24,5 +24,19 @@ namespace Balloondle.MiniGame
         {
             _currentScore += 1f;
         }
+
+        public bool IsHighScore()
+        {
+            return _currentScore > _maxScore;
+        }
+        
+        public void SaveScore()
+        {
+            if (_currentScore > _maxScore)
+            {
+                PlayerPrefs.SetFloat(MaxScoreKey, _currentScore);
+                PlayerPrefs.Save();
+            }
+        }
     }
 }
