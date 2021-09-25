@@ -747,6 +747,7 @@ GameObject:
   - component: {fileID: 7229559468679424682}
   - component: {fileID: 7229559468679424681}
   - component: {fileID: 7229559468679424684}
+  - component: {fileID: 8935277073286262824}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -854,7 +855,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7229559468679424682}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8935277073286262824}
+        m_TargetAssemblyTypeName: Balloondle.MiniGame.LevelRestarter, Source
+        m_MethodName: RestartLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7229559468679424684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,6 +881,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DesignResolution: {x: 1920, y: 1080}
+--- !u!114 &8935277073286262824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7229559468679424663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f619f130d6874a84b5db0c36f76e7e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7316710184698476748
 GameObject:
   m_ObjectHideFlags: 0
