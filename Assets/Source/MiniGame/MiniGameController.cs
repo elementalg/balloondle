@@ -23,11 +23,27 @@ namespace Balloondle.MiniGame
         [SerializeField, Tooltip("Minimum (x) and maximum (y) force which can be applied to the obstacles.")]
         private Vector2 m_MinAndMaxForceForObstacle;
 
+        [SerializeField] 
+        private List<ObstacleStage> m_ObstacleStages;
+
         private ScoreManager _scoreManager;
         private JoystickPointerListeningSurface _joystickContainer;
         private HUDController _hudController;
         private ActorsSpawner _actorsSpawner;
         
+        private float _elapsedTime;
+
+        private int _currentObstacleStageIndex = 0;
+        private float _elapsedTimeAfterObstacleSpawn;
+
+        private void Start()
+        {
+            if (m_ObstacleStages.Count == 0)
+            {
+                throw new InvalidOperationException("ObstaclesStages cannot be empty.");
+            }
+        }
+
         public void StartGame()
         {
             _scoreManager = new ScoreManager();
@@ -77,11 +93,36 @@ namespace Balloondle.MiniGame
                 m_BarrelSpawnBoundaries, detailsProvider);
             _actorsSpawner.Start();
         }
-        
+
+        private void Update()
+        {
+            _elapsedTime += Time.deltaTime;
+            _elapsedTimeAfterObstacleSpawn += Time.deltaTime;
+
+            if (m_ObstacleStages.Count > _currentObstacleStageIndex + 1)
+            {
+                if (m_ObstacleStages[_currentObstacleStageIndex + 1].ElapsedTimeRequired <= _elapsedTime)
+                {
+                    _currentObstacleStageIndex += 1;
+                }
+            }
+            
+            ObstacleStage stage = m_ObstacleStages[_currentObstacleStageIndex];
+            
+            if (_elapsedTimeAfterObstacleSpawn >= stage.SpawnEachSeconds)
+            {
+                for (int i = 0; i < stage.ObstaclesAmount; i++)
+                {
+                    _actorsSpawner.SpawnObstacle();
+                }
+                
+                _elapsedTimeAfterObstacleSpawn = 0f;
+            }
+        }
+
         public void EndGame()
         {
-            Debug.Log("End.");
-            
+            Debug.Log("End");
             _joystickContainer.DestroyJoystick();
             // Blur background.
             // Show retry button with obtained score, and also discord server button link.

@@ -20,8 +20,6 @@ namespace Balloondle.MiniGame
         private Rect _pointSpawnBoundaries;
         private RandomObstacleDetailsProvider _randomObstacleDetailsProvider;
 
-        private int _obstaclesAliveCount = 0;
-        
         public ActorsSpawner(WorldEntitySpawner spawner, ScoreManager score, HUDController hud, 
             Rect pointSpawnBoundaries, RandomObstacleDetailsProvider detailsProvider)
         {
@@ -37,7 +35,6 @@ namespace Balloondle.MiniGame
             SpawnPlayer();
             SpawnWeapon();
             SpawnPointEntity();
-            SpawnObstacle();
         }
 
         private void SpawnPlayer()
@@ -88,7 +85,7 @@ namespace Balloondle.MiniGame
             };
         }
 
-        private void SpawnObstacle()
+        public void SpawnObstacle()
         {
             _randomObstacleDetailsProvider.Generate();
 
