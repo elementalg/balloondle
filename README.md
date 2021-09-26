@@ -8,6 +8,8 @@ You may have to protect the world from the infamous alien based balloons, which 
 
 Balloondle will be released initially only for Android (+4.4). iOS releases are planned too!
 
+Download the concept demo on Play Store! https://play.google.com/store/apps/details?id=com.elementalg.balloondle
+
 #### Levels
 
 Fight your way through the enemies in order to achieve the peace.
