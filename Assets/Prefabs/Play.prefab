@@ -162,8 +162,8 @@ GameObject:
   - component: {fileID: 6371099234518674470}
   - component: {fileID: 8243282014770421363}
   - component: {fileID: 6674741452830714066}
+  - component: {fileID: 4646968922158464815}
   - component: {fileID: 7891006934767048058}
-  - component: {fileID: 7284216476269429250}
   - component: {fileID: 5876553868225232149}
   m_Layer: 5
   m_Name: Button
@@ -273,9 +273,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7284216476269429250}
-        m_TargetAssemblyTypeName: Balloondle.FirstRunEndContinue, Source
-        m_MethodName: Continue
+      - m_Target: {fileID: 4646968922158464815}
+        m_TargetAssemblyTypeName: Balloondle.OnEndFirstRun, Source
+        m_MethodName: OnPlayButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -285,6 +285,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4646968922158464815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5852675348451656912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7bacd0a4fc42c0a3ba418c34c35119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7891006934767048058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,18 +310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DesignResolution: {x: 1920, y: 1080}
---- !u!114 &7284216476269429250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5852675348451656912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e1a9c107dfb41aab6ace47940a6e51e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &5876553868225232149
 Animator:
   serializedVersion: 3

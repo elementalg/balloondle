@@ -1,4 +1,6 @@
 using System;
+using Balloondle.MiniGame;
+using Balloondle.Script;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +12,7 @@ namespace Balloondle
     /// </summary>
     public class StartLevelLoader : MonoBehaviour
     {
-        private const string IsFirstRunKey = "first-run";
+        public const string IsFirstRunKey = "first-run";
 
         [SerializeField, Tooltip("Circle mask used for creating a transition to the loaded scene.")] 
         private RectTransform m_CircleMask;
@@ -28,7 +30,7 @@ namespace Balloondle
             }
             else
             {
-                LoadMainMenu();
+                LoadMiniGame();
             }
         }
 
@@ -39,9 +41,11 @@ namespace Balloondle
             operation.completed += ApplyTransition;
         }
 
-        private void LoadMainMenu()
+        private void LoadMiniGame()
         {
-            throw new NotImplementedException();
+            _sceneBeingLoaded = SceneNames.MiniGame;
+            AsyncOperation operation = SceneManager.LoadSceneAsync(SceneNames.MiniGame, LoadSceneMode.Additive);
+            operation.completed += ApplyTransition;
         }
 
         private void ApplyTransition(AsyncOperation operation)
@@ -59,7 +63,7 @@ namespace Balloondle
             {
                 Destroy(loadingUIObject);
             }
-            
+
             Animator animator = m_CircleMask.GetComponent<Animator>();
 
             if (animator == null)

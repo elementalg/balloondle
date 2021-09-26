@@ -9,6 +9,9 @@ namespace Balloondle.MiniGame
 {
     public class MiniGameController : MonoBehaviour
     {
+        [SerializeField]
+        private Canvas m_SceneCanvas;
+        
         [SerializeField, Tooltip("Prefab containing the joystick container.")]
         private GameObject m_JoystickContainerPrefab;
 
@@ -42,7 +45,7 @@ namespace Balloondle.MiniGame
 
         private int _currentObstacleStageIndex;
         private float _elapsedTimeAfterObstacleSpawn;
-
+        
         private void Start()
         {
             if (m_ObstacleStages.Count == 0)
@@ -56,33 +59,19 @@ namespace Balloondle.MiniGame
             _scoreManager = new ScoreManager();
             
             ShowHUD();
-            StartActorsSpawner();           
+            StartActorsSpawner();
             EnableJoystick();
         }
 
         private void EnableJoystick()
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
-
-            if (canvas == null)
-            {
-                throw new InvalidOperationException("Canvas could not be found.");
-            }
-            
-            _joystickContainer = Instantiate(m_JoystickContainerPrefab, canvas.transform)
+            _joystickContainer = Instantiate(m_JoystickContainerPrefab, m_SceneCanvas.transform)
                 .GetComponent<JoystickPointerListeningSurface>();
         }
 
         private void ShowHUD()
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
-
-            if (canvas == null)
-            {
-                throw new InvalidOperationException("Canvas could not be found.");
-            }
-
-            _hudController = Instantiate(m_HUDPrefab, canvas.transform).GetComponent<HUDController>();
+            _hudController = Instantiate(m_HUDPrefab, m_SceneCanvas.transform).GetComponent<HUDController>();
         }
 
         private void StartActorsSpawner()
@@ -137,16 +126,9 @@ namespace Balloondle.MiniGame
 
         private void ShowGameOver()
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
-
-            if (canvas == null)
-            {
-                throw new InvalidOperationException("Canvas could not be found.");
-            }
-
             Instantiate(m_EventSystemPrefab);
             
-            GameObject gameOver = Instantiate(m_GameOverPrefab, canvas.transform);
+            GameObject gameOver = Instantiate(m_GameOverPrefab, m_SceneCanvas.transform);
             GameOverSynchronizer synchronizer = gameOver.GetComponent<GameOverSynchronizer>();
             
             synchronizer.m_ScoreClamp.SetText(_scoreManager.CurrentScore.ToString("0."));

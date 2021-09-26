@@ -156,7 +156,7 @@ PolygonCollider2D:
       - {x: 0.28125, y: 0.0703125}
       - {x: 0.3046875, y: 0.08203125}
       - {x: 0.48828125, y: 0.0078125}
-      - {x: 0.5, y: 0.5}
+      - {x: 0.5, y: 0}
 --- !u!114 &2160497400920273158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,19 +199,19 @@ EdgeCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.28145412, y: 0.015388191}
-  - {x: 0.28153777, y: 0.068980634}
-  - {x: 0.2984736, y: 0.085754216}
-  - {x: 0.50382185, y: -0.00019323826}
-  - {x: 0.29623175, y: -0.08527398}
-  - {x: 0.27951455, y: -0.0642457}
-  - {x: 0.28130716, y: -0.018211484}
+  - {x: 0.27963787, y: 0.01696518}
+  - {x: 0.27651796, y: 0.07428736}
+  - {x: 0.2971505, y: 0.08906199}
+  - {x: 0.511099, y: 0.00046831742}
+  - {x: 0.29379964, y: -0.09175962}
+  - {x: 0.27479956, y: -0.0684368}
+  - {x: 0.2794253, y: -0.017107723}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

@@ -858,7 +858,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8935277073286262824}
         m_TargetAssemblyTypeName: Balloondle.MiniGame.LevelRestarter, Source
-        m_MethodName: RestartLevel
+        m_MethodName: StartMiniGameScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

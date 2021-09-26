@@ -26,7 +26,7 @@ namespace Balloondle.MiniGame
 
             _outOfBoundsOnce = true;
         }
-
+        
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (GetComponent<WorldEntity>() == null)

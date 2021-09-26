@@ -29,6 +29,7 @@ namespace Balloondle.Gameplay
 
         private void Update()
         {
+            _cameraTransform = Camera.main.transform;
             _elapsedTime += Time.deltaTime;
 
             float progress = _elapsedTime / EasingDurationInSeconds;

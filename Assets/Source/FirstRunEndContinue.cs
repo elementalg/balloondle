@@ -6,7 +6,7 @@ namespace Balloondle
     {
         public void Continue()
         {
-            Debug.Log("Continue pressed.");
+            
         }
     }
 }

@@ -59,6 +59,8 @@ namespace Balloondle.Script.Handlers.FirstRun.ScriptEnds
             
             Transform canvasTransform = FindObjectOfType<Canvas>().transform;
             GameObject.Instantiate(m_FirstRunContinuePrefab, canvasTransform);
+            
+            PlayerPrefs.SetInt(StartLevelLoader.IsFirstRunKey, 0);
         }
     }
 }
