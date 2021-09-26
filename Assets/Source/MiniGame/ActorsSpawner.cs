@@ -12,6 +12,7 @@ namespace Balloondle.MiniGame
         private const string PlayerWeaponEntityName = "GreenVenom";
         private const string PointEntityName = "Barrel";
         private const string ObstacleEntityName = "Arrow";
+        private const float MinimumDistanceBetweenPlayerAndPoint = 2f;
         
         private WorldEntitySpawner _spawner;
         
@@ -19,6 +20,8 @@ namespace Balloondle.MiniGame
         private HUDController _hud;
         private Rect _pointSpawnBoundaries;
         private RandomObstacleDetailsProvider _randomObstacleDetailsProvider;
+
+        private WorldEntity _currentPlayer;
 
         public ActorsSpawner(WorldEntitySpawner spawner, ScoreManager score, HUDController hud, 
             Rect pointSpawnBoundaries, RandomObstacleDetailsProvider detailsProvider)
@@ -43,7 +46,6 @@ namespace Balloondle.MiniGame
             player.m_Indestructible = false;
             player.OnPreDestroy += damage =>
             {
-                Debug.Log("Player - OnPreDestroy");
                 GameObject.FindObjectOfType<ScriptDirector>().TryTriggerExpireEvent("player-destroyed");
 
                 Player playerLogic = player.GetComponent<Player>();
@@ -56,9 +58,10 @@ namespace Balloondle.MiniGame
             
             player.OnDamagePreReceived += damage =>
             {
-                Debug.Log($"Player - OnDamagePreReceived {player.Health} after {player.Health - damage}");
                 _hud.UpdateHealth(player.MaxHealth, Mathf.Max(0f, player.Health - damage));
             };
+
+            _currentPlayer = player;
         }
 
         private void SpawnWeapon()
@@ -72,6 +75,14 @@ namespace Balloondle.MiniGame
             Vector2 randomPosition = new Vector2(
                 Random.Range(_pointSpawnBoundaries.xMin, _pointSpawnBoundaries.xMax),
                 Random.Range(_pointSpawnBoundaries.yMin, _pointSpawnBoundaries.yMax));
+
+            if (Vector2.Distance(_currentPlayer.transform.position, randomPosition) <
+                MinimumDistanceBetweenPlayerAndPoint)
+            {
+                SpawnPointEntity();
+                return;
+            }
+            
             Quaternion randomAngle = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
             
             WorldEntity pointEntity = _spawner.Spawn(PointEntityName, randomPosition, randomAngle);
