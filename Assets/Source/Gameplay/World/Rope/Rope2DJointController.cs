@@ -2,7 +2,7 @@ using System;
 using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World.Rope
 {
     public class Rope2DJointController : MonoBehaviour
     {

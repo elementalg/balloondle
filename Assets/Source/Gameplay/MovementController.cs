@@ -1,5 +1,5 @@
 using System;
-using Balloondle.Effects.Implementations;
+using Balloondle.Gameplay.World.Effects.Implementations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

@@ -4,7 +4,7 @@ using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World.Rope
 {
     public class Rope2DVisualizer : MonoBehaviour
     {

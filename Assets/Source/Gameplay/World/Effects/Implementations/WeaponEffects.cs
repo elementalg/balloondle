@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Balloondle.Effects.Implementations
+namespace Balloondle.Gameplay.World.Effects.Implementations
 {
     public class WeaponEffects : MonoBehaviour
     {

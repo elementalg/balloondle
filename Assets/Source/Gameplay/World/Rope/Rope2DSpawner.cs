@@ -1,9 +1,8 @@
 using System;
 using Balloondle.Gameplay.Physics2D;
-using Balloondle.Gameplay.World;
 using UnityEngine;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World.Rope
 {
     [CreateAssetMenu(fileName = "Rope2DSpawnerConfig", menuName = "Rope2D/Spawner", order = 1)]
     public class Rope2DSpawner : ScriptableObject
