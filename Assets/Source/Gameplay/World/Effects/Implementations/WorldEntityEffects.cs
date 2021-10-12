@@ -1,8 +1,7 @@
 ﻿using System;
-using Balloondle.Gameplay.World;
 using UnityEngine;
 
-namespace Balloondle.Effects.Implementations
+namespace Balloondle.Gameplay.World.Effects.Implementations
 {
     public class WorldEntityEffects : MonoBehaviour
     {

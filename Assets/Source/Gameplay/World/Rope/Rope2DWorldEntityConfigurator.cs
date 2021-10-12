@@ -2,7 +2,7 @@
 using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 
-namespace Balloondle.Gameplay.World
+namespace Balloondle.Gameplay.World.Rope
 {
     /// <summary>
     /// Creates a link between the <see cref="WorldEntity"/> component, and the <see cref="Rope2D"/> component,

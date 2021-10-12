@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Balloondle.Effects
+namespace Balloondle.Gameplay.World.Effects
 {
     [Serializable]
     public struct Effect

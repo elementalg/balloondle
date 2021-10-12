@@ -1,7 +1,6 @@
 ﻿using Balloondle.Gameplay.Physics2D;
-using Balloondle.Gameplay.World;
 
-namespace Balloondle.Gameplay
+namespace Balloondle.Gameplay.World.Rope
 {
     public class Rope2DDestructorForWorldEntity : IRope2DCustomDestructor
     {

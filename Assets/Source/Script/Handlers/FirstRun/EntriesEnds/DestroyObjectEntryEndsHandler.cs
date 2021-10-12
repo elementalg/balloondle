@@ -1,6 +1,6 @@
 ﻿using Balloondle.Ambient;
-using Balloondle.Effects;
 using Balloondle.Gameplay.World;
+using Balloondle.Gameplay.World.Effects;
 using Balloondle.UI.Controllers;
 using UnityEngine;
 

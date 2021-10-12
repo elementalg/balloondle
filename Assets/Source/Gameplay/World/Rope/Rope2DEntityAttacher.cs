@@ -4,7 +4,7 @@ using Balloondle.Gameplay.Physics2D;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Balloondle.Gameplay.World
+namespace Balloondle.Gameplay.World.Rope
 {
     [CreateAssetMenu(fileName = "Rope2DEntityAttacher", menuName = "WorldEntities/Rope2DEntityAttacher", order = 1)]
     public class Rope2DEntityAttacher : WorldEntityAttacher

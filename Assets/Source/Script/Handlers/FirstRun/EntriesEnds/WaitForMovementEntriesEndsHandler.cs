@@ -1,8 +1,8 @@
 ﻿using System;
 using Balloondle.Ambient;
-using Balloondle.Effects;
 using Balloondle.Gameplay;
 using Balloondle.Gameplay.World;
+using Balloondle.Gameplay.World.Effects;
 using UnityEngine;
 
 namespace Balloondle.Script.Handlers.FirstRun.EntriesEnds

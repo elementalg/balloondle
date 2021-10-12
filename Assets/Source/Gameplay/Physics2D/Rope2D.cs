@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Balloondle.Gameplay.World.Rope;
 using UnityEngine;
 using UnityEngine.Serialization;
 

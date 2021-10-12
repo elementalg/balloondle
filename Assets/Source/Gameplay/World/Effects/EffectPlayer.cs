@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Balloondle.Effects
+namespace Balloondle.Gameplay.World.Effects
 {
     public class EffectPlayer : MonoBehaviour
     {
